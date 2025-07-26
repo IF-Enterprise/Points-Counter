@@ -1,0 +1,23 @@
+package app.point_counter.model
+
+class Tennis: Sport() {
+
+    private var player1Pts = 0
+    private var player2Pts = 0
+    private val tennisPts = listOf("0", "15", "30", "40")
+
+    override fun addPoint(player: Int) {
+        if (player == 1) player1Pts++ else player2Pts++
+    }
+
+    override fun resetScore() {
+        player1Pts = 0
+        player2Pts = 0
+    }
+
+    override fun getScore(): String {
+        return "${tennisPts.getOrElse(player1Pts) { "Game" }} - ${tennisPts.getOrElse(player2Pts) { "Game" }}"
+    }
+
+    override fun getSport(): String = "Tennis"
+}
