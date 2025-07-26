@@ -1,6 +1,6 @@
 package app.point_counter.model
 
-class Tennis: Sport() {
+class Tennis: Sport("Tenis") {
 
     private var player1Pts = 0
     private var player2Pts = 0
