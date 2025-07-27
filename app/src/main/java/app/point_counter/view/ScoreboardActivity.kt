@@ -4,14 +4,16 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import app.point_counter.view.MainActivity
 import app.point_counter.R
+import android.util.Log
 
-class ScoreboardActivity : AppCompatActivity() {
+class ScoreboardActivity : MainActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scoreboard)
+        Log.d("DEBUG", "ScoreboardActivity cargada")
 
         // Referencias a vistas
         val redBox: LinearLayout = findViewById(R.id.red_box)

@@ -8,18 +8,6 @@
     tools:context=".view.MainActivity">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.745"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.956" />
-
-
     <Button
         android:id="@+id/myButton"
         android:layout_width="283dp"
@@ -27,8 +15,8 @@
         android:text="Ping Pong"
         android:textSize="18sp"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="80dp"
-        tools:layout_editor_absoluteY="451dp" />
+        tools:layout_editor_absoluteX="448dp"
+        tools:layout_editor_absoluteY="294dp" />
 
     <ImageButton
         android:id="@+id/my_image_button"
@@ -38,10 +26,10 @@
         android:src="@mipmap/pingpong"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.575"
+        app:layout_constraintHorizontal_bias="0.963"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.359" />
+        app:layout_constraintVertical_bias="0.265" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

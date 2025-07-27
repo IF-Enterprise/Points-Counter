@@ -8,28 +8,31 @@
     tools:ignore="MissingDefaultResource">
 
     <!-- Caja roja -->
+
+    <!-- Caja azul -->
     <LinearLayout
         android:id="@+id/red_box"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_width="337dp"
+        android:layout_height="379dp"
+        android:layout_margin="16dp"
+        android:layout_marginTop="280dp"
         android:background="#FF0000"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        android:layout_margin="16dp">
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <!-- Puntuación Roja -->
         <TextView
             android:id="@+id/red_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:text="0"
             android:textColor="#FFFFFF"
-            android:textSize="48sp"
-            android:layout_marginEnd="16dp"/>
+            android:textSize="48sp" />
 
         <!-- Botones para subir y bajar puntuación Roja -->
         <LinearLayout
@@ -51,20 +54,18 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Caja azul -->
     <LinearLayout
         android:id="@+id/blue_box"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_width="327dp"
+        android:layout_height="379dp"
         android:layout_margin="16dp"
-        android:layout_marginTop="308dp"
         android:background="#0000FF"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/red_box">
+        app:layout_constraintTop_toTopOf="parent">
 
         <!-- Puntuación Azul -->
         <TextView
