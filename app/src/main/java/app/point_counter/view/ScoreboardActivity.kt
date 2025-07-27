@@ -7,13 +7,19 @@ import android.widget.TextView
 import app.point_counter.view.MainActivity
 import app.point_counter.R
 import android.util.Log
+import app.point_counter.model.PingPong
+import app.point_counter.view.ScoreboardActivity
 
 class ScoreboardActivity : MainActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val sportType = intent.getStringExtra("sportType")
+        if (sportType == "pingpong") {
+            scoreManager.setSport(PingPong())
+        }
+
         setContentView(R.layout.activity_scoreboard)
-        Log.d("DEBUG", "ScoreboardActivity cargada")
 
         // Referencias a vistas
         val redBox: LinearLayout = findViewById(R.id.red_box)
@@ -29,19 +35,23 @@ class ScoreboardActivity : MainActivity() {
 
         // Lógica para sumar y restar puntos
         redPlus.setOnClickListener {
-            redScore.text = (redScore.text.toString().toInt() + 1).toString()
+            scoreManager.addPointToPlayer(1).toString()
+            redScore.text=scoreManager.getScorePlayer(1)
         }
 
         redMinus.setOnClickListener {
-            redScore.text = (redScore.text.toString().toInt() - 1).toString()
+            scoreManager.substractPointToPlayer(1).toString()
+            redScore.text=scoreManager.getScorePlayer(1)
         }
 
         bluePlus.setOnClickListener {
-            blueScore.text = (blueScore.text.toString().toInt() + 1).toString()
+            scoreManager.addPointToPlayer(2).toString()
+            blueScore.text = scoreManager.getScorePlayer(2)
         }
 
         blueMinus.setOnClickListener {
-            blueScore.text = (blueScore.text.toString().toInt() - 1).toString()
+            scoreManager.substractPointToPlayer(2).toString()
+            blueScore.text = scoreManager.getScorePlayer(2)
         }
     }
 }

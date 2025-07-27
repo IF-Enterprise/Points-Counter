@@ -19,7 +19,7 @@ import app.point_counter.view.ScoreboardActivity
 
 open class MainActivity : AppCompatActivity() {
 
-    private val scoreManager = ScoreViewModel()  // ahora es solo un objeto normal
+    val scoreManager = ScoreViewModel()  // ahora es solo un objeto normal
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +41,23 @@ open class MainActivity : AppCompatActivity() {
         ImageButton.setOnClickListener {
             scoreManager.setSport(PingPong())
             val intent = Intent(this, ScoreboardActivity::class.java)
+            intent.putExtra("sportType", "pingpong")//Its like passing the class PingPong() but with a string
             startActivity(intent)
         }
+        /*
+        ImageButton.setOnClickListener {
+            scoreManager.setSport(Tenis())
+            val intent = Intent(this, ScoreboardActivity::class.java)
+            intent.putExtra("sportType", "tenis")
+            startActivity(intent)
+        }
+        ImageButton.setOnClickListener {
+            scoreManager.setSport(Padel())
+            val intent = Intent(this, ScoreboardActivity::class.java)
+            intent.putExtra("sportType", "padel")
+            startActivity(intent)
+        }
+
+         */
     }
 }

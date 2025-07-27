@@ -6,4 +6,7 @@ abstract class Sport() {
     abstract fun resetScore()
     abstract fun setScore(player1Pts: Int,player2Pts: Int)
     abstract fun getSport(): String
+    abstract fun getScorePlayer(player: Int): String
+
+    abstract fun substractPointToPlayer(player: Int)
 }

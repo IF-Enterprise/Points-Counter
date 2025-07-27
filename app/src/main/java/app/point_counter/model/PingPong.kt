@@ -12,6 +12,14 @@ class PingPong: Sport() {
         }
     }
 
+    override fun substractPointToPlayer(player: Int) {
+        if (player == 1){
+            player1Pts--
+        } else{
+            player2Pts--
+        }
+    }
+
     override fun resetScore() {
         player1Pts = 0
         player2Pts = 0
@@ -28,6 +36,13 @@ class PingPong: Sport() {
 
     override fun getSport(): String = "Ping Pong"
 
+    override fun getScorePlayer(player: Int): String {
+        return if (player == 1){
+            player1Pts.toString()
+        } else{
+            player2Pts.toString()
+        }
+    }
 }
 
 /*
