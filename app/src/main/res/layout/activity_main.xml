@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".view.MainActivity">
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,14 +19,30 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.956" />
 
+
     <Button
         android:id="@+id/myButton"
-        android:layout_width="188dp"
-        android:layout_height="112dp"
+        android:layout_width="283dp"
+        android:layout_height="114dp"
         android:text="Ping Pong"
         android:textSize="18sp"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="166dp"
-        tools:layout_editor_absoluteY="102dp" />
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="451dp" />
+
+    <ImageButton
+        android:id="@+id/my_image_button"
+        android:layout_width="298dp"
+        android:layout_height="230dp"
+        android:contentDescription="button to select sport"
+        android:src="@mipmap/pingpong"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.575"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.359" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
