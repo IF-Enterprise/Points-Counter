@@ -4,11 +4,23 @@ class PingPong: Sport() {
     private var player1Pts = 0
     private var player2Pts = 0
 
+    private var setPlayer1 = 0
+    private var setPlayer2 = 0
+
+    //--------------------------------------------Pts--------------------------------------------
     override fun addPointToPlayer(player: Int) {
         if (player == 1){
             player1Pts++
         } else{
             player2Pts++
+        }
+        if (player1Pts == 11 && player2Pts - player1Pts >= 2){
+            addSetToPlayer(1)
+            resetScore()
+        }
+        if (player2Pts == 11 && player1Pts - player2Pts >= 2){
+            addSetToPlayer(2)
+            resetScore()
         }
     }
 
@@ -20,9 +32,41 @@ class PingPong: Sport() {
         }
     }
 
+    //--------------------------------------------Sets--------------------------------------------
+
+    override fun addSetToPlayer(player: Int) {
+        if (player == 1){
+            setPlayer1++
+        } else{
+            setPlayer2++
+        }
+    }
+
+    override fun substractSetToPlayer(player: Int) {
+        if (player == 1){
+            setPlayer1--
+        } else{
+            setPlayer2--
+        }
+    }
+
+    override fun getSets(): String {
+        return "$setPlayer1 - $setPlayer2"
+    }
+
+    override fun getSetsPlayer(player: Int): String {
+        return if (player == 1){
+            setPlayer1.toString()
+        } else{
+            setPlayer2.toString()
+        }
+    }
+    //--------------------------------------------Score--------------------------------------------
     override fun resetScore() {
         player1Pts = 0
         player2Pts = 0
+        setPlayer1 = 0
+        setPlayer2 = 0
     }
 
     override fun setScore(player1Pts: Int,player2Pts: Int) {
@@ -34,15 +78,16 @@ class PingPong: Sport() {
         return "$player1Pts - $player2Pts"
     }
 
-    override fun getSport(): String = "Ping Pong"
-
     override fun getScorePlayer(player: Int): String {
         return if (player == 1){
-            player1Pts.toString()
+            player1Pts.toString()+" set "+ setPlayer1.toString()
         } else{
-            player2Pts.toString()
+            player2Pts.toString()+" set "+ setPlayer2.toString()
         }
     }
+
+    override fun getSport(): String = "Ping Pong"
+
 }
 
 /*

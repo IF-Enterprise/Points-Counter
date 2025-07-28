@@ -15,6 +15,7 @@ import app.point_counter.model.Sport
 import app.point_counter.viewmodel.ScoreViewModel
 import android.widget.ImageButton
 import android.content.Intent
+import android.media.MediaPlayer
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -26,6 +27,8 @@ open class MainActivity : AppCompatActivity() {
 
     private lateinit var myButton: ImageButton
 
+    private lateinit var mediaPlayer: MediaPlayer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,6 +37,11 @@ open class MainActivity : AppCompatActivity() {
 
         setupHoverEffect()
         setupClickAction()
+
+        // 🎶 Cargar la música desde res/raw
+        mediaPlayer = MediaPlayer.create(this, R.raw.lofisweetsong265674)
+        mediaPlayer.isLooping = true   // 🔁 Que suene en bucle
+        mediaPlayer.start()
     }
 
     private fun setupHoverEffect() {
@@ -91,5 +99,20 @@ open class MainActivity : AppCompatActivity() {
                     .start()
             }
             .start()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mediaPlayer.pause()   // ⏸ Pausa cuando sales de la pantalla
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mediaPlayer.start()   // ▶ Reanuda cuando vuelves
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer.release() // 🗑 Libera recursos cuando la Activity se destruye
     }
 }
