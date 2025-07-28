@@ -1,6 +1,7 @@
 package app.point_counter.model
 
 class PingPong: Sport() {
+    private var setToWin = 3
     private var player1Pts = 0
     private var player2Pts = 0
 
@@ -14,11 +15,12 @@ class PingPong: Sport() {
         } else{
             player2Pts++
         }
-        if (player1Pts == 11 && player2Pts - player1Pts >= 2){
+        //If the player has 11 or more points with a difference of 2 wins the set and reset the score
+        if (player1Pts >= 11 && player1Pts - player2Pts >= 2){
             addSetToPlayer(1)
             resetScore()
         }
-        if (player2Pts == 11 && player1Pts - player2Pts >= 2){
+        if (player2Pts >= 11 && player2Pts - player1Pts >= 2){
             addSetToPlayer(2)
             resetScore()
         }
@@ -65,8 +67,6 @@ class PingPong: Sport() {
     override fun resetScore() {
         player1Pts = 0
         player2Pts = 0
-        setPlayer1 = 0
-        setPlayer2 = 0
     }
 
     override fun setScore(player1Pts: Int,player2Pts: Int) {
@@ -80,13 +80,31 @@ class PingPong: Sport() {
 
     override fun getScorePlayer(player: Int): String {
         return if (player == 1){
-            player1Pts.toString()+" set "+ setPlayer1.toString()
+            "$player1Pts set $setPlayer1"
         } else{
-            player2Pts.toString()+" set "+ setPlayer2.toString()
+            "$player2Pts set $setPlayer2"
         }
     }
 
     override fun getSport(): String = "Ping Pong"
+
+    //------------------------------------------nºsets to win--------------------------------------------
+
+    fun setToWin(setToWin: Int) {
+        this.setToWin = setToWin
+    }
+
+    fun getSetToWin(): Int {
+        return setToWin
+    }
+
+    fun checkWin(currentSets: Int): Boolean {
+        if (currentSets == setToWin) {
+            return true
+        } else {
+            return false
+        }
+    }
 
 }
 

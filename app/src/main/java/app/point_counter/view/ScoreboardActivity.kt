@@ -21,7 +21,7 @@ class ScoreboardActivity : MainActivity() {
 
         setContentView(R.layout.activity_scoreboard)
 
-        // Referencias a vistas
+        // References to the buttons and boxes
         val redBox: LinearLayout = findViewById(R.id.red_box)
         val blueBox: LinearLayout = findViewById(R.id.blue_box)
 
@@ -33,24 +33,28 @@ class ScoreboardActivity : MainActivity() {
         val bluePlus: Button = findViewById(R.id.blue_plus)
         val blueMinus: Button = findViewById(R.id.blue_minus)
 
-        // Lógica para sumar y restar puntos
+        // We add or substract points with the buttons and actualizes the scores.text
         redPlus.setOnClickListener {
             scoreManager.addPointToPlayer(1)
             redScore.text=scoreManager.getScorePlayer(1)
+            blueScore.text=scoreManager.getScorePlayer(2)
         }
 
         redMinus.setOnClickListener {
             scoreManager.substractPointToPlayer(1)
+            blueScore.text=scoreManager.getScorePlayer(2)
             redScore.text=scoreManager.getScorePlayer(1)
         }
 
         bluePlus.setOnClickListener {
             scoreManager.addPointToPlayer(2)
+            redScore.text = scoreManager.getScorePlayer(1)
             blueScore.text = scoreManager.getScorePlayer(2)
         }
 
         blueMinus.setOnClickListener {
             scoreManager.substractPointToPlayer(2)
+            redScore.text = scoreManager.getScorePlayer(1)
             blueScore.text = scoreManager.getScorePlayer(2)
         }
     }
