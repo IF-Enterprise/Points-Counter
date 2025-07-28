@@ -18,7 +18,7 @@ class ScoreViewModel:ViewModel() {//has to extend ViewModel to connect it to the
         sport.addPointToPlayer(player)
     }
     fun substractPointToPlayer(player: Int) {
-        sport.addPointToPlayer(player)
+        sport.substractPointToPlayer(player)
     }
 
     fun getScore(): String {

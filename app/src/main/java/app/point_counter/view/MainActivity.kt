@@ -15,49 +15,81 @@ import app.point_counter.model.Sport
 import app.point_counter.viewmodel.ScoreViewModel
 import android.widget.ImageButton
 import android.content.Intent
+import android.view.MotionEvent
+import android.view.View
+import android.view.animation.AnimationUtils
+import android.view.animation.OvershootInterpolator
 import app.point_counter.view.ScoreboardActivity
 
 open class MainActivity : AppCompatActivity() {
-
     val scoreManager = ScoreViewModel()  // ahora es solo un objeto normal
 
-    @SuppressLint("MissingInflatedId")
+    private lateinit var myButton: ImageButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-
-        //Sets the layout
         setContentView(R.layout.activity_main)
 
-        //Find the button at activity_main.xml
-        val button = findViewById<Button>(R.id.myButton)
-        val ImageButton = findViewById<ImageButton>(R.id.my_image_button)
+        myButton = findViewById(R.id.my_image_button)
 
-        button.setOnClickListener {
+        setupHoverEffect()
+        setupClickAction()
+    }
+
+    private fun setupHoverEffect() {
+        myButton.setOnHoverListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_HOVER_ENTER -> animateScale(v, 1.0f, 1.15f)
+                MotionEvent.ACTION_HOVER_EXIT -> animateScale(v, 1.15f, 1.0f)
+            }
+            false
+        }
+    }
+
+    private fun setupClickAction() {
+        myButton.setOnClickListener { v ->
+            // Animación de rebote al hacer click
+            animateClickBounce(v)
+
+            // Cambiar deporte y navegar
             scoreManager.setSport(PingPong())
-            Toast.makeText(this, "¡Juego iniciado!", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, ScoreboardActivity::class.java).apply {
+                putExtra("sportType", "pingpong")
+            })
         }
+    }
 
-        ImageButton.setOnClickListener {
-            scoreManager.setSport(PingPong())
-            val intent = Intent(this, ScoreboardActivity::class.java)
-            intent.putExtra("sportType", "pingpong")//Its like passing the class PingPong() but with a string
-            startActivity(intent)
-        }
-        /*
-        ImageButton.setOnClickListener {
-            scoreManager.setSport(Tenis())
-            val intent = Intent(this, ScoreboardActivity::class.java)
-            intent.putExtra("sportType", "tenis")
-            startActivity(intent)
-        }
-        ImageButton.setOnClickListener {
-            scoreManager.setSport(Padel())
-            val intent = Intent(this, ScoreboardActivity::class.java)
-            intent.putExtra("sportType", "padel")
-            startActivity(intent)
-        }
+    // Animación fluida de escala
+    private fun animateScale(view: View, from: Float, to: Float) {
+        view.animate()
+            .scaleX(to)
+            .scaleY(to)
+            .setDuration(150)
+            .setInterpolator(OvershootInterpolator()) // efecto “spring”
+            .start()
+    }
 
-         */
+    // Animación de rebote cuando clicas
+    private fun animateClickBounce(view: View) {
+        view.animate()
+            .scaleX(0.9f)
+            .scaleY(0.9f)
+            .setDuration(80)
+            .withEndAction {
+                view.animate()
+                    .scaleX(1.1f)
+                    .scaleY(1.1f)
+                    .setDuration(120)
+                    .setInterpolator(OvershootInterpolator())
+                    .withEndAction {
+                        view.animate()
+                            .scaleX(1.0f)
+                            .scaleY(1.0f)
+                            .setDuration(100)
+                            .start()
+                    }
+                    .start()
+            }
+            .start()
     }
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Estado presionado -->
+    <item android:state_pressed="true">
+        <bitmap android:src="@mipmap/pingpongpixel"/>
+    </item>
+
+    <!-- Estado hover -->
+    <item android:state_hovered="true">
+        <bitmap android:src="@mipmap/pingpongpixel"/>
+    </item>
+
+    <!-- Estado normal -->
+    <item>
+        <bitmap android:src="@mipmap/pingpongpixelblackwhite"/>
+    </item>
+</selector>

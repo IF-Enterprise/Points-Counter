@@ -35,22 +35,22 @@ class ScoreboardActivity : MainActivity() {
 
         // Lógica para sumar y restar puntos
         redPlus.setOnClickListener {
-            scoreManager.addPointToPlayer(1).toString()
+            scoreManager.addPointToPlayer(1)
             redScore.text=scoreManager.getScorePlayer(1)
         }
 
         redMinus.setOnClickListener {
-            scoreManager.substractPointToPlayer(1).toString()
+            scoreManager.substractPointToPlayer(1)
             redScore.text=scoreManager.getScorePlayer(1)
         }
 
         bluePlus.setOnClickListener {
-            scoreManager.addPointToPlayer(2).toString()
+            scoreManager.addPointToPlayer(2)
             blueScore.text = scoreManager.getScorePlayer(2)
         }
 
         blueMinus.setOnClickListener {
-            scoreManager.substractPointToPlayer(2).toString()
+            scoreManager.substractPointToPlayer(2)
             blueScore.text = scoreManager.getScorePlayer(2)
         }
     }
