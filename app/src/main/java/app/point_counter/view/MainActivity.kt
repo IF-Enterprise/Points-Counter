@@ -1,5 +1,6 @@
 package app.point_counter.view
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Button
@@ -15,19 +16,23 @@ import app.point_counter.model.Sport
 import app.point_counter.viewmodel.ScoreViewModel
 import android.widget.ImageButton
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.media.MediaPlayer
+import android.speech.RecognitionListener
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.OvershootInterpolator
+import androidx.core.app.ActivityCompat
 import app.point_counter.view.ScoreboardActivity
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 
 open class MainActivity : AppCompatActivity() {
     val scoreManager = ScoreViewModel()  // ahora es solo un objeto normal
-
     private lateinit var myButton: ImageButton
 
-    private lateinit var mediaPlayer: MediaPlayer
+    private lateinit var mediaPlayer: MediaPlayer//Music
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +49,7 @@ open class MainActivity : AppCompatActivity() {
         mediaPlayer.start()
     }
 
+    //-----------------------------------------BUTTONS-----------------------------------------
     private fun setupHoverEffect() {
         myButton.setOnHoverListener { v, event ->
             when (event.action) {
@@ -67,6 +73,7 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
+    //-----------------------------------------Animations-----------------------------------------
     // Animación fluida de escala
     private fun animateScale(view: View, from: Float, to: Float) {
         view.animate()
@@ -101,6 +108,7 @@ open class MainActivity : AppCompatActivity() {
             .start()
     }
 
+    //-----------------------------------------MUSIC-----------------------------------------
     override fun onPause() {
         super.onPause()
         mediaPlayer.pause()   // ⏸ Pausa cuando sales de la pantalla
