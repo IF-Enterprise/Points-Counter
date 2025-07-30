@@ -90,7 +90,7 @@ class PingPong: Sport() {
 
     //------------------------------------------nºsets to win--------------------------------------------
 
-    fun setToWin(setToWin: Int) {
+    override fun setToWin(setToWin: Int) {
         this.setToWin = setToWin
     }
 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- 🎨 Color de fondo negro con transparencia (80% opacidad aprox) -->
+    <solid android:color="#CC000000" />
+    <!-- CC = 80% de opacidad en hexadecimal -->
+
+    <!-- 🔲 Bordes redondeados -->
+    <corners android:radius="20dp" />
+
+    <!-- ✍️ Opcional: un borde más claro -->
+    <stroke
+        android:width="2dp"
+        android:color="#88FFFFFF" /> <!-- Blanco suave transparente -->
+</shape>

@@ -37,5 +37,9 @@ class ScoreViewModel:ViewModel() {//has to extend ViewModel to connect it to the
         sport.setScore(player1Pts, player2Pts)
     }
 
+    fun setToWin(setToWin: Int){
+        sport.setToWin(setToWin)
+    }
+
 
 }

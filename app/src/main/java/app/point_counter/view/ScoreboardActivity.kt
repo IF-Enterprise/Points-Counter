@@ -17,13 +17,15 @@ class ScoreboardActivity : MainActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sportType = intent.getStringExtra("sportType")
+        val setsToWin = intent.getStringExtra("sets")
         if (sportType == "pingpong") {
             scoreManager.setSport(PingPong())
+            //scoreManager.setToWin(setsToWintoInt())
         }
 
         setContentView(R.layout.activity_scoreboard)
 
-        // ✅ Referencias UI
+        // Referencias UI
         val redBox: LinearLayout = findViewById(R.id.red_box)
         val blueBox: LinearLayout = findViewById(R.id.blue_box)
 
@@ -35,7 +37,7 @@ class ScoreboardActivity : MainActivity() {
         val bluePlus: Button = findViewById(R.id.blue_plus)
         val blueMinus: Button = findViewById(R.id.blue_minus)
 
-        // ✅ Botones manuales
+        // Botones manuales
         redPlus.setOnClickListener {
             scoreManager.addPointToPlayer(1)
             updateScore()

@@ -18,4 +18,5 @@ abstract class Sport() {
     abstract fun getSport(): String
     abstract fun getScorePlayer(player: Int): String
 
+    abstract fun setToWin(setToWin: Int)
 }

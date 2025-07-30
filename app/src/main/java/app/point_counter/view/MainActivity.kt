@@ -1,32 +1,18 @@
 package app.point_counter.view
 
-import android.Manifest
-import android.annotation.SuppressLint
+import SettingsDialog
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import app.point_counter.R
 import app.point_counter.model.PingPong
-import app.point_counter.model.Sport
 import app.point_counter.viewmodel.ScoreViewModel
 import android.widget.ImageButton
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.media.MediaPlayer
-import android.speech.RecognitionListener
 import android.view.MotionEvent
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.view.animation.OvershootInterpolator
-import androidx.core.app.ActivityCompat
-import app.point_counter.view.ScoreboardActivity
-import android.speech.RecognizerIntent
-import android.speech.SpeechRecognizer
 import android.view.GestureDetector
 import android.view.GestureDetector.SimpleOnGestureListener
 import kotlin.math.abs
@@ -117,9 +103,10 @@ open class MainActivity : AppCompatActivity() {
 
             // Cambiar deporte y navegar
             scoreManager.setSport(PingPong())
-            startActivity(Intent(this, ScoreboardActivity::class.java).apply {
-                putExtra("sportType", "pingpong")
-            })
+
+            //Shows pop up of the SettingsDialog
+            val settingsDialog = SettingsDialog.newInstance("pingpong")
+            settingsDialog.show(supportFragmentManager, "SettingsDialog")
         }
     }
 
