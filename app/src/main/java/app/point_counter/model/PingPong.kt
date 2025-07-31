@@ -56,11 +56,11 @@ class PingPong: Sport() {
         return "$setPlayer1 - $setPlayer2"
     }
 
-    override fun getSetsPlayer(player: Int): String {
+    override fun getSetsPlayer(player: Int): Int {
         return if (player == 1){
-            setPlayer1.toString()
+            setPlayer1
         } else{
-            setPlayer2.toString()
+            setPlayer2
         }
     }
     //--------------------------------------------Score--------------------------------------------
@@ -98,8 +98,8 @@ class PingPong: Sport() {
         return setToWin
     }
 
-    fun checkWin(currentSets: Int): Boolean {
-        if (currentSets == setToWin) {
+    override fun checkWin(): Boolean {
+        if (getSetToWin() == setPlayer1 || getSetToWin() == setPlayer2) {
             return true
         } else {
             return false

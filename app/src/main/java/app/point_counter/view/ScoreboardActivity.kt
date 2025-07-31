@@ -25,10 +25,6 @@ class ScoreboardActivity : MainActivity() {
 
         setContentView(R.layout.activity_scoreboard)
 
-        // Referencias UI
-        val redBox: LinearLayout = findViewById(R.id.red_box)
-        val blueBox: LinearLayout = findViewById(R.id.blue_box)
-
         redScore = findViewById(R.id.red_score)
         blueScore = findViewById(R.id.blue_score)
 
@@ -58,11 +54,15 @@ class ScoreboardActivity : MainActivity() {
             updateScore()
         }
 
+
+        /*
         // Inicializamos VoiceCommand
         voiceCommand = VoiceCommand(this) {
             commandCode -> handleVoiceCommand(commandCode)
         }
         voiceCommand.startListening()
+
+         */
     }
 
     private fun handleVoiceCommand(commandCode: Int) {
@@ -85,6 +85,17 @@ class ScoreboardActivity : MainActivity() {
     private fun updateScore() {
         redScore.text = scoreManager.getScorePlayer(1)
         blueScore.text = scoreManager.getScorePlayer(2)
+        //check if player wins
+        //then pop up dialog of win victory try again(show pop up settings) or select another game
+        if (scoreManager.checkWin()){
+            if (scoreManager.getSetsPlayer(1) > scoreManager.getSetsPlayer(2)){
+                val dialog = WinDialog.newInstance("red")
+                dialog.show(supportFragmentManager, "WinDialog")
+            } else{
+                val dialog = WinDialog.newInstance("blue")
+                dialog.show(supportFragmentManager, "WinDialog")
+            }
+        }
     }
 
     override fun onDestroy() {

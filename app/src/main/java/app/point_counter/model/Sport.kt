@@ -10,7 +10,7 @@ abstract class Sport() {
     abstract fun substractSetToPlayer(player: Int)
 
     abstract fun getSets(): String
-    abstract fun getSetsPlayer(player: Int): String
+    abstract fun getSetsPlayer(player: Int): Int
 
     abstract fun getScore(): String
     abstract fun resetScore()
@@ -19,4 +19,5 @@ abstract class Sport() {
     abstract fun getScorePlayer(player: Int): String
 
     abstract fun setToWin(setToWin: Int)
+    abstract fun checkWin(): Boolean
 }
