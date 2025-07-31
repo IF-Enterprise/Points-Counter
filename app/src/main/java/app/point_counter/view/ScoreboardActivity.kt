@@ -55,14 +55,13 @@ class ScoreboardActivity : MainActivity() {
         }
 
 
-        /*
         // Inicializamos VoiceCommand
         voiceCommand = VoiceCommand(this) {
             commandCode -> handleVoiceCommand(commandCode)
         }
         voiceCommand.startListening()
 
-         */
+
     }
 
     private fun handleVoiceCommand(commandCode: Int) {
@@ -87,14 +86,12 @@ class ScoreboardActivity : MainActivity() {
         blueScore.text = scoreManager.getScorePlayer(2)
         //check if player wins
         //then pop up dialog of win victory try again(show pop up settings) or select another game
-        if (scoreManager.checkWin()){
-            if (scoreManager.getSetsPlayer(1) > scoreManager.getSetsPlayer(2)){
-                val dialog = WinDialog.newInstance("red")
-                dialog.show(supportFragmentManager, "WinDialog")
-            } else{
-                val dialog = WinDialog.newInstance("blue")
-                dialog.show(supportFragmentManager, "WinDialog")
-            }
+        if (scoreManager.checkWin() == 1) {
+            val winDialog = WinDialog.newInstance("Player 1")
+            winDialog.show(supportFragmentManager, "WinDialog")
+        } else if (scoreManager.checkWin() == 2) {
+            val winDialog = WinDialog.newInstance("Player 2")
+            winDialog.show(supportFragmentManager, "WinDialog")
         }
     }
 

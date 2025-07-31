@@ -16,6 +16,7 @@ import android.view.animation.OvershootInterpolator
 import android.view.GestureDetector
 import android.view.GestureDetector.SimpleOnGestureListener
 import kotlin.math.abs
+
 open class MainActivity : AppCompatActivity() {
     val scoreManager = ScoreViewModel()  // ahora es solo un objeto normal
     private lateinit var myButton: ImageButton

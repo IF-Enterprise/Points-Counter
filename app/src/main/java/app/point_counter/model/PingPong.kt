@@ -28,9 +28,13 @@ class PingPong: Sport() {
 
     override fun substractPointToPlayer(player: Int) {
         if (player == 1){
-            player1Pts--
-        } else{
-            player2Pts--
+            if (player1Pts > 1) {
+                player1Pts--
+            }
+        } else {
+            if (player2Pts > 1) {
+                player2Pts--
+            }
         }
     }
 
@@ -46,9 +50,11 @@ class PingPong: Sport() {
 
     override fun substractSetToPlayer(player: Int) {
         if (player == 1){
-            setPlayer1--
+            if (setPlayer1 > 1)
+                setPlayer1--
         } else{
-            setPlayer2--
+            if (setPlayer1 > 1)
+                setPlayer2--
         }
     }
 
@@ -63,6 +69,7 @@ class PingPong: Sport() {
             setPlayer2
         }
     }
+
     //--------------------------------------------Score--------------------------------------------
     override fun resetScore() {
         player1Pts = 0
@@ -98,14 +105,16 @@ class PingPong: Sport() {
         return setToWin
     }
 
-    override fun checkWin(): Boolean {
-        if (getSetToWin() == setPlayer1 || getSetToWin() == setPlayer2) {
-            return true
+    // 0 - No one wins / 1 - P1 wins / 2 - P2 wins
+    override fun checkWin(): Int {
+        if (getSetToWin() == setPlayer1) {
+            return 1
+        } else if (getSetToWin() == setPlayer2) {
+            return 2
         } else {
-            return false
+            return 0
         }
     }
-
 }
 
 /*

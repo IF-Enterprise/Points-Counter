@@ -19,5 +19,5 @@ abstract class Sport() {
     abstract fun getScorePlayer(player: Int): String
 
     abstract fun setToWin(setToWin: Int)
-    abstract fun checkWin(): Boolean
+    abstract fun checkWin(): Int
 }

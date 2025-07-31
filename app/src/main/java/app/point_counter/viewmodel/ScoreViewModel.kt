@@ -2,6 +2,7 @@ package app.point_counter.viewmodel
 
 import app.point_counter.model.Sport
 import androidx.lifecycle.ViewModel
+
 class ScoreViewModel:ViewModel() {//has to extend ViewModel to connect it to the UI
     private lateinit var sport: Sport
 
@@ -41,7 +42,7 @@ class ScoreViewModel:ViewModel() {//has to extend ViewModel to connect it to the
         sport.setToWin(setToWin)
     }
 
-    fun checkWin(): Boolean {
+    fun checkWin(): Int {
         return sport.checkWin()
     }
     fun getSetsPlayer(player: Int): Int {
