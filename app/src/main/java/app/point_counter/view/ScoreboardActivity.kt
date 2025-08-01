@@ -61,6 +61,10 @@ open class ScoreboardActivity : MainActivity() {
         }
         voiceCommand.startListening()
 
+        supportFragmentManager.setFragmentResultListener("winDialogClosed", this) { _, _ ->
+            scoreManager.resetScore()
+            updateScore() // (opcional, para que el marcador se refresque inmediatamente)
+        }
 
     }
 

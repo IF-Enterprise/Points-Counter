@@ -12,11 +12,11 @@ class PingPong: Sport() {
         //If the player has 11 or more points with a difference of 2 wins the set and reset the score
         if (player1Pts >= 11 && player1Pts - player2Pts >= 2){
             addSetToPlayer(1)
-            resetScore()
+            resetAllPts()
         }
         if (player2Pts >= 11 && player2Pts - player1Pts >= 2){
             addSetToPlayer(2)
-            resetScore()
+            resetAllPts()
         }
     }
 
@@ -30,6 +30,10 @@ class PingPong: Sport() {
                 player2Pts--
             }
         }
+    }
+    fun resetAllPts(){
+        player1Pts = 0
+        player2Pts = 0
     }
 
     //--------------------------------------------Sets--------------------------------------------
@@ -68,6 +72,8 @@ class PingPong: Sport() {
     override fun resetScore() {
         player1Pts = 0
         player2Pts = 0
+        setPlayer1 = 0
+        setPlayer2 = 0
     }
 
     override fun setScore(player1Pts: Int,player2Pts: Int) {
