@@ -8,7 +8,7 @@ import app.point_counter.R
 import app.point_counter.model.PingPong
 import app.point_counter.model.VoiceCommand
 
-class ScoreboardActivity : MainActivity() {
+open class ScoreboardActivity : MainActivity() {
 
     private lateinit var voiceCommand: VoiceCommand
     private lateinit var redScore: TextView

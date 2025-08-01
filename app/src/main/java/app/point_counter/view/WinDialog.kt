@@ -10,7 +10,6 @@ import android.widget.*
 import android.content.Intent
 import app.point_counter.viewmodel.ScoreViewModel
 
-
 class WinDialog: DialogFragment() {
     companion object {
         fun newInstance(winner: String): WinDialog {
@@ -32,15 +31,14 @@ class WinDialog: DialogFragment() {
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
         val winner = arguments?.getString("winner")
-        //val scoreManager = arguments?.getSerializable("scoreManager") as ScoreViewModel
 
         val tvWinner = view.findViewById<TextView>(R.id.tvTituloAjustes)
         tvWinner.text = "VICTORY PLAYER $winner"
 
         val btnAgain = view.findViewById<Button>(R.id.btnAgain)
         btnAgain.setOnClickListener {
+            startActivity(Intent(requireContext(), ScoreboardActivity::class.java))
             dismiss() // Cierra el WinDialog
-            //scoreManager.resetScore()
         }
 
         val btnMenu = view.findViewById<Button>(R.id.btonMenu)
