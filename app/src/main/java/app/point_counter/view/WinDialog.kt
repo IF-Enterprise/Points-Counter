@@ -46,6 +46,7 @@ class WinDialog: DialogFragment() {
         val btnMenu = view.findViewById<Button>(R.id.btonMenu)
         btnMenu.setOnClickListener {
             startActivity(Intent(requireContext(), MainActivity::class.java))
+            dismiss()
         }
 
         return dialog

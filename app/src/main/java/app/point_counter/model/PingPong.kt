@@ -1,12 +1,6 @@
 package app.point_counter.model
 
 class PingPong: Sport() {
-    private var setToWin = 3
-    private var player1Pts = 0
-    private var player2Pts = 0
-
-    private var setPlayer1 = 0
-    private var setPlayer2 = 0
 
     //--------------------------------------------Pts--------------------------------------------
     override fun addPointToPlayer(player: Int) {
@@ -101,15 +95,11 @@ class PingPong: Sport() {
         this.setToWin = setToWin
     }
 
-    fun getSetToWin(): Int {
-        return setToWin
-    }
-
     // 0 - No one wins / 1 - P1 wins / 2 - P2 wins
     override fun checkWin(): Int {
-        if (getSetToWin() == setPlayer1) {
+        if (setToWin == setPlayer1) {
             return 1
-        } else if (getSetToWin() == setPlayer2) {
+        } else if (setToWin == setPlayer2) {
             return 2
         } else {
             return 0

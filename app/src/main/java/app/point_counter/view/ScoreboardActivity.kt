@@ -17,10 +17,10 @@ class ScoreboardActivity : MainActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sportType = intent.getStringExtra("sportType")
-        val setsToWin = intent.getStringExtra("sets")
+        val setsToWin = intent.getIntExtra("sets", 3)
         if (sportType == "pingpong") {
             scoreManager.setSport(PingPong())
-            //scoreManager.setToWin(setsToWintoInt())
+            scoreManager.setToWin(setsToWin)
         }
 
         setContentView(R.layout.activity_scoreboard)

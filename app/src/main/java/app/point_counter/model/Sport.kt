@@ -1,6 +1,13 @@
 package app.point_counter.model
 
 abstract class Sport() {
+    var setToWin = 3
+    var player1Pts = 0
+    var player2Pts = 0
+
+    var setPlayer1 = 0
+    var setPlayer2 = 0
+
     abstract fun addPointToPlayer(player: Int)
 
     abstract fun substractPointToPlayer(player: Int)
