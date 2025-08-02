@@ -1,116 +1,35 @@
 package app.point_counter.model
 
-class PingPong: Sport() {
+import Sport
 
-    //--------------------------------------------Pts--------------------------------------------
+class PingPong : Sport() {
+
     override fun addPointToPlayer(player: Int) {
-        if (player == 1){
-            player1Pts++
-        } else{
-            player2Pts++
+        score.addPts(player)
+
+        // Regla de ping pong: si un jugador tiene 11 y diferencia de 2 → gana el set
+        if (score.player1Pts >= 11 && score.player1Pts - score.player2Pts >= 2) {
+            score.addSet(1)
         }
-        //If the player has 11 or more points with a difference of 2 wins the set and reset the score
-        if (player1Pts >= 11 && player1Pts - player2Pts >= 2){
-            addSetToPlayer(1)
-            resetAllPts()
-        }
-        if (player2Pts >= 11 && player2Pts - player1Pts >= 2){
-            addSetToPlayer(2)
-            resetAllPts()
+        if (score.player2Pts >= 11 && score.player2Pts - score.player1Pts >= 2) {
+            score.addSet(2)
         }
     }
 
     override fun substractPointToPlayer(player: Int) {
-        if (player == 1){
-            if (player1Pts > 1) {
-                player1Pts--
-            }
-        } else {
-            if (player2Pts > 1) {
-                player2Pts--
-            }
-        }
-    }
-    fun resetAllPts(){
-        player1Pts = 0
-        player2Pts = 0
+        score.subPts(player)
     }
 
-    //--------------------------------------------Sets--------------------------------------------
-
-    override fun addSetToPlayer(player: Int) {
-        if (player == 1){
-            setPlayer1++
-        } else{
-            setPlayer2++
-        }
-    }
-
-    override fun substractSetToPlayer(player: Int) {
-        if (player == 1){
-            if (setPlayer1 > 1)
-                setPlayer1--
-        } else{
-            if (setPlayer1 > 1)
-                setPlayer2--
-        }
-    }
-
-    override fun getSets(): String {
-        return "$setPlayer1 - $setPlayer2"
-    }
-
-    override fun getSetsPlayer(player: Int): Int {
-        return if (player == 1){
-            setPlayer1
-        } else{
-            setPlayer2
-        }
-    }
-
-    //--------------------------------------------Score--------------------------------------------
-    override fun resetScore() {
-        player1Pts = 0
-        player2Pts = 0
-        setPlayer1 = 0
-        setPlayer2 = 0
-    }
-
-    override fun setScore(player1Pts: Int,player2Pts: Int) {
-        this.player1Pts=player1Pts
-        this.player2Pts=player2Pts
-    }
-
-    override fun getScore(): String {
-        return "$player1Pts - $player2Pts"
-    }
-
-    override fun getScorePlayer(player: Int): String {
-        return if (player == 1){
-            "$player1Pts set $setPlayer1"
-        } else{
-            "$player2Pts set $setPlayer2"
+    override fun checkWin(): Int {
+        //if the result its 1 player 1 wins if its 2 player 2 wins else no one wins
+        return when {
+            score.setPlayer1 == setToWin -> 1
+            score.setPlayer2 == setToWin -> 2
+            else -> 0
         }
     }
 
     override fun getSport(): String = "Ping Pong"
-
-    //------------------------------------------nºsets to win--------------------------------------------
-
-    override fun setToWin(setToWin: Int) {
-        this.setToWin = setToWin
-    }
-
-    // 0 - No one wins / 1 - P1 wins / 2 - P2 wins
-    override fun checkWin(): Int {
-        if (setToWin == setPlayer1) {
-            return 1
-        } else if (setToWin == setPlayer2) {
-            return 2
-        } else {
-            return 0
-        }
-    }
 }
 
 /*

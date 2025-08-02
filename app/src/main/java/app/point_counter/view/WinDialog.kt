@@ -10,7 +10,7 @@ import app.point_counter.R
 import android.widget.*
 import android.content.Intent
 import androidx.core.os.bundleOf
-import app.point_counter.viewmodel.ScoreViewModel
+import app.point_counter.view.MainActivity
 
 class WinDialog: DialogFragment() {
     companion object {

@@ -1,53 +1,29 @@
-package app.point_counter.viewmodel
-
-import app.point_counter.model.Sport
 import androidx.lifecycle.ViewModel
 
-class ScoreViewModel:ViewModel() {//has to extend ViewModel to connect it to the UI
+class ScoreViewModel: ViewModel() {
     private lateinit var sport: Sport
 
     fun setSport(typeSport: Sport) {
         sport = typeSport
     }
 
-    fun getSport(): String {
-        return sport.getSport()
-    }
+    fun getSport(): String = sport.getSport()
 
+    fun addPointToPlayer(player: Int) = sport.addPointToPlayer(player)
 
-    fun addPointToPlayer(player: Int) {
-        sport.addPointToPlayer(player)
-    }
-    fun substractPointToPlayer(player: Int) {
-        sport.substractPointToPlayer(player)
-    }
+    fun substractPointToPlayer(player: Int) = sport.substractPointToPlayer(player)
 
-    fun getScore(): String {
-        return sport.getScore()
-    }
+    fun getScore(): String = sport.getScore()
 
-    fun getScorePlayer(player: Int): String {
-        return sport.getScorePlayer(player)
-    }
+    fun getScorePlayer(player: Int): String = sport.getScorePlayer(player)
 
-    fun resetScore() {
-        sport.resetScore()
-    }
+    fun resetScore() = sport.resetScore()
 
-    fun setScore(player1Pts: Int, player2Pts: Int) {
-        sport.setScore(player1Pts, player2Pts)
-    }
+    fun setScore(player1Pts: Int, player2Pts: Int) = sport.setScore(player1Pts, player2Pts)
 
-    fun setToWin(setToWin: Int){
-        sport.setToWin(setToWin)
-    }
+    fun setToWin(setToWin: Int) = sport.setToWin(setToWin)
 
-    fun checkWin(): Int {
-        return sport.checkWin()
-    }
-    fun getSetsPlayer(player: Int): Int {
-        return sport.getSetsPlayer(player)
-    }
+    fun checkWin(): Int = sport.checkWin()
 
-
+    fun getSetsPlayer(player: Int): Int = sport.getSetsPlayer(player)
 }

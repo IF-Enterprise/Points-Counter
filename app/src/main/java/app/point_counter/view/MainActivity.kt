@@ -1,12 +1,12 @@
 package app.point_counter.view
 
+import ScoreViewModel
 import SettingsDialog
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import app.point_counter.R
 import app.point_counter.model.PingPong
-import app.point_counter.viewmodel.ScoreViewModel
 import android.widget.ImageButton
 import android.content.Intent
 import android.media.MediaPlayer

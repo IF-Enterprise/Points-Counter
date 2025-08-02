@@ -1,0 +1,40 @@
+📌 Sports
+Crear las clases Tenis, Pádel y Fútbol.
+
+📌 ScoreboardActivity
+Rediseñar el layout para que los sets aparezcan en una zona diferente a la de los puntos.
+
+Implementar un reloj de tiempo (cronómetro) para, en el futuro, medir el tiempo de saque de cada jugador.
+
+📌 MainActivity
+Detener la música al cambiar de actividad cuando se clicke un ImageButton.
+
+Añadir los botones con imágenes de pádel, tenis, fútbol, etc. (aunque de momento no sean cliqueables).
+
+Hacer que los botones sean scrollables horizontalmente.
+
+Establecer que los botones aparezcan en gris y al ser pulsados pasen a color.
+
+Buscar un efecto visual (por ejemplo, tintado o animación) para evitar tener que usar dos imágenes distintas (BN y color).
+
+📌 SettingsDialog
+Añadir más opciones:
+
+Número de sets.
+
+Puntos por set.
+
+Activar/desactivar audio (con pregunta de confirmación: “¿Activar audio siempre o solo esta vez?”).
+
+Botón para retomar una partida.
+
+Barra de volumen.
+
+Activar o desactivar tiempo límite por turno (para sacar).
+
+Orden de turnos de saque: natural (reglas básicas), aleatorio, o “uno sí, uno no”.
+
+Juegos por turno (para deportes como pádel y tenis).
+
+📌 Otros
+Pensar en dónde colocar los anuncios 📣 en la interfaz para que no resulten molestos pero sean visibles.
