@@ -86,16 +86,18 @@ open class ScoreboardActivity : MainActivity() {
     }
 
     private fun updateScore() {
-        redScore.text = scoreManager.getScorePlayer(1)
-        blueScore.text = scoreManager.getScorePlayer(2)
+        redScore.text = scoreManager.toStringPlayer(1)
+        blueScore.text = scoreManager.toStringPlayer(2)
         //check if player wins
         //then pop up dialog of win victory try again(show pop up settings) or select another game
         if (scoreManager.checkWin() == 1) {
             val winDialog = WinDialog.newInstance("Player 1")
             winDialog.show(supportFragmentManager, "WinDialog")
+            saveGameScore()
         } else if (scoreManager.checkWin() == 2) {
             val winDialog = WinDialog.newInstance("Player 2")
             winDialog.show(supportFragmentManager, "WinDialog")
+            saveGameScore()
         }
     }
 

@@ -15,7 +15,10 @@ import android.view.View
 import android.view.animation.OvershootInterpolator
 import android.view.GestureDetector
 import android.view.GestureDetector.SimpleOnGestureListener
+import android.widget.Button
+import app.point_counter.data.ScoreRepository
 import kotlin.math.abs
+import app.point_counter.model.Score
 
 open class MainActivity : AppCompatActivity() {
     val scoreManager = ScoreViewModel()  // ahora es solo un objeto normal
@@ -40,7 +43,25 @@ open class MainActivity : AppCompatActivity() {
         mediaPlayer.start()
 
         movementRightFinger()
+
+        buttonGames()
     }
+
+
+    fun saveGameScore() {
+        val score = Score(
+            player1Pts = scoreManager.getPtsPlayer(1),
+            player2Pts = scoreManager.getPtsPlayer(2),
+            setPlayer1 = scoreManager.getSetsPlayer(1),
+            setPlayer2 = scoreManager.getSetsPlayer(2),
+        )
+        print("saved at score: $score")
+
+        // ✅ Llamamos al repositorio para guardarlo en JSON
+        ScoreRepository.saveGame(this, score)
+        println("Game saved to JSON")
+    }
+
     private fun movementRightFinger() {
         // 👇 CONFIGURAMOS EL DETECTOR DE GESTOS
         gestureDetector = GestureDetector(this, object : SimpleOnGestureListener() {
@@ -111,6 +132,12 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun buttonGames(){
+        val buttonGames = findViewById<Button>(R.id.button_games)
+        buttonGames.setOnClickListener {
+            startActivity(Intent(this, GamesActivity::class.java))
+        }
+    }
     //-----------------------------------------Animations-----------------------------------------
     // Animación fluida de escala
     private fun animateScale(view: View, from: Float, to: Float) {

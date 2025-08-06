@@ -18,13 +18,14 @@ abstract class Sport {
         score.player2Pts = player2Pts
     }
 
-    open fun getScore(): String{
-        return score.getScore()
+    open fun getPtsPlayer(player: Int): Int {
+        return if (player == 1) score.player1Pts else score.player2Pts
     }
 
-    open fun getScorePlayer(player: Int): String{
-        return score.getScorePlayer(player)
+    open fun toStringPlayer(player : Int): String {
+        return score.toStringPlayer(player)
     }
+
 
     open fun getSetsPlayer(player: Int): Int {
         return if (player == 1) score.setPlayer1 else score.setPlayer2

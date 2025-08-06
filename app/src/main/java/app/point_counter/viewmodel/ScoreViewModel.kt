@@ -1,7 +1,10 @@
+import android.content.Context
 import androidx.lifecycle.ViewModel
-
+import app.point_counter.data.ScoreRepository
+import app.point_counter.model.Score
 class ScoreViewModel: ViewModel() {
     private lateinit var sport: Sport
+    private val games = mutableListOf<Score>()//We create a list of games
 
     fun setSport(typeSport: Sport) {
         sport = typeSport
@@ -13,9 +16,11 @@ class ScoreViewModel: ViewModel() {
 
     fun substractPointToPlayer(player: Int) = sport.substractPointToPlayer(player)
 
-    fun getScore(): String = sport.getScore()
+    fun getPtsPlayer(player: Int): Int = sport.getPtsPlayer(player)
 
-    fun getScorePlayer(player: Int): String = sport.getScorePlayer(player)
+    fun getSetsPlayer(player: Int): Int = sport.getSetsPlayer(player)
+
+    fun toStringPlayer(player: Int): String = sport.toStringPlayer(player)
 
     fun resetScore() = sport.resetScore()
 
@@ -25,5 +30,21 @@ class ScoreViewModel: ViewModel() {
 
     fun checkWin(): Int = sport.checkWin()
 
-    fun getSetsPlayer(player: Int): Int = sport.getSetsPlayer(player)
+    // --- Save and load games -----------------------
+
+    //Load all games
+    fun loadGames(context: Context) {
+        games.clear()
+        games.addAll(ScoreRepository.loadGames(context))
+    }
+
+    //Returns the list of games
+    fun getGames(): List<Score> = games
+
+    //Save a new game
+    fun saveGame(context: Context, score: Score) {
+        ScoreRepository.saveGame(context, score)
+        games.add(score) // actualizar memoria
+    }
 }
+

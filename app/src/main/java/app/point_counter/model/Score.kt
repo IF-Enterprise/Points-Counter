@@ -1,10 +1,11 @@
 package app.point_counter.model
-
-class Score {
-    var player1Pts = 0
-    var player2Pts = 0
-    var setPlayer1 = 0
-    var setPlayer2 = 0
+import kotlinx.serialization.Serializable
+@Serializable
+class Score(    var player1Pts: Int = 0,
+                var player2Pts: Int = 0,
+                var setPlayer1: Int = 0,
+                var setPlayer2: Int = 0
+    ) {
 
     fun addPts(player: Int, pts: Int = 1) {
         if (player == 1) player1Pts += pts else player2Pts += pts
@@ -37,11 +38,19 @@ class Score {
         setPlayer2 = 0
     }
 
-    fun getScore(): String = "$player1Pts - $player2Pts"
+    fun getSetsPlayer(player: Int): Int {
+        return if (player == 1) setPlayer1 else setPlayer2
+    }
 
-    fun getSets(): String = "$setPlayer1 - $setPlayer2"
+    fun getPtsPlayer(player: Int): Int {
+        return if (player == 1) player1Pts else player2Pts
+    }
 
-    fun getScorePlayer(player: Int): String {
-        return if (player == 1) "$player1Pts (sets: $setPlayer1)" else "$player2Pts (sets: $setPlayer2)"
+    fun toStringPlayer(player: Int): String {
+        if (player == 1){
+            return "Pts: $player1Pts Set: $setPlayer1"
+        }else{
+            return "Pts: $player2Pts Set: $setPlayer2"
+        }
     }
 }

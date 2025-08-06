@@ -26,4 +26,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.497" />
 
+    <Button
+        android:id="@+id/button_games"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prev Games"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="567dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
