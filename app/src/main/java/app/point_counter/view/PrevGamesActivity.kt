@@ -1,19 +1,18 @@
 package app.point_counter.view
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.TextView
 import app.point_counter.R
 import app.point_counter.model.Score
 
-class GamesActivity : MainActivity() {
+class PrevGamesActivity : MainActivity() {
 
     private lateinit var containerGames: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_games)
+        setContentView(R.layout.activity_prevgames)
 
         containerGames = findViewById(R.id.containerGames)
 
@@ -35,12 +34,20 @@ class GamesActivity : MainActivity() {
 
         tvTitulo.text = "Partida ${index + 1}"
         // Ajusta aquí la forma de obtener los sets y puntos desde Score
-        tvDetalle.text = game.toString()
+        tvDetalle.text = game.toStringPlayer(1)+" - "+game.toStringPlayer(2)
 
         // Opcional: añadir listener para clicks
         gameView.setOnClickListener {
-            // Aquí, por ejemplo, abrir detalles de la partida
+            scoreManager.setScore(game.player1Pts, game.player2Pts, game.setPlayer1, game.setPlayer2)
+            //startActivity(Intent(this, ScoreboardActivity::class.java))
         }
+
+        val btnEliminar = gameView.findViewById<TextView>(R.id.btnDeleteGame)
+        btnEliminar.setOnClickListener {
+            containerGames.removeView(gameView)
+            scoreManager.deleteGame(this, game)
+        }
+
 
         // Añadimos la vista al contenedor
         containerGames.addView(gameView)

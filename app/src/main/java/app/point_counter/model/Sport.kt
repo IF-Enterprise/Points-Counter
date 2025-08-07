@@ -13,9 +13,11 @@ abstract class Sport {
     // Commun methods for all sports
     open fun resetScore() = score.resetAll()
 
-    open fun setScore(player1Pts: Int, player2Pts: Int) {
+    open fun setScore(player1Pts: Int, player2Pts: Int, setPlayer1: Int, setPlayer2: Int) {
         score.player1Pts = player1Pts
         score.player2Pts = player2Pts
+        score.setPlayer1 = setPlayer1
+        score.setPlayer2 = setPlayer2
     }
 
     open fun getPtsPlayer(player: Int): Int {

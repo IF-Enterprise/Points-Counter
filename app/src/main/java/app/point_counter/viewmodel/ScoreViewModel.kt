@@ -24,7 +24,7 @@ class ScoreViewModel: ViewModel() {
 
     fun resetScore() = sport.resetScore()
 
-    fun setScore(player1Pts: Int, player2Pts: Int) = sport.setScore(player1Pts, player2Pts)
+    fun setScore(player1Pts: Int, player2Pts: Int, setPlayer1:Int, setPlayer2:Int) = sport.setScore(player1Pts, player2Pts,setPlayer1, setPlayer2)
 
     fun setToWin(setToWin: Int) = sport.setToWin(setToWin)
 
@@ -45,6 +45,10 @@ class ScoreViewModel: ViewModel() {
     fun saveGame(context: Context, score: Score) {
         ScoreRepository.saveGame(context, score)
         games.add(score) // actualizar memoria
+    }
+    fun deleteGame(context: Context, score: Score) {
+        ScoreRepository.deleteGame(context, score)
+        games.remove(score) // actualizar memoria
     }
 }
 

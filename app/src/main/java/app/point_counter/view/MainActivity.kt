@@ -99,10 +99,9 @@ open class MainActivity : AppCompatActivity() {
     private fun onSwipeRight() {
         Toast.makeText(this, "¡Deslizado hacia la derecha!", Toast.LENGTH_SHORT).show()
 
-        // 👉 Aquí decides qué hacer (ejemplo: abrir ScoreboardActivity)
         scoreManager.setSport(PingPong())
-        startActivity(Intent(this, ScoreboardActivity::class.java).apply {
-            putExtra("sportType", "pingpong")
+        startActivity(Intent(this, MainActivity::class.java).apply {
+            saveGameScore()
         })
     }
 
@@ -135,7 +134,7 @@ open class MainActivity : AppCompatActivity() {
     private fun buttonGames(){
         val buttonGames = findViewById<Button>(R.id.button_games)
         buttonGames.setOnClickListener {
-            startActivity(Intent(this, GamesActivity::class.java))
+            startActivity(Intent(this, PrevGamesActivity::class.java))
         }
     }
     //-----------------------------------------Animations-----------------------------------------

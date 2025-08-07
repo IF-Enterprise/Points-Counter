@@ -6,24 +6,42 @@
     android:padding="12dp"
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/tvTituloPartida"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:text="Partida #1"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvDetallePartida"
+        <TextView
+            android:id="@+id/tvTituloPartida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Partida #1"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/tvDetallePartida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sets: 0 - 0 | Puntos: 0 - 0"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnDeleteGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sets: 0 - 0 | Puntos: 0 - 0"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="14sp" />
+        android:text="✕"
+        android:textSize="12sp"
+        android:padding="4dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/btn_x"
+        android:contentDescription="Eliminar partida" />
 
 </LinearLayout>

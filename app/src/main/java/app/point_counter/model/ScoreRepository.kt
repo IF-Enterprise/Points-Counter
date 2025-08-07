@@ -66,4 +66,21 @@ object ScoreRepository {
             file.writeText("[]")
         }
     }
+
+    fun deleteGame(context: Context, score: Score) {
+        val games = loadGames(context).toMutableList()
+        games.remove(score) // Usa equals() de Score
+        saveAllGames(context, games)
+    }
+
+    fun saveAllGames(context: Context, games: List<Score>) {
+        try {
+            val file = File(context.filesDir, FILE_NAME)
+            file.writeText(Json.encodeToString(games))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
 }

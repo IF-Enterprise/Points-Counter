@@ -32,7 +32,7 @@
             android:exported="true"
             android:screenOrientation="landscape"/>
         <activity
-            android:name=".view.GamesActivity"
+            android:name=".view.PrevGamesActivity"
             android:exported="true"
             android:screenOrientation="landscape"/>
 
