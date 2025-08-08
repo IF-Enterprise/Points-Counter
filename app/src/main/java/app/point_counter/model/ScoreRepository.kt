@@ -8,7 +8,6 @@ import app.point_counter.model.Score
 import java.io.File
 
 object ScoreRepository {
-
     private const val FILE_NAME = "games.json"
 
     /**
@@ -81,6 +80,5 @@ object ScoreRepository {
             e.printStackTrace()
         }
     }
-
 
 }
