@@ -28,4 +28,13 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/btn_creativo_2" />
+
+    <Button
+        android:id="@+id/button_back_prevgames"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:background="@drawable/settings_background"
+        android:drawableStart="@drawable/ic_back"
+        />
 </LinearLayout>

@@ -1,5 +1,6 @@
 package app.point_counter.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -16,6 +17,21 @@ class PrevGamesActivity : MainActivity() {
 
         containerGames = findViewById(R.id.containerGames)
 
+        // Botón Clear Games
+        val btnClear = findViewById<TextView>(R.id.btnClearGames)
+        btnClear.setOnClickListener {
+            scoreManager.clearGames(this)
+            containerGames.removeAllViews()
+        }
+
+        // Botón Back
+        val btnBack = findViewById<TextView>(R.id.button_back_prevgames)
+        btnBack.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish() // Opcional, para cerrar esta actividad
+        }
+
+        // Cargar partidas
         scoreManager.loadGames(this)
         val games = scoreManager.getGames()
 
@@ -23,7 +39,6 @@ class PrevGamesActivity : MainActivity() {
             addGameView(game, index)
         }
     }
-
     private fun addGameView(game: Score, index: Int) {
         // Inflamos el layout personalizado
         val gameView = layoutInflater.inflate(R.layout.item_partida, containerGames, false)
@@ -47,13 +62,6 @@ class PrevGamesActivity : MainActivity() {
             scoreManager.deleteGame(this, game)
             containerGames.removeView(gameView)
         }
-
-        val btnClear = findViewById<TextView>(R.id.btnClearGames)
-        btnClear.setOnClickListener {
-            scoreManager.clearGames(this)
-            containerGames.removeAllViews()
-        }
-
 
         // Añadimos la vista al contenedor
         containerGames.addView(gameView)

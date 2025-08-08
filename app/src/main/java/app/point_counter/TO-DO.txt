@@ -21,7 +21,6 @@ Establecer que los botones aparezcan en gris y al ser pulsados pasen a color.
 
 Buscar un efecto visual (por ejemplo, tintado o animación) para evitar tener que usar dos imágenes distintas (BN y color).
 
-! -Añadir un boton para volver atras (Todas las activities)
 
 📌 SettingsDialog
 Añadir más opciones:

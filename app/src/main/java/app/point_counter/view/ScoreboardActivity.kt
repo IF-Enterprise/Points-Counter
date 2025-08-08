@@ -1,5 +1,6 @@
 package app.point_counter.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.LinearLayout
@@ -68,6 +69,11 @@ open class ScoreboardActivity : MainActivity() {
         }
 
          */
+
+        val btnBack = findViewById<TextView>(R.id.button_back_scoreboard)
+        btnBack.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
 
     }
 
