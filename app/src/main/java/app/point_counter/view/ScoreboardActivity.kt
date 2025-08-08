@@ -55,6 +55,7 @@ open class ScoreboardActivity : MainActivity() {
         }
 
 
+        /*
         // Inicializamos VoiceCommand
         voiceCommand = VoiceCommand(this) {
             commandCode -> handleVoiceCommand(commandCode)
@@ -65,6 +66,8 @@ open class ScoreboardActivity : MainActivity() {
             scoreManager.resetScore()
             updateScore() // (opcional, para que el marcador se refresque inmediatamente)
         }
+
+         */
 
     }
 

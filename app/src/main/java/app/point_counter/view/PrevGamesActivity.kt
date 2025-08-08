@@ -38,14 +38,20 @@ class PrevGamesActivity : MainActivity() {
 
         // Opcional: añadir listener para clicks
         gameView.setOnClickListener {
-            scoreManager.setScore(game.player1Pts, game.player2Pts, game.setPlayer1, game.setPlayer2)
+            //scoreManager.setScore(game.player1Pts, game.player2Pts, game.setPlayer1, game.setPlayer2)
             //startActivity(Intent(this, ScoreboardActivity::class.java))
         }
 
         val btnEliminar = gameView.findViewById<TextView>(R.id.btnDeleteGame)
         btnEliminar.setOnClickListener {
-            containerGames.removeView(gameView)
             scoreManager.deleteGame(this, game)
+            containerGames.removeView(gameView)
+        }
+
+        val btnClear = findViewById<TextView>(R.id.btnClearGames)
+        btnClear.setOnClickListener {
+            scoreManager.clearGames(this)
+            containerGames.removeAllViews()
         }
 
 

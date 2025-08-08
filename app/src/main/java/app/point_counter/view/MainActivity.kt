@@ -101,7 +101,7 @@ open class MainActivity : AppCompatActivity() {
 
         scoreManager.setSport(PingPong())
         startActivity(Intent(this, MainActivity::class.java).apply {
-            saveGameScore()
+            //saveGameScore() No beacuse if you acces by the prev games sliding right then is saving the game
         })
     }
 

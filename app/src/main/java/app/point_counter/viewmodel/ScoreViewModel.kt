@@ -46,6 +46,12 @@ class ScoreViewModel: ViewModel() {
         ScoreRepository.saveGame(context, score)
         games.add(score) // actualizar memoria
     }
+
+    fun clearGames(context: Context) {
+        ScoreRepository.clearGames(context)
+        games.clear()
+    }
+
     fun deleteGame(context: Context, score: Score) {
         ScoreRepository.deleteGame(context, score)
         games.remove(score) // actualizar memoria
