@@ -112,31 +112,47 @@ open class ScoreboardActivity : MainActivity() {
     private fun initializeVosk() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                // 1. Extraer modelo
+                // Extraer modelo con verificación mejorada
                 val modelPath = VoskHelper.extractModel(this@ScoreboardActivity, "vosk_en")
-                Log.d("VOSK", "Modelo extraído en: $modelPath")
+                Log.d("VOSK", "Model extracted to: $modelPath")
 
-                // 2. Inicializar modelo Vosk
-                model = Model(modelPath)
-                recognizer = Recognizer(model, 16000.0f)
+                // Verificar contenido del directorio (solo debug)
+                val modelDir = File(modelPath)
+                val files = modelDir.walk().toList()
+                Log.d("VOSK", "Model contents: ${files.joinToString("\n") { it.absolutePath }}")
+
+                // Inicializar modelo
+                model = Model(modelPath).also {
+                    if (it.pointer == null) throw IOException("Model initialization failed")
+                }
+
+                recognizer = Recognizer(model, 16000.0f).also {
+                    if (it.pointer == null) throw IOException("Recognizer initialization failed")
+                }
 
                 withContext(Dispatchers.Main) {
                     speechService = SpeechService(recognizer, 16000.0f)
                     speechService.startListening(recognitionListener)
                     Toast.makeText(
                         this@ScoreboardActivity,
-                        "Reconocimiento de voz activado",
+                        "Voice recognition enabled",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
+                    val errorMsg = when (e) {
+                        is IOException -> "Failed to load voice model: ${e.message}"
+                        else -> "Unexpected error: ${e.message}"
+                    }
+
                     Toast.makeText(
                         this@ScoreboardActivity,
-                        "Error al cargar modelo de voz: ${e.message}",
+                        errorMsg,
                         Toast.LENGTH_LONG
                     ).show()
-                    Log.e("VOSK", "Error al inicializar", e)
+
+                    Log.e("VOSK", "Full initialization error", e)
                 }
             }
         }
