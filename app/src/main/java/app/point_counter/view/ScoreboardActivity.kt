@@ -113,7 +113,7 @@ open class ScoreboardActivity : MainActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 // 1. Extraer modelo
-                val modelPath = VoskHelper.extractModel(this@ScoreboardActivity, "vosk-en")
+                val modelPath = VoskHelper.extractModel(this@ScoreboardActivity, "vosk_en")
                 Log.d("VOSK", "Modelo extraído en: $modelPath")
 
                 // 2. Inicializar modelo Vosk

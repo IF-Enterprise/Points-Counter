@@ -1,3 +1,6 @@
+import com.android.build.api.dsl.AaptOptions
+import com.android.build.api.dsl.AndroidResources
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -37,7 +40,7 @@ android {
         }
     }
 
-    aaptOptions {
+    fun AndroidResources.() {
         noCompress.addAll(listOf("mdl", "conf", "am", "mat", "mfcc", "raw", "txt"))
     }
 
