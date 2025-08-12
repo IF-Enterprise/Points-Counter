@@ -27,27 +27,42 @@ android {
             )
         }
     }
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false // Fixes 16KB alignment
+        }
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+
+    aaptOptions {
+        noCompress.addAll(listOf("mdl", "conf", "am", "mat", "mfcc", "raw", "txt"))
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
 }
 
 dependencies {
-
+    implementation("net.java.dev.jna:jna:5.13.0@aar")
+    implementation("com.alphacephei:vosk-android:0.3.47")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.games.activity)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    // ✅ Añadir esta línea para JSON serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 }

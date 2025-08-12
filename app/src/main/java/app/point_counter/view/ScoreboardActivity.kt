@@ -1,22 +1,75 @@
 package app.point_counter.view
 
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import app.point_counter.R
 import app.point_counter.model.PingPong
-import app.point_counter.model.VoiceCommand
+import com.yourpackage.utils.VoskHelper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.json.JSONObject
+import org.vosk.Model
+import org.vosk.Recognizer
+import org.vosk.android.SpeechService
+import org.vosk.android.RecognitionListener
+import java.io.File
+import java.io.IOException
 
 open class ScoreboardActivity : MainActivity() {
 
-    private lateinit var voiceCommand: VoiceCommand
+    private lateinit var model: Model
+    private lateinit var recognizer: Recognizer
+    private lateinit var speechService: SpeechService
     private lateinit var redScore: TextView
     private lateinit var blueScore: TextView
 
+    // Listener correctamente implementado para Vosk
+    private val recognitionListener = object : RecognitionListener {
+        override fun onResult(result: String) {
+            try {
+                val jsonResult = JSONObject(result)
+                val recognizedText = jsonResult.getString("text").toLowerCase()
+                handleVoiceCommand(recognizedText)
+            } catch (e: Exception) {
+                Log.e("VOSK", "Error processing voice result", e)
+            }
+        }
+
+        override fun onFinalResult(hypothesis: String?) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onPartialResult(partialResult: String) {
+            // Opcional: manejar resultados parciales
+        }
+
+        override fun onError(exception: Exception) {
+            runOnUiThread {
+                Toast.makeText(this@ScoreboardActivity,
+                    "Error en reconocimiento: ${exception.message}",
+                    Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        override fun onTimeout() {
+            runOnUiThread {
+                Toast.makeText(this@ScoreboardActivity,
+                    "Tiempo de espera agotado",
+                    Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Configuración inicial del juego
         val sportType = intent.getStringExtra("sportType")
         val setsToWin = intent.getIntExtra("sets", 3)
         if (sportType == "pingpong") {
@@ -26,70 +79,95 @@ open class ScoreboardActivity : MainActivity() {
 
         setContentView(R.layout.activity_scoreboard)
 
+        // Inicializar UI
         redScore = findViewById(R.id.red_score)
         blueScore = findViewById(R.id.blue_score)
 
-        val redPlus: Button = findViewById(R.id.red_plus)
-        val redMinus: Button = findViewById(R.id.red_minus)
-        val bluePlus: Button = findViewById(R.id.blue_plus)
-        val blueMinus: Button = findViewById(R.id.blue_minus)
+        // Configurar botones
+        setupButtons()
 
-        // Botones manuales
-        redPlus.setOnClickListener {
+        // Inicializar Vosk
+        initializeVosk()
+    }
+
+    private fun setupButtons() {
+        findViewById<Button>(R.id.red_plus).setOnClickListener {
             scoreManager.addPointToPlayer(1)
             updateScore()
         }
-
-        redMinus.setOnClickListener {
+        findViewById<Button>(R.id.red_minus).setOnClickListener {
             scoreManager.substractPointToPlayer(1)
             updateScore()
         }
-
-        bluePlus.setOnClickListener {
+        findViewById<Button>(R.id.blue_plus).setOnClickListener {
             scoreManager.addPointToPlayer(2)
             updateScore()
         }
-
-        blueMinus.setOnClickListener {
+        findViewById<Button>(R.id.blue_minus).setOnClickListener {
             scoreManager.substractPointToPlayer(2)
             updateScore()
         }
-
-
-        /*
-        // Inicializamos VoiceCommand
-        voiceCommand = VoiceCommand(this) {
-            commandCode -> handleVoiceCommand(commandCode)
-        }
-        voiceCommand.startListening()
-
-        supportFragmentManager.setFragmentResultListener("winDialogClosed", this) { _, _ ->
-            scoreManager.resetScore()
-            updateScore() // (opcional, para que el marcador se refresque inmediatamente)
-        }
-
-         */
-
-        val btnBack = findViewById<TextView>(R.id.button_back_scoreboard)
-        btnBack.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-        }
-
     }
 
-    private fun handleVoiceCommand(commandCode: Int) {
-        when (commandCode) {
-            8 -> { // ADD POINT
+    private fun initializeVosk() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                // 1. Extraer modelo
+                val modelPath = VoskHelper.extractModel(this@ScoreboardActivity, "vosk-en")
+                Log.d("VOSK", "Modelo extraído en: $modelPath")
+
+                // 2. Inicializar modelo Vosk
+                model = Model(modelPath)
+                recognizer = Recognizer(model, 16000.0f)
+
+                withContext(Dispatchers.Main) {
+                    speechService = SpeechService(recognizer, 16000.0f)
+                    speechService.startListening(recognitionListener)
+                    Toast.makeText(
+                        this@ScoreboardActivity,
+                        "Reconocimiento de voz activado",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@ScoreboardActivity,
+                        "Error al cargar modelo de voz: ${e.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    Log.e("VOSK", "Error al inicializar", e)
+                }
+            }
+        }
+    }
+
+    // ... (resto de los métodos permanecen igual)
+
+    private fun handleVoiceCommand(command: String) {
+        Log.d("VOSK", "Comando recibido: $command")
+
+        when {
+            command.contains("añadir") || command.contains("sumar") || command.contains("add") -> {
                 scoreManager.addPointToPlayer(1)
                 updateScore()
             }
-            9 -> { // SUBTRACT POINT
+            command.contains("quitar") || command.contains("restar") || command.contains("subtract") -> {
                 scoreManager.substractPointToPlayer(1)
                 updateScore()
             }
-            7 -> {
+            command.contains("reset") || command.contains("reiniciar") -> {
                 scoreManager.resetScore()
                 updateScore()
+            }
+            else -> {
+                runOnUiThread {
+                    Toast.makeText(
+                        this@ScoreboardActivity,
+                        "Comando no reconocido: $command",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
@@ -97,21 +175,34 @@ open class ScoreboardActivity : MainActivity() {
     private fun updateScore() {
         redScore.text = scoreManager.toStringPlayer(1)
         blueScore.text = scoreManager.toStringPlayer(2)
-        //check if player wins
-        //then pop up dialog of win victory try again(show pop up settings) or select another game
+
         if (scoreManager.checkWin() == 1) {
             val winDialog = WinDialog.newInstance("Player 1")
             winDialog.show(supportFragmentManager, "WinDialog")
             saveGameScore()
+            speechService.stop() // Detener reconocimiento al ganar
         } else if (scoreManager.checkWin() == 2) {
             val winDialog = WinDialog.newInstance("Player 2")
             winDialog.show(supportFragmentManager, "WinDialog")
             saveGameScore()
+            speechService.stop() // Detener reconocimiento al ganar
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        runCatching { speechService.stop() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        runCatching { speechService.startListening(recognitionListener as RecognitionListener?) }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        voiceCommand.stopListening() // ✅ Importante liberar recursos
+        runCatching { speechService.stop() }
+        runCatching { recognizer.close() }
+        runCatching { model.close() }
     }
 }

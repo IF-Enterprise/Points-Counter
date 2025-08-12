@@ -1,0 +1,9 @@
+!!!
+If you use Vosk (which is Apache 2.0), you can ship your Kotlin app on Google Play, sell it, and keep your source private.
+You just need to credit Vosk in your app’s license/credits section, something like:
+
+This app uses Vosk Speech Recognition (Apache License 2.0)
+Copyright 2020 Alpha Cephei Inc.
+https://alphacephei.com/vosk
+!!!
+
