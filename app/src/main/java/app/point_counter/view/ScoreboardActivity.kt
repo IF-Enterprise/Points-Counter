@@ -113,7 +113,7 @@ open class ScoreboardActivity : MainActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 // Extraer modelo con verificación mejorada
-                val modelPath = VoskHelper.extractModel(this@ScoreboardActivity, "vosk_en")
+                val modelPath = VoskHelper.extractModel(this@ScoreboardActivity, "vosk_es")
                 Log.d("VOSK", "Model extracted to: $modelPath")
 
                 // Verificar contenido del directorio (solo debug)

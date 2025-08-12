@@ -28,6 +28,7 @@ object VoskHelper {
 
             // Verificación de archivos requeridos
             val requiredFiles = listOf(
+                "am/final.mdl",
                 "conf/mfcc.conf",
                 "conf/model.conf",
                 "graph/HCLr.fst",
