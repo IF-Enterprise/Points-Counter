@@ -45,6 +45,7 @@ open class MainActivity : AppCompatActivity() {
         movementRightFinger()
 
         buttonGames()
+
     }
 
 

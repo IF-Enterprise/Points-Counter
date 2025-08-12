@@ -1,11 +1,15 @@
 package app.point_counter.view
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import app.point_counter.R
 import app.point_counter.model.PingPong
@@ -39,6 +43,7 @@ open class ScoreboardActivity : MainActivity() {
             } catch (e: Exception) {
                 Log.e("VOSK", "Error processing voice result", e)
             }
+
         }
 
         override fun onFinalResult(hypothesis: String?) {
@@ -69,6 +74,14 @@ open class ScoreboardActivity : MainActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 1)
+        } else {
+            initializeVosk()
+        }
+
+
         // Configuración inicial del juego
         val sportType = intent.getStringExtra("sportType")
         val setsToWin = intent.getIntExtra("sets", 3)
@@ -86,8 +99,6 @@ open class ScoreboardActivity : MainActivity() {
         // Configurar botones
         setupButtons()
 
-        // Inicializar Vosk
-        initializeVosk()
     }
 
     private fun setupButtons() {
@@ -106,6 +117,19 @@ open class ScoreboardActivity : MainActivity() {
         findViewById<Button>(R.id.blue_minus).setOnClickListener {
             scoreManager.substractPointToPlayer(2)
             updateScore()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            initializeVosk()
+        } else {
+            Toast.makeText(this, "Permiso de micrófono requerido", Toast.LENGTH_SHORT).show()
         }
     }
 
