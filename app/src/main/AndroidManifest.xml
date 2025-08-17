@@ -16,7 +16,7 @@
 
         <!-- ✅ ESTA ES LA PANTALLA PRINCIPAL -->
         <activity
-            android:name=".view.MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:screenOrientation="landscape">
             <intent-filter>
@@ -27,11 +27,11 @@
 
         <!-- ✅ ESTA SOLO SE ABRE CON INTENT -->
         <activity
-            android:name=".view.ScoreboardActivity"
+            android:name=".ui.ScoreboardActivity"
             android:exported="true"
             android:screenOrientation="landscape"/>
         <activity
-            android:name=".view.PrevGamesActivity"
+            android:name=".ui.PrevGamesActivity"
             android:exported="true"
             android:screenOrientation="landscape"/>
 

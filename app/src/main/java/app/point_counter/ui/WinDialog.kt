@@ -1,6 +1,5 @@
-package app.point_counter.view
+package app.point_counter.ui
 
-import SettingsDialog
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
@@ -10,7 +9,6 @@ import app.point_counter.R
 import android.widget.*
 import android.content.Intent
 import androidx.core.os.bundleOf
-import app.point_counter.view.MainActivity
 
 class WinDialog: DialogFragment() {
     companion object {

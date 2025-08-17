@@ -1,7 +1,6 @@
-package app.point_counter.view
+package app.point_counter.ui
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +11,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import app.point_counter.R
-import app.point_counter.model.PingPong
+import app.point_counter.data.PingPong
 import com.yourpackage.utils.VoskHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -107,7 +106,7 @@ open class ScoreboardActivity : MainActivity() {
             updateScore()
         }
         findViewById<Button>(R.id.red_minus).setOnClickListener {
-            scoreManager.substractPointToPlayer(1)
+            scoreManager.subPointToPlayer(1)
             updateScore()
         }
         findViewById<Button>(R.id.blue_plus).setOnClickListener {
@@ -115,7 +114,7 @@ open class ScoreboardActivity : MainActivity() {
             updateScore()
         }
         findViewById<Button>(R.id.blue_minus).setOnClickListener {
-            scoreManager.substractPointToPlayer(2)
+            scoreManager.subPointToPlayer(2)
             updateScore()
         }
     }
@@ -193,7 +192,7 @@ open class ScoreboardActivity : MainActivity() {
                 updateScore()
             }
             command.contains("quitar") || command.contains("restar") || command.contains("subtract") -> {
-                scoreManager.substractPointToPlayer(1)
+                scoreManager.subPointToPlayer(1)
                 updateScore()
             }
             command.contains("reset") || command.contains("reiniciar") -> {

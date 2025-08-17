@@ -1,4 +1,4 @@
-package app.point_counter.view
+package app.point_counter.ui
 
 import ScoreViewModel
 import SettingsDialog
@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import app.point_counter.R
-import app.point_counter.model.PingPong
+import app.point_counter.data.PingPong
 import android.widget.ImageButton
 import android.content.Intent
 import android.media.MediaPlayer
@@ -18,7 +18,7 @@ import android.view.GestureDetector.SimpleOnGestureListener
 import android.widget.Button
 import app.point_counter.data.ScoreRepository
 import kotlin.math.abs
-import app.point_counter.model.Score
+import app.point_counter.data.Score
 
 open class MainActivity : AppCompatActivity() {
     val scoreManager = ScoreViewModel()  // ahora es solo un objeto normal
@@ -54,7 +54,7 @@ open class MainActivity : AppCompatActivity() {
             player1Pts = scoreManager.getPtsPlayer(1),
             player2Pts = scoreManager.getPtsPlayer(2),
             setPlayer1 = scoreManager.getSetsPlayer(1),
-            setPlayer2 = scoreManager.getSetsPlayer(2),
+            player2Sets = scoreManager.getSetsPlayer(2),
         )
         print("saved at score: $score")
 

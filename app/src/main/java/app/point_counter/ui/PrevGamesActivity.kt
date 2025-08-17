@@ -1,11 +1,11 @@
-package app.point_counter.view
+package app.point_counter.ui
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.TextView
 import app.point_counter.R
-import app.point_counter.model.Score
+import app.point_counter.data.Score
 
 class PrevGamesActivity : MainActivity() {
 

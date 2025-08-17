@@ -2,9 +2,7 @@ package app.point_counter.data
 
 import android.content.Context
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import app.point_counter.model.Score
 import java.io.File
 
 object ScoreRepository {

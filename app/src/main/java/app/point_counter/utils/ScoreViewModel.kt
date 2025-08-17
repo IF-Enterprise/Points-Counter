@@ -1,45 +1,52 @@
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import app.point_counter.data.ScoreRepository
-import app.point_counter.model.Score
-class ScoreViewModel: ViewModel() {
-    private lateinit var sport: Sport
-    private val games = mutableListOf<Score>()//We create a list of games
+import app.point_counter.data.Score
 
+class ScoreViewModel: ViewModel() {
+    // Actual Sport
+    private lateinit var sport: Sport
+    // List of past games Scores
+    private val games = mutableListOf<Score>()
+
+    /* -------- SETTERS -------- */
     fun setSport(typeSport: Sport) {
         sport = typeSport
     }
 
+    fun setScore(player1Pts: Int, player2Pts: Int, setPlayer1:Int, setPlayer2:Int) {
+        sport.setScore(player1Pts, player2Pts,setPlayer1, setPlayer2)
+    }
+
+    fun setToWin(setToWin: Int) = sport.setToWin(setToWin)
+
+    /* -------- GETTERS -------- */
     fun getSport(): String = sport.getSport()
-
-    fun addPointToPlayer(player: Int) = sport.addPointToPlayer(player)
-
-    fun substractPointToPlayer(player: Int) = sport.substractPointToPlayer(player)
 
     fun getPtsPlayer(player: Int): Int = sport.getPtsPlayer(player)
 
     fun getSetsPlayer(player: Int): Int = sport.getSetsPlayer(player)
 
+    fun getGames(): List<Score> = games
+
+    /* -------- OTHER METHODS -------- */
+
+    fun addPointToPlayer(player: Int) = sport.addPointToPlayer(player)
+
+    fun subPointToPlayer(player: Int) = sport.substractPointToPlayer(player)
+
     fun toStringPlayer(player: Int): String = sport.toStringPlayer(player)
 
     fun resetScore() = sport.resetScore()
 
-    fun setScore(player1Pts: Int, player2Pts: Int, setPlayer1:Int, setPlayer2:Int) = sport.setScore(player1Pts, player2Pts,setPlayer1, setPlayer2)
-
-    fun setToWin(setToWin: Int) = sport.setToWin(setToWin)
-
     fun checkWin(): Int = sport.checkWin()
 
-    // --- Save and load games -----------------------
+    /* -------- GAMES MANAGER -------- */
 
-    //Load all games
     fun loadGames(context: Context) {
         games.clear()
         games.addAll(ScoreRepository.loadGames(context))
     }
-
-    //Returns the list of games
-    fun getGames(): List<Score> = games
 
     //Save a new game
     fun saveGame(context: Context, score: Score) {
@@ -57,4 +64,3 @@ class ScoreViewModel: ViewModel() {
         games.remove(score) // actualizar memoria
     }
 }
-

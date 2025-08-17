@@ -1,4 +1,4 @@
-package app.point_counter.model
+package app.point_counter.data
 
 import Sport
 
@@ -23,8 +23,8 @@ class PingPong : Sport() {
     override fun checkWin(): Int {
         //if the result its 1 player 1 wins if its 2 player 2 wins else no one wins
         return when {
-            score.setPlayer1 == setToWin -> 1
-            score.setPlayer2 == setToWin -> 2
+            score.player1Sets == setToWin -> 1
+            score.player2Sets == setToWin -> 2
             else -> 0
         }
     }

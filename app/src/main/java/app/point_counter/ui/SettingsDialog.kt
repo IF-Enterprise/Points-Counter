@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import app.point_counter.R
-import app.point_counter.view.ScoreboardActivity
+import app.point_counter.ui.ScoreboardActivity
 
 
 class SettingsDialog : DialogFragment() {

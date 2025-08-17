@@ -1,4 +1,4 @@
-package app.point_counter.model
+package app.point_counter.data
 
 import android.Manifest
 import android.app.Activity
@@ -10,14 +10,6 @@ import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.util.Log
 import androidx.core.app.ActivityCompat
-import android.content.Context
-import android.os.Handler
-import android.os.Looper
-import org.vosk.Model
-import org.vosk.Recognizer
-import org.vosk.android.SpeechService
-import org.vosk.android.StorageService
-import java.io.IOException
 
 class VoiceCommand(
     private val activity: Activity,
