@@ -5,8 +5,21 @@ import app.point_counter.data.Score
     Mother Class of all Sports, has basic function which are common with all the available sports.
 */
 abstract class Sport {
-    var setToWin = 3 // !!! Not all sports share that number
     val score = Score() // Calls the new class Score
+
+    abstract val rules: SportRules
+
+    // Rules data class
+    data class SportRules(
+        val setsToWin: Int,
+        val pointsPerGames: Int = 0,
+        val gamesPerSets: Int = 0,
+        val pointsPerSet: Int = 0,
+        val diff2Pts: Boolean = false,
+        val diff2Games: Boolean = false,
+        val diff2Sets: Boolean = false,
+        val hasTieBreak: Boolean = false,
+    )
 
     /* -------- SPORT SPECIFIC METHODS -------- */
 
