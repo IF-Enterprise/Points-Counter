@@ -2,9 +2,10 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import app.point_counter.data.ScoreRepository
 import app.point_counter.data.Score
+import app.point_counter.data.Sport
 
 class ScoreViewModel: ViewModel() {
-    // Actual Sport
+    // Actual app.point_counter.data.Sport
     private lateinit var sport: Sport
     // List of past games Scores
     private val games = mutableListOf<Score>()

@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import app.point_counter.R
-import app.point_counter.data.PingPong
+import app.point_counter.data.sports.PingPong
 import android.widget.ImageButton
 import android.content.Intent
 import android.media.MediaPlayer
@@ -53,7 +53,7 @@ open class MainActivity : AppCompatActivity() {
         val score = Score(
             player1Pts = scoreManager.getPtsPlayer(1),
             player2Pts = scoreManager.getPtsPlayer(2),
-            setPlayer1 = scoreManager.getSetsPlayer(1),
+            //setPlayer1 = scoreManager.getSetsPlayer(1),
             player2Sets = scoreManager.getSetsPlayer(2),
         )
         print("saved at score: $score")
@@ -124,7 +124,6 @@ open class MainActivity : AppCompatActivity() {
             animateClickBounce(v)
 
             // Cambiar deporte y navegar
-            scoreManager.setSport(PingPong())
 
             //Shows pop up of the SettingsDialog
             val settingsDialog = SettingsDialog.newInstance("pingpong")

@@ -1,10 +1,10 @@
-package app.point_counter.data
+package app.point_counter.data.sports
 
-import Sport
+import app.point_counter.data.Sport
 
 
 /*
-* Class Tennis child from Sport
+* Class Tennis child from app.point_counter.data.Sport
 *
 * Points:   [00/15/30/40/AV] // AV = 50
 * Games:
@@ -30,7 +30,7 @@ class Tennis : Sport() {
                     else
                         score.addPts(1, 10); // AV to Plr 1
                 50 ->
-                    if (score.player1Games == )
+                    score.addGames(1)
             }
         } else if (player == 2) {
             when (score.player2Pts) {
@@ -55,6 +55,9 @@ class Tennis : Sport() {
     }
 
     override fun getSport(): String = "Tennis"
+    override fun setToWin(toWin: Int): Any {
+        TODO("Not yet implemented")
+    }
 }
 
 /*

@@ -1,5 +1,5 @@
 package app.point_counter.model
 
-class Padel: Sport("Padel") {
+class Padel: app.point_counter.data.Sport("Padel") {
 
 }

@@ -1,8 +1,15 @@
-package app.point_counter.data
+package app.point_counter.data.sports
 
-import Sport
+import app.point_counter.data.Sport
 
-class PingPong : Sport() {
+class PingPong() : Sport() {
+    override val rules: SportRules = SportRules(
+        setsToWin = 3, // 3 | 5 Grand Slams
+        pointsPerSet = 6,
+        hasTieBreak = true,
+        tieBreakPoints = 7,
+        maxSets = 3
+    )
 
     override fun addPointToPlayer(player: Int) {
         score.addPts(player)
@@ -23,13 +30,17 @@ class PingPong : Sport() {
     override fun checkWin(): Int {
         //if the result its 1 player 1 wins if its 2 player 2 wins else no one wins
         return when {
-            score.player1Sets == setToWin -> 1
-            score.player2Sets == setToWin -> 2
+            score.player1Sets == rules.setsToWin -> 1
+            score.player2Sets == rules.setsToWin -> 2
             else -> 0
         }
     }
 
     override fun getSport(): String = "Ping Pong"
+    
+    override fun setToWin(toWin: Int): Any {
+        TODO("Not yet implemented")
+    }
 }
 
 /*

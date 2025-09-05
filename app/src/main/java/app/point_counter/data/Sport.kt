@@ -1,4 +1,4 @@
-import app.point_counter.data.Score
+package app.point_counter.data
 
 /*
     Sport.kt
@@ -7,7 +7,7 @@ import app.point_counter.data.Score
 abstract class Sport {
     val score = Score() // Calls the new class Score
 
-    abstract val rules: SportRules
+    abstract val rules: SportRules?
 
     // Rules data class
     data class SportRules(
@@ -19,6 +19,8 @@ abstract class Sport {
         val diff2Games: Boolean = false,
         val diff2Sets: Boolean = false,
         val hasTieBreak: Boolean = false,
+        val tieBreakPoints: Int,
+        val maxSets: Int,
     )
 
     /* -------- SPORT SPECIFIC METHODS -------- */
@@ -51,14 +53,11 @@ abstract class Sport {
         score.player2Sets = player2Sets
     }
 
-    fun setToWin(setToWin: Int) {
-        this.setToWin = setToWin
-    }
-
     /* -------- SCORE FUNCTIONS -------- */
     open fun toStringPlayer(player : Int): String {
         return score.toStringPlayer(player)
     }
 
     open fun resetScore() = score.resetAll()
+    abstract fun setToWin(toWin: Int): Any
 }
