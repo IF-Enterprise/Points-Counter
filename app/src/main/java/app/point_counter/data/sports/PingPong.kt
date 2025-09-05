@@ -1,5 +1,6 @@
 package app.point_counter.data.sports
 
+import app.point_counter.data.Score
 import app.point_counter.data.Sport
 
 class PingPong() : Sport() {
@@ -37,9 +38,10 @@ class PingPong() : Sport() {
     }
 
     override fun getSport(): String = "Ping Pong"
-    
-    override fun setToWin(toWin: Int): Any {
-        TODO("Not yet implemented")
+
+    override fun setToWin(toWin: Int) {
+        rules.setsToWin = toWin
+        score.resetAll()
     }
 }
 

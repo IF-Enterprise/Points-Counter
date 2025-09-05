@@ -106,3 +106,14 @@ Pensar en dónde colocar los anuncios 📣 en la interfaz para que no resulten m
 
 Solo si lo ponemos en ping pong o otros online
   Modo torneo, Arbol de partidos generado con vista grafica (pts, oponentes, etc...)
+
+
+
+
+
+
+
+
+
+
+EXTRA EXTRA : reconocimiento de voz para no tener que especificar el jugador que esta obteniendo el punto

@@ -22,7 +22,7 @@ import app.point_counter.data.Score
 
 open class MainActivity : AppCompatActivity() {
     val scoreManager = ScoreViewModel()  // ahora es solo un objeto normal
-    private lateinit var myButton: ImageButton
+    private lateinit var imBtnPingPong: ImageButton
 
     private lateinit var mediaPlayer: MediaPlayer//Music
 
@@ -32,8 +32,8 @@ open class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        myButton = findViewById(R.id.my_image_button)
-
+        //Image button that initializes the game (effects at clicking)
+        imBtnPingPong = findViewById(R.id.my_image_button)
         setupHoverEffect()
         setupClickAction()
 
@@ -53,7 +53,7 @@ open class MainActivity : AppCompatActivity() {
         val score = Score(
             player1Pts = scoreManager.getPtsPlayer(1),
             player2Pts = scoreManager.getPtsPlayer(2),
-            //setPlayer1 = scoreManager.getSetsPlayer(1),
+            player1Sets = scoreManager.getSetsPlayer(1),
             player2Sets = scoreManager.getSetsPlayer(2),
         )
         print("saved at score: $score")
@@ -109,7 +109,7 @@ open class MainActivity : AppCompatActivity() {
 
     //-----------------------------------------BUTTONS-----------------------------------------
     private fun setupHoverEffect() {
-        myButton.setOnHoverListener { v, event ->
+        imBtnPingPong.setOnHoverListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_HOVER_ENTER -> animateScale(v, 1.0f, 1.15f)
                 MotionEvent.ACTION_HOVER_EXIT -> animateScale(v, 1.15f, 1.0f)
@@ -119,7 +119,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun setupClickAction() {
-        myButton.setOnClickListener { v ->
+        imBtnPingPong.setOnClickListener { v ->
             // Animación de rebote al hacer click
             animateClickBounce(v)
 

@@ -2,6 +2,7 @@ package app.point_counter.ui
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -32,40 +33,52 @@ open class ScoreboardActivity : MainActivity() {
     private lateinit var redScore: TextView
     private lateinit var blueScore: TextView
 
+    companion object {
+        private const val RECORD_AUDIO_REQUEST_CODE = 1
+    }
+
+    // ✅ Nueva función para comprobar permisos
+    private fun checkAudioPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.RECORD_AUDIO),
+                RECORD_AUDIO_REQUEST_CODE
+            )
+        } else {
+            initializeVosk()
+        }
+    }
+
     // Listener correctamente implementado para Vosk
     private val recognitionListener = object : RecognitionListener {
         override fun onResult(result: String) {
             try {
                 val jsonResult = JSONObject(result)
-                val recognizedText = jsonResult.getString("text").toLowerCase()
+                val recognizedText = jsonResult.getString("text").lowercase()
                 handleVoiceCommand(recognizedText)
             } catch (e: Exception) {
                 Log.e("VOSK", "Error processing voice result", e)
             }
-
         }
 
         override fun onFinalResult(hypothesis: String?) {
-            TODO("Not yet implemented")
+            Log.d("Vosk", "Resultado final: $hypothesis")
+            Toast.makeText(this@ScoreboardActivity, "Reconocido: $hypothesis", Toast.LENGTH_SHORT).show()
         }
 
-        override fun onPartialResult(partialResult: String) {
-            // Opcional: manejar resultados parciales
-        }
-
+        override fun onPartialResult(partialResult: String) { }
         override fun onError(exception: Exception) {
             runOnUiThread {
-                Toast.makeText(this@ScoreboardActivity,
-                    "Error en reconocimiento: ${exception.message}",
-                    Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ScoreboardActivity, "Error en reconocimiento: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
         }
 
         override fun onTimeout() {
             runOnUiThread {
-                Toast.makeText(this@ScoreboardActivity,
-                    "Tiempo de espera agotado",
-                    Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ScoreboardActivity, "Tiempo de espera agotado", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -73,13 +86,8 @@ open class ScoreboardActivity : MainActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-            != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 1)
-        } else {
-            initializeVosk()
-        }
-
+        // ✅ Usamos la función en vez de código duplicado
+        checkAudioPermission()
 
         // Configuración inicial del juego
         val sportType = intent.getStringExtra("sportType")
@@ -97,7 +105,6 @@ open class ScoreboardActivity : MainActivity() {
 
         // Configurar botones
         setupButtons()
-
     }
 
     private fun setupButtons() {
@@ -125,7 +132,10 @@ open class ScoreboardActivity : MainActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 1 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == RECORD_AUDIO_REQUEST_CODE &&
+            grantResults.isNotEmpty() &&
+            grantResults[0] == PackageManager.PERMISSION_GRANTED
+        ) {
             initializeVosk()
         } else {
             Toast.makeText(this, "Permiso de micrófono requerido", Toast.LENGTH_SHORT).show()
@@ -135,14 +145,9 @@ open class ScoreboardActivity : MainActivity() {
     private fun initializeVosk() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                // Extraer modelo con verificación mejorada
+                // Extraer modelo (ya con tu VoskHelper)
                 val modelPath = VoskHelper.extractModel(this@ScoreboardActivity, "vosk_es")
                 Log.d("VOSK", "Model extracted to: $modelPath")
-
-                // Verificar contenido del directorio (solo debug)
-                val modelDir = File(modelPath)
-                val files = modelDir.walk().toList()
-                Log.d("VOSK", "Model contents: ${files.joinToString("\n") { it.absolutePath }}")
 
                 // Inicializar modelo
                 model = Model(modelPath).also {
@@ -154,7 +159,10 @@ open class ScoreboardActivity : MainActivity() {
                 }
 
                 withContext(Dispatchers.Main) {
+                    // ✅ Usar el constructor simple que solo necesita Recognizer y sampleRate
                     speechService = SpeechService(recognizer, 16000.0f)
+
+                    // Iniciar reconocimiento
                     speechService.startListening(recognitionListener)
                     Toast.makeText(
                         this@ScoreboardActivity,
@@ -162,30 +170,23 @@ open class ScoreboardActivity : MainActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     val errorMsg = when (e) {
                         is IOException -> "Failed to load voice model: ${e.message}"
                         else -> "Unexpected error: ${e.message}"
                     }
-
-                    Toast.makeText(
-                        this@ScoreboardActivity,
-                        errorMsg,
-                        Toast.LENGTH_LONG
-                    ).show()
-
+                    Toast.makeText(this@ScoreboardActivity, errorMsg, Toast.LENGTH_LONG).show()
                     Log.e("VOSK", "Full initialization error", e)
                 }
             }
         }
     }
 
-    // ... (resto de los métodos permanecen igual)
 
     private fun handleVoiceCommand(command: String) {
         Log.d("VOSK", "Comando recibido: $command")
-
         when {
             command.contains("añadir") || command.contains("sumar") || command.contains("add") -> {
                 scoreManager.addPointToPlayer(1)
@@ -199,14 +200,8 @@ open class ScoreboardActivity : MainActivity() {
                 scoreManager.resetScore()
                 updateScore()
             }
-            else -> {
-                runOnUiThread {
-                    Toast.makeText(
-                        this@ScoreboardActivity,
-                        "Comando no reconocido: $command",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+            else -> runOnUiThread {
+                Toast.makeText(this@ScoreboardActivity, "Comando no reconocido: $command", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -216,15 +211,13 @@ open class ScoreboardActivity : MainActivity() {
         blueScore.text = scoreManager.toStringPlayer(2)
 
         if (scoreManager.checkWin() == 1) {
-            val winDialog = WinDialog.newInstance("Player 1")
-            winDialog.show(supportFragmentManager, "WinDialog")
+            WinDialog.newInstance("Player 1").show(supportFragmentManager, "WinDialog")
             saveGameScore()
-            speechService.stop() // Detener reconocimiento al ganar
+            speechService.stop()
         } else if (scoreManager.checkWin() == 2) {
-            val winDialog = WinDialog.newInstance("Player 2")
-            winDialog.show(supportFragmentManager, "WinDialog")
+            WinDialog.newInstance("Player 2").show(supportFragmentManager, "WinDialog")
             saveGameScore()
-            speechService.stop() // Detener reconocimiento al ganar
+            speechService.stop()
         }
     }
 
@@ -235,7 +228,7 @@ open class ScoreboardActivity : MainActivity() {
 
     override fun onResume() {
         super.onResume()
-        runCatching { speechService.startListening(recognitionListener as RecognitionListener?) }
+        runCatching { speechService.startListening(recognitionListener) }
     }
 
     override fun onDestroy() {

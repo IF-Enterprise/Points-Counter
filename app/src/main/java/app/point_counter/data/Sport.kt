@@ -11,7 +11,7 @@ abstract class Sport {
 
     // Rules data class
     data class SportRules(
-        val setsToWin: Int,
+        var setsToWin: Int,
         val pointsPerGames: Int = 0,
         val gamesPerSets: Int = 0,
         val pointsPerSet: Int = 0,
@@ -59,5 +59,6 @@ abstract class Sport {
     }
 
     open fun resetScore() = score.resetAll()
+
     abstract fun setToWin(toWin: Int): Any
 }
