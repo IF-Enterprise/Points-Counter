@@ -138,7 +138,7 @@ open class MainActivity : AppCompatActivity() {
         }
     }
     //-----------------------------------------Animations-----------------------------------------
-    // Animación fluida de escala
+    // Animación fluida de escala.
     private fun animateScale(view: View, from: Float, to: Float) {
         view.animate()
             .scaleX(to)
