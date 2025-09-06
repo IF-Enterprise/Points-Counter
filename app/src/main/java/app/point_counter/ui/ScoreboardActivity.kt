@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import app.point_counter.R
 import app.point_counter.data.sports.PingPong
+import app.point_counter.data.sports.Tennis
 import com.yourpackage.utils.VoskHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -104,9 +105,8 @@ open class ScoreboardActivity : MainActivity() {
         if (sportType == "pingpong") {
             scoreManager.setSport(PingPong())
             //scoreManager.setToWin(setsToWin)
-        }else (sportType == "tennis"){
+        }else if(sportType == "tennis"){
             scoreManager.setSport(Tennis())
-
         }
 
         setContentView(R.layout.activity_scoreboard)

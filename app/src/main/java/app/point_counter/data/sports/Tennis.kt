@@ -10,7 +10,7 @@ import app.point_counter.data.Sport
 * Games:
 * Sets
  */
-abstract class Tennis : Sport() {
+class Tennis : Sport() {
     override val rules: SportRules = SportRules(
         setsToWin = 3, // 3 | 5 Grand Slams
         gamesPerSet = 6,
@@ -54,6 +54,10 @@ abstract class Tennis : Sport() {
                 }
             }
         }
+    }
+
+    override fun substractPointToPlayer(player: Int) {
+        TODO("Not yet implemented")
     }
 
     fun addGamesToPlayer(player: Int) {
