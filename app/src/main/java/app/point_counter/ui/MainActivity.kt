@@ -23,6 +23,7 @@ import app.point_counter.data.Score
 open class MainActivity : AppCompatActivity() {
     val scoreManager = ScoreViewModel()  // ahora es solo un objeto normal
     private lateinit var imBtnPingPong: ImageButton
+    private lateinit var imBtnTennis: ImageButton
 
     private lateinit var mediaPlayer: MediaPlayer//Music
 

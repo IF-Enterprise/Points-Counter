@@ -103,7 +103,6 @@ open class ScoreboardActivity : MainActivity() {
         val setsToWin = intent.getIntExtra("sets", 3)
         if (sportType == "pingpong") {
             scoreManager.setSport(PingPong())
-            scoreManager.setToWin(setsToWin)
         }
 
         setContentView(R.layout.activity_scoreboard)

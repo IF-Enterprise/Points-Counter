@@ -21,6 +21,8 @@ abstract class Tennis : Sport() {
         tieBreak2Diff = true,
     )
 
+    var tieBreak: Boolean = false
+
     override fun addPointToPlayer(player: Int) {
         if (player == 1) {
             when (score.player1Pts) {
@@ -57,9 +59,12 @@ abstract class Tennis : Sport() {
     }
 
     fun addGamesToPlayer(player: Int) {
+        if (rules.hasTieBreak && score.player1Games == 6 && score.player2Games == 6) {
+            tieBreak = true
+        }
         if (player == 1) {
             score.addGames(1)
-            if (score.player1Games == rules.gamesPerSet)
+            if (score.player1Games == rules.gamesPerSet && score.player1Games - score.player2Games >= 2)
             {
                 score.resetGames()
                 if (checkWin() != 1)
@@ -67,7 +72,7 @@ abstract class Tennis : Sport() {
             }
         } else if (player == 2) {
             score.addGames(2)
-            if (score.player2Games == rules.gamesPerSet)
+            if (score.player2Games == rules.gamesPerSet && score.player2Games - score.player1Games >= 2)
             {
                 score.resetGames()
                 if (checkWin() != 2)
@@ -87,9 +92,7 @@ abstract class Tennis : Sport() {
 
     override fun getSport(): String = "Tennis"
 
-    override fun setToWin(toWin: Int): Any {
-        TODO("Not yet implemented")
-    }
+
 }
 
 /*
