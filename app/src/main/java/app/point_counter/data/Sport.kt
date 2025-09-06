@@ -44,6 +44,12 @@ abstract class Sport {
         return -1
     }
 
+    open fun getGamesPlayer(player: Int):Int {
+        if (player == 1) return score.player1Games
+        if (player == 2) return score.player2Games
+        return -1
+    }
+
     /* -------- SETTERS -------- */
 
     open fun setScore(player1Pts: Int, player2Pts: Int, player1Sets: Int, player2Sets: Int) {

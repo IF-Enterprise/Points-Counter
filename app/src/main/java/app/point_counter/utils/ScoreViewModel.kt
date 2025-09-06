@@ -28,6 +28,8 @@ class ScoreViewModel: ViewModel() {
 
     fun getSetsPlayer(player: Int): Int = sport.getSetsPlayer(player)
 
+    fun getGamesPlayer(player: Int): Int = sport.getGamesPlayer(player)
+
     fun getGames(): List<Score> = games
 
     /* -------- OTHER METHODS -------- */

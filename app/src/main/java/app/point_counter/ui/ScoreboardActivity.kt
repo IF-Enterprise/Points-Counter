@@ -1,6 +1,7 @@
 package app.point_counter.ui
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -30,8 +31,15 @@ open class ScoreboardActivity : MainActivity() {
     private lateinit var model: Model
     private lateinit var recognizer: Recognizer
     private lateinit var speechService: SpeechService
-    private lateinit var redScore: TextView
-    private lateinit var blueScore: TextView
+    private lateinit var redScorePts: TextView
+    private lateinit var blueScorePts: TextView
+
+    private lateinit var redScoreSets: TextView
+    private lateinit var blueScoreSets: TextView
+
+    private lateinit var redScoreGames: TextView
+    private lateinit var blueScoreGames: TextView
+
 
     companion object {
         private const val RECORD_AUDIO_REQUEST_CODE = 1
@@ -83,6 +91,7 @@ open class ScoreboardActivity : MainActivity() {
         }
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -100,8 +109,14 @@ open class ScoreboardActivity : MainActivity() {
         setContentView(R.layout.activity_scoreboard)
 
         // Inicializar UI
-        redScore = findViewById(R.id.red_score)
-        blueScore = findViewById(R.id.blue_score)
+        redScorePts = findViewById(R.id.red_scorepts)
+        blueScorePts = findViewById(R.id.blue_scorepts)
+
+        redScoreSets = findViewById(R.id.red_scoresets)
+        blueScoreSets = findViewById(R.id.blue_scoresets)
+
+        redScoreGames = findViewById(R.id.red_scoregames)
+        blueScoreGames = findViewById(R.id.blue_scoregames)
 
         // Configurar botones
         setupButtons()
@@ -207,8 +222,12 @@ open class ScoreboardActivity : MainActivity() {
     }
 
     private fun updateScore() {
-        redScore.text = scoreManager.toStringPlayer(1)
-        blueScore.text = scoreManager.toStringPlayer(2)
+        redScorePts.text = scoreManager.getPtsPlayer(1).toString()
+        blueScorePts.text = scoreManager.getPtsPlayer(2).toString()
+        redScoreSets.text = scoreManager.getSetsPlayer(1).toString()
+        blueScoreSets.text = scoreManager.getSetsPlayer(2).toString()
+        redScoreGames.text = scoreManager.getGamesPlayer(1).toString()
+        blueScoreGames.text = scoreManager.getGamesPlayer(2).toString()
 
         if (scoreManager.checkWin() == 1) {
             WinDialog.newInstance("Player 1").show(supportFragmentManager, "WinDialog")
