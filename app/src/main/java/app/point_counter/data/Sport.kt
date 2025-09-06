@@ -11,7 +11,7 @@ abstract class Sport {
 
     // Rules data class
     data class SportRules(
-        var setsToWin: Int,
+        var setsToWin: Int = 0,
         val pointsPerGames: Int = 0,
         val gamesPerSet: Int = 0,
         val pointsPerSet: Int = 0,
@@ -19,8 +19,8 @@ abstract class Sport {
         val diff2Games: Boolean = false,
         val diff2Sets: Boolean = false,
         val hasTieBreak: Boolean = false,
-        val tieBreakPoints: Int,
-        val maxSets: Int,
+        val tieBreakPoints: Int = 0,
+        val tieBreak2Diff: Boolean = false
     )
 
     /* -------- SPORT SPECIFIC METHODS -------- */
@@ -32,6 +32,9 @@ abstract class Sport {
 
     /* -------- GETTERS -------- */
 
+    fun getSetsToWin(): Int {
+        return rules!!.setsToWin
+    }
     open fun getPtsPlayer(player: Int): Int {
         if (player == 1) return score.player1Pts
         if (player == 2) return score.player2Pts
@@ -65,6 +68,4 @@ abstract class Sport {
     }
 
     open fun resetScore() = score.resetAll()
-
-    abstract fun setToWin(toWin: Int): Any
 }

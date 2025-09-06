@@ -13,16 +13,12 @@ import app.point_counter.data.Sport
 abstract class Tennis : Sport() {
     override val rules: SportRules = SportRules(
         setsToWin = 3, // 3 | 5 Grand Slams
-
         gamesPerSet = 6,
         diff2Sets = true,
-
         pointsPerGames = 4, // 0, 15, 30, 45, AV, Game
-
-
         hasTieBreak = true,
         tieBreakPoints = 7,
-        maxSets = 3
+        tieBreak2Diff = true,
     )
 
     override fun addPointToPlayer(player: Int) {
@@ -39,7 +35,7 @@ abstract class Tennis : Sport() {
                 50 ->
                 {
                     score.resetPts()
-                    score.addGames(1)
+                    addGamesToPlayer(1)
                 }
             }
         } else if (player == 2) {
@@ -54,8 +50,28 @@ abstract class Tennis : Sport() {
                 }
                 50 -> {
                     score.resetPts()
-                    score.addGames(1)
+                    addGamesToPlayer(2)
                 }
+            }
+        }
+    }
+
+    fun addGamesToPlayer(player: Int) {
+        if (player == 1) {
+            score.addGames(1)
+            if (score.player1Games == rules.gamesPerSet)
+            {
+                score.resetGames()
+                if (checkWin() != 1)
+                    score.addSet(1)
+            }
+        } else if (player == 2) {
+            score.addGames(2)
+            if (score.player2Games == rules.gamesPerSet)
+            {
+                score.resetGames()
+                if (checkWin() != 2)
+                    score.addSet(2)
             }
         }
     }

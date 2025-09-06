@@ -5,11 +5,10 @@ import app.point_counter.data.Sport
 
 class PingPong() : Sport() {
     override val rules: SportRules = SportRules(
-        setsToWin = 3, // 3 | 5 Grand Slams
+        setsToWin = 3,
         pointsPerSet = 6,
         hasTieBreak = true,
         tieBreakPoints = 7,
-        maxSets = 3
     )
 
     override fun addPointToPlayer(player: Int) {
@@ -38,11 +37,6 @@ class PingPong() : Sport() {
     }
 
     override fun getSport(): String = "Ping Pong"
-
-    override fun setToWin(toWin: Int) {
-        rules.setsToWin = toWin
-        score.resetAll()
-    }
 }
 
 /*
