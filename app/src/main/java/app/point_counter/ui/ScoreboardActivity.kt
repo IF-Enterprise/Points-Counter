@@ -109,17 +109,17 @@ open class ScoreboardActivity : MainActivity() {
             scoreManager.setSport(Tennis())
         }
 
-        setContentView(R.layout.activity_scoreboard)
+        setContentView(R.layout.activity_scoreboard2)
 
         // Inicializar UI
-        redScorePts = findViewById(R.id.red_scorepts)
-        blueScorePts = findViewById(R.id.blue_scorepts)
+        redScorePts = findViewById(R.id.red_pts)
+        blueScorePts = findViewById(R.id.blue_pts)
 
-        redScoreSets = findViewById(R.id.red_scoresets)
-        blueScoreSets = findViewById(R.id.blue_scoresets)
+        redScoreSets = findViewById(R.id.red_sets)
+        blueScoreSets = findViewById(R.id.blue_sets)
 
-        redScoreGames = findViewById(R.id.red_scoregames)
-        blueScoreGames = findViewById(R.id.blue_scoregames)
+        redScoreGames = findViewById(R.id.red_games)
+        blueScoreGames = findViewById(R.id.blue_games)
 
         // Configurar botones
         setupButtons()
