@@ -7,7 +7,7 @@ import app.point_counter.data.Sport
 class ScoreViewModel: ViewModel() {
     // Actual app.point_counter.data.Sport
     private lateinit var sport: Sport
-    // List of past games Scores
+    // List of past games Score
     private val games = mutableListOf<Score>()
 
     /* -------- SETTERS -------- */
