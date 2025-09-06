@@ -19,8 +19,6 @@ class ScoreViewModel: ViewModel() {
         sport.setScore(player1Pts, player2Pts,setPlayer1, setPlayer2)
     }
 
-    fun setToWin(setToWin: Int) = sport.setToWin(setToWin)
-
     /* -------- GETTERS -------- */
     fun getSport(): String = sport.getSport()
 

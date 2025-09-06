@@ -13,7 +13,7 @@ abstract class Sport {
     data class SportRules(
         var setsToWin: Int,
         val pointsPerGames: Int = 0,
-        val gamesPerSets: Int = 0,
+        val gamesPerSet: Int = 0,
         val pointsPerSet: Int = 0,
         val diff2Pts: Boolean = false,
         val diff2Games: Boolean = false,

@@ -17,7 +17,6 @@ class Score(
     ) {
 
     /* -------- GETTERS -------- */
-
     fun getSetsPlayer(player: Int): Int {
         if (player == 1) return player1Sets
         if (player == 2) return player2Sets
@@ -52,26 +51,23 @@ class Score(
         if (player == 2) player2Games = games
     }
 
-    // addPts | add Points to x player default 1 pt
+    /* -------- ADD & SUB -------- */
     fun addPts(player: Int, pts: Int = 1) {
-        if (player == 1) player1Pts += pts
+        if (player == 1 ) player1Pts += pts
         if (player == 2) player2Pts += pts
     }
 
-    // subPts | sub Points to x player default 1 pt
     fun subPts(player: Int, pts: Int = 1) {
         if (player == 1 && player1Pts > 0) player1Pts -= pts
         if (player == 2 && player2Pts > 0) player2Pts -= pts
     }
 
-    // addSet | add set to x player and reset the points
     fun addSet(player: Int) {
         if (player == 1) player1Sets++
         if (player == 2) player2Sets++
         resetPts()
     }
 
-    // subSet | sub set to x player
     fun subSet(player: Int) {
         if (player == 1 && player1Sets > 0) player1Sets--
         if (player == 2 && player2Sets > 0) player2Sets--
@@ -87,7 +83,7 @@ class Score(
         if (player == 2 && player2Games > 0) player2Games--
     }
 
-    // resetPts | Set points to 0
+    /* -------- RESET -------- */
     fun resetPts() {
         player1Pts = 0
         player2Pts = 0
@@ -100,7 +96,6 @@ class Score(
         player2Games = 0
     }
 
-    // resetAll | Resets points, games, sets
     fun resetAll() {
         player1Pts = 0
         player2Pts = 0
@@ -110,7 +105,7 @@ class Score(
         player2Games = 0
     }
 
-    // toStringPlayer | Return in terminal the pts and sets
+    /* -------- MISC -------- */
     fun toStringPlayer(player: Int): String {
         if (player == 1){
             return "Pts: $player1Pts Games: $player1Games Set: $player1Sets"

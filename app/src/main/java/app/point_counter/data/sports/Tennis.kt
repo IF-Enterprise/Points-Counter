@@ -10,10 +10,16 @@ import app.point_counter.data.Sport
 * Games:
 * Sets
  */
-class Tennis : Sport() {
+abstract class Tennis : Sport() {
     override val rules: SportRules = SportRules(
         setsToWin = 3, // 3 | 5 Grand Slams
-        pointsPerSet = 6,
+
+        gamesPerSet = 6,
+        diff2Sets = true,
+
+        pointsPerGames = 4, // 0, 15, 30, 45, AV, Game
+
+
         hasTieBreak = true,
         tieBreakPoints = 7,
         maxSets = 3
@@ -24,37 +30,47 @@ class Tennis : Sport() {
             when (score.player1Pts) {
                 0, 15 -> score.addPts(1, 15)
                 30 -> score.addPts(1, 10) // 50 MEANS AV !!!
-                40 ->
+                40 -> {
                     if (score.player2Pts == 50)
-                        score.addPts(2, -10); // Both go back to 40
+                        score.addPts(2, -10) // Both go back to 40
                     else
-                        score.addPts(1, 10); // AV to Plr 1
+                        score.addPts(1, 10) // AV to Plr 1
+                }
                 50 ->
+                {
+                    score.resetPts()
                     score.addGames(1)
+                }
             }
         } else if (player == 2) {
             when (score.player2Pts) {
                 0, 15 -> score.addPts(2, 15)
                 30 -> score.addPts(2, 10) // 50 MEANS AV !!!
-                40 ->
+                40 -> {
                     if (score.player1Pts == 50)
                         score.addPts(1, -10); // Both go back to 40
                     else
                         score.addPts(2, 10); // AV to Plr 2
-                50 -> score.addSet(2)
+                }
+                50 -> {
+                    score.resetPts()
+                    score.addGames(1)
+                }
             }
         }
     }
 
-    override fun substractPointToPlayer(player: Int) {
-        TODO("Not yet implemented")
-    }
-
     override fun checkWin(): Int {
-        TODO("Not yet implemented")
+        if (score.player1Sets == rules.setsToWin)
+            return 1
+        else if (score.player2Sets == rules.setsToWin)
+            return 2
+        else
+            return 0
     }
 
     override fun getSport(): String = "Tennis"
+
     override fun setToWin(toWin: Int): Any {
         TODO("Not yet implemented")
     }
