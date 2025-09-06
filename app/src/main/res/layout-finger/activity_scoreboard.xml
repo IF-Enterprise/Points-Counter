@@ -15,14 +15,14 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="16dp"
+        app:cardBackgroundColor="@color/blue_player"
         app:cardCornerRadius="20dp"
         app:cardElevation="6dp"
-        app:cardBackgroundColor="@color/blue_player"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/red_card"
-        app:layout_constraintWidth_percent="0.45"
-        app:layout_constraintHeight_percent="0.45">
+        app:layout_constraintHeight_percent="0.45"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.45">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,14 +83,14 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="16dp"
+        app:cardBackgroundColor="@color/red_player"
         app:cardCornerRadius="20dp"
         app:cardElevation="6dp"
-        app:cardBackgroundColor="@color/red_player"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/blue_card"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.45"
-        app:layout_constraintHeight_percent="0.45">
+        app:layout_constraintHeight_percent="0.45"
+        app:layout_constraintStart_toEndOf="@id/blue_card"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.45">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -103,11 +103,11 @@
                 android:id="@+id/red_scorepts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
                 android:text="0"
                 android:textColor="@android:color/white"
                 android:textSize="48sp"
-                android:textStyle="bold"
-                android:layout_marginEnd="12dp"/>
+                android:textStyle="bold" />
 
             <!-- Botones Rojos -->
             <LinearLayout
@@ -120,26 +120,26 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
+                    android:backgroundTint="@color/red_dark"
                     android:text="▲"
-                    android:textSize="20sp"
                     android:textColor="@android:color/white"
+                    android:textSize="20sp"
                     app:cornerRadius="12dp"
                     app:strokeColor="@android:color/white"
-                    app:strokeWidth="2dp"
-                    android:backgroundTint="@color/red_dark"/>
+                    app:strokeWidth="2dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/red_minus"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
+                    android:backgroundTint="@color/red_dark"
                     android:text="▼"
-                    android:textSize="20sp"
                     android:textColor="@android:color/white"
+                    android:textSize="20sp"
                     app:cornerRadius="12dp"
                     app:strokeColor="@android:color/white"
-                    app:strokeWidth="2dp"
-                    android:backgroundTint="@color/red_dark"/>
+                    app:strokeWidth="2dp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -159,52 +159,58 @@
         android:id="@+id/blue_scoresets"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="121dp"
         android:layout_weight="1"
         android:text="0"
         android:textColor="@color/black"
         android:textSize="48sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="614dp"
-        tools:layout_editor_absoluteY="258dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/red_card"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="614dp" />
 
     <TextView
         android:id="@+id/red_scoresets"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="49dp"
+        android:layout_height="71dp"
+        android:layout_marginBottom="44dp"
         android:layout_weight="1"
         android:text="0"
         android:textColor="@color/black"
         android:textSize="48sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="248dp"
-        tools:layout_editor_absoluteY="258dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="231dp" />
 
     <TextView
         android:id="@+id/blue_scoregames"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="121dp"
         android:layout_weight="1"
         android:text="0"
         android:textColor="@color/black"
         android:textSize="48sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="519dp"
-        tools:layout_editor_absoluteY="258dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/red_card"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="504dp" />
 
     <TextView
         android:id="@+id/red_scoregames"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="132dp"
         android:layout_weight="1"
         android:text="0"
         android:textColor="@color/black"
         android:textSize="48sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="106dp"
-        tools:layout_editor_absoluteY="258dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blue_card"
+        app:layout_constraintVertical_bias="0.636"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
