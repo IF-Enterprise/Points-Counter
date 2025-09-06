@@ -87,9 +87,12 @@ abstract class Tennis : Sport() {
 
     override fun getSport(): String = "Tennis"
 
+    /*
     override fun setToWin(toWin: Int): Any {
         TODO("Not yet implemented")
     }
+
+     */
 }
 
 /*

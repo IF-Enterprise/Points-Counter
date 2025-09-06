@@ -23,6 +23,7 @@ import app.point_counter.data.Score
 open class MainActivity : AppCompatActivity() {
     val scoreManager = ScoreViewModel()  // ahora es solo un objeto normal
     private lateinit var imBtnPingPong: ImageButton
+    private lateinit var imBtnTennis: ImageButton
 
     private lateinit var mediaPlayer: MediaPlayer//Music
 
@@ -33,7 +34,8 @@ open class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //Image button that initializes the game (effects at clicking)
-        imBtnPingPong = findViewById(R.id.my_image_button)
+        imBtnPingPong = findViewById(R.id.my_image_btn_pingpong)
+        imBtnTennis = findViewById(R.id.my_image_btn_tennis)
         setupHoverEffect()
         setupClickAction()
 
@@ -116,6 +118,13 @@ open class MainActivity : AppCompatActivity() {
             }
             false
         }
+        imBtnTennis.setOnHoverListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_HOVER_ENTER -> animateScale(v, 1.0f, 1.15f)
+                MotionEvent.ACTION_HOVER_EXIT -> animateScale(v, 1.15f, 1.0f)
+            }
+            false
+        }
     }
 
     private fun setupClickAction() {
@@ -129,6 +138,18 @@ open class MainActivity : AppCompatActivity() {
             val settingsDialog = SettingsDialog.newInstance("pingpong")
             settingsDialog.show(supportFragmentManager, "SettingsDialog")
         }
+        imBtnTennis.setOnClickListener { v ->
+            // Animación de rebote al hacer click
+            animateClickBounce(v)
+
+            // Cambiar deporte y navegar
+
+            //Shows pop up of the SettingsDialog
+            val settingsDialog = SettingsDialog.newInstance("tennis")
+            settingsDialog.show(supportFragmentManager, "SettingsDialog")
+        }
+
+
     }
 
     private fun buttonGames(){
