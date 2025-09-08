@@ -31,7 +31,9 @@ open class ScoreboardActivity : MainActivity() {
 
     private lateinit var model: Model
     private lateinit var recognizer: Recognizer
-    private lateinit var speechService: SpeechService
+
+    private var speechService: SpeechService? = null
+
     private lateinit var redScorePts: TextView
     private lateinit var blueScorePts: TextView
 
@@ -106,6 +108,7 @@ open class ScoreboardActivity : MainActivity() {
             scoreManager.setSport(PingPong())
             //scoreManager.setToWin(setsToWin)
         }else if(sportType == "tennis"){
+            val gamesToWin = intent.getIntExtra("games", 0)
             scoreManager.setSport(Tennis())
         }
 
@@ -181,7 +184,7 @@ open class ScoreboardActivity : MainActivity() {
                     speechService = SpeechService(recognizer, 16000.0f)
 
                     // Iniciar reconocimiento
-                    speechService.startListening(recognitionListener)
+                    speechService?.startListening(recognitionListener)
                     Toast.makeText(
                         this@ScoreboardActivity,
                         "Voice recognition enabled",
@@ -235,28 +238,30 @@ open class ScoreboardActivity : MainActivity() {
         if (scoreManager.checkWin() == 1) {
             WinDialog.newInstance("Player 1").show(supportFragmentManager, "WinDialog")
             saveGameScore()
-            speechService.stop()
+            speechService?.stop()
         } else if (scoreManager.checkWin() == 2) {
             WinDialog.newInstance("Player 2").show(supportFragmentManager, "WinDialog")
             saveGameScore()
-            speechService.stop()
+            speechService?.stop()
         }
+
     }
 
     override fun onPause() {
         super.onPause()
-        runCatching { speechService.stop() }
+        runCatching { speechService?.stop() }
     }
 
     override fun onResume() {
         super.onResume()
-        runCatching { speechService.startListening(recognitionListener) }
+        runCatching { speechService?.startListening(recognitionListener) }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        runCatching { speechService.stop() }
+        runCatching { speechService?.stop() }
         runCatching { recognizer.close() }
         runCatching { model.close() }
     }
+
 }

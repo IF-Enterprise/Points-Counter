@@ -9,22 +9,22 @@
 
 
     <!--Red -->
+
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="156dp"
-        android:layout_height="194dp"
-        android:layout_marginTop="152dp"
-        android:layout_marginEnd="504dp"
+        android:layout_width="167dp"
+        android:layout_height="192dp"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardElevation="0dp"
         app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/guideline5">
 
         <TextView
             android:id="@+id/red_pts"
-            android:layout_width="160dp"
-            android:layout_height="match_parent"
+            android:layout_width="153dp"
+            android:layout_height="187dp"
             android:gravity="center"
             android:text="0"
             android:textColor="@color/red_dark"
@@ -33,32 +33,30 @@
 
         <Button
             android:id="@+id/red_minus"
-            android:layout_width="match_parent"
+            android:layout_width="154dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:text="Button" />
+            android:text="-" />
 
         <Button
             android:id="@+id/red_plus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:text="Button" />
+            android:text="+" />
 
     </androidx.cardview.widget.CardView>
-
 
     <androidx.cardview.widget.CardView
         android:layout_width="64dp"
         android:layout_height="58dp"
         android:layout_marginTop="152dp"
-        android:layout_marginEnd="376dp"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardElevation="0dp"
         app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="32dp">
+        app:layout_constraintEnd_toStartOf="@+id/cardView"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/red_sets"
@@ -75,16 +73,14 @@
 
     <!-- blue -->
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
         android:layout_width="156dp"
         android:layout_height="194dp"
-        android:layout_marginTop="152dp"
-        android:layout_marginEnd="60dp"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardElevation="0dp"
         app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="32dp">
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/guideline5">
 
         <TextView
             android:id="@+id/blue_pts"
@@ -101,14 +97,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:text="button" />
+            android:text="+" />
 
         <Button
             android:id="@+id/blue_minus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:text="Button" />
+            android:text="-" />
     </androidx.cardview.widget.CardView>
 
     <!-- games player red(left) and blue(right) -->
@@ -117,14 +113,12 @@
         android:id="@+id/cardView"
         android:layout_width="64dp"
         android:layout_height="58dp"
-        android:layout_marginTop="152dp"
-        android:layout_marginEnd="276dp"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardElevation="0dp"
         app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="32dp">
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline6"
+        app:layout_constraintTop_toTopOf="@+id/guideline5">
 
         <TextView
             android:id="@+id/blue_sets"
@@ -141,13 +135,12 @@
         android:layout_width="202dp"
         android:layout_height="34dp"
         android:layout_marginTop="372dp"
-        android:layout_marginEnd="248dp"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardElevation="0dp"
         app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="32dp">
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/red_games"
@@ -172,6 +165,34 @@
             android:textStyle="bold" />
 
     </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="519dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="232dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="150dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="400dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

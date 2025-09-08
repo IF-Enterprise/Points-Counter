@@ -1,6 +1,7 @@
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
@@ -8,7 +9,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import app.point_counter.R
 import app.point_counter.ui.ScoreboardActivity
-
 
 class SettingsDialog : DialogFragment() {
 
@@ -27,11 +27,8 @@ class SettingsDialog : DialogFragment() {
         val inflater = requireActivity().layoutInflater
         val view = inflater.inflate(R.layout.activity_settings, null)
 
-        // ✅ Inflamos el layout ANTES de crear el diálogo
         builder.setView(view)
         val dialog = builder.create()
-
-        // 👇 Hacemos el fondo del diálogo transparente
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
         // Referencias UI
@@ -41,10 +38,33 @@ class SettingsDialog : DialogFragment() {
         val seekJugadores = view.findViewById<SeekBar>(R.id.seekBarJugadores)
         val btnConfirmar = view.findViewById<Button>(R.id.btnConfirmar)
 
+        // NUEVO → bloque Games
+        val tvGames = view.findViewById<TextView>(R.id.tvGames)
+        val seekGames = view.findViewById<SeekBar>(R.id.seekBarGames)
+
         // Recuperar el sportType
         val sportType = arguments?.getString("sportType") ?: "pingpong"
 
-        // Listeners de SeekBars
+        // --- Configuración según deporte ---
+        if (sportType.equals("tennis", ignoreCase = true)) {
+            // Mostrar Games solo en tenis
+            tvGames.visibility = View.VISIBLE
+            seekGames.visibility = View.VISIBLE
+
+            seekGames.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                    tvGames.text = "Número de games: $progress"
+                }
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            })
+        } else {
+            // Ocultar en otros deportes
+            tvGames.visibility = View.GONE
+            seekGames.visibility = View.GONE
+        }
+
+        // Listeners de SeekBars normales
         seekSets.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 tvSets.text = "Número de sets: $progress"
@@ -67,6 +87,11 @@ class SettingsDialog : DialogFragment() {
                 putExtra("sportType", sportType)
                 putExtra("sets", seekSets.progress)
                 putExtra("jugadores", seekJugadores.progress)
+
+                // ✅ Solo añadir games si es tenis
+                if (sportType.equals("tennis", ignoreCase = true)) {
+                    putExtra("games", seekGames.progress)
+                }
             })
             dismiss()
         }
