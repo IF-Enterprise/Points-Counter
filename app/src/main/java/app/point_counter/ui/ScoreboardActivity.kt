@@ -44,56 +44,6 @@ open class ScoreboardActivity : MainActivity() {
     private lateinit var blueScoreGames: TextView
 
 
-    companion object {
-        private const val RECORD_AUDIO_REQUEST_CODE = 1
-    }
-
-    // ✅ Nueva función para comprobar permisos
-    private fun checkAudioPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.RECORD_AUDIO),
-                RECORD_AUDIO_REQUEST_CODE
-            )
-        } else {
-            initializeVosk()
-        }
-    }
-
-    // Listener correctamente implementado para Vosk
-    private val recognitionListener = object : RecognitionListener {
-        override fun onResult(result: String) {
-            try {
-                val jsonResult = JSONObject(result)
-                val recognizedText = jsonResult.getString("text").lowercase()
-                handleVoiceCommand(recognizedText)
-            } catch (e: Exception) {
-                Log.e("VOSK", "Error processing voice result", e)
-            }
-        }
-
-        override fun onFinalResult(hypothesis: String?) {
-            Log.d("Vosk", "Resultado final: $hypothesis")
-            Toast.makeText(this@ScoreboardActivity, "Reconocido: $hypothesis", Toast.LENGTH_SHORT).show()
-        }
-
-        override fun onPartialResult(partialResult: String) { }
-        override fun onError(exception: Exception) {
-            runOnUiThread {
-                Toast.makeText(this@ScoreboardActivity, "Error en reconocimiento: ${exception.message}", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        override fun onTimeout() {
-            runOnUiThread {
-                Toast.makeText(this@ScoreboardActivity, "Tiempo de espera agotado", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -144,6 +94,46 @@ open class ScoreboardActivity : MainActivity() {
         findViewById<Button>(R.id.blue_minus).setOnClickListener {
             scoreManager.subPointToPlayer(2)
             updateScore()
+        }
+    }
+
+    private fun updateScore() {
+        redScorePts.text = scoreManager.getPtsPlayer(1).toString()
+        blueScorePts.text = scoreManager.getPtsPlayer(2).toString()
+        redScoreSets.text = scoreManager.getSetsPlayer(1).toString()
+        blueScoreSets.text = scoreManager.getSetsPlayer(2).toString()
+        redScoreGames.text = scoreManager.getGamesPlayer(1).toString()
+        blueScoreGames.text = scoreManager.getGamesPlayer(2).toString()
+
+        if (scoreManager.checkWin() == 1) {
+            WinDialog.newInstance("Player 1").show(supportFragmentManager, "WinDialog")
+            saveGameScore()
+            speechService?.stop()
+        } else if (scoreManager.checkWin() == 2) {
+            WinDialog.newInstance("Player 2").show(supportFragmentManager, "WinDialog")
+            saveGameScore()
+            speechService?.stop()
+        }
+
+    }
+
+    //////////////////////////////////////////VOSK///////////////////////////////////////////////////
+    companion object {
+        private const val RECORD_AUDIO_REQUEST_CODE = 1
+    }
+
+    // ✅ Nueva función para comprobar permisos
+    private fun checkAudioPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.RECORD_AUDIO),
+                RECORD_AUDIO_REQUEST_CODE
+            )
+        } else {
+            initializeVosk()
         }
     }
 
@@ -227,24 +217,35 @@ open class ScoreboardActivity : MainActivity() {
         }
     }
 
-    private fun updateScore() {
-        redScorePts.text = scoreManager.getPtsPlayer(1).toString()
-        blueScorePts.text = scoreManager.getPtsPlayer(2).toString()
-        redScoreSets.text = scoreManager.getSetsPlayer(1).toString()
-        blueScoreSets.text = scoreManager.getSetsPlayer(2).toString()
-        redScoreGames.text = scoreManager.getGamesPlayer(1).toString()
-        blueScoreGames.text = scoreManager.getGamesPlayer(2).toString()
-
-        if (scoreManager.checkWin() == 1) {
-            WinDialog.newInstance("Player 1").show(supportFragmentManager, "WinDialog")
-            saveGameScore()
-            speechService?.stop()
-        } else if (scoreManager.checkWin() == 2) {
-            WinDialog.newInstance("Player 2").show(supportFragmentManager, "WinDialog")
-            saveGameScore()
-            speechService?.stop()
+    // Listener correctamente implementado para Vosk
+    private val recognitionListener = object : RecognitionListener {
+        override fun onResult(result: String) {
+            try {
+                val jsonResult = JSONObject(result)
+                val recognizedText = jsonResult.getString("text").lowercase()
+                handleVoiceCommand(recognizedText)
+            } catch (e: Exception) {
+                Log.e("VOSK", "Error processing voice result", e)
+            }
         }
 
+        override fun onFinalResult(hypothesis: String?) {
+            Log.d("Vosk", "Resultado final: $hypothesis")
+            Toast.makeText(this@ScoreboardActivity, "Reconocido: $hypothesis", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onPartialResult(partialResult: String) { }
+        override fun onError(exception: Exception) {
+            runOnUiThread {
+                Toast.makeText(this@ScoreboardActivity, "Error en reconocimiento: ${exception.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        override fun onTimeout() {
+            runOnUiThread {
+                Toast.makeText(this@ScoreboardActivity, "Tiempo de espera agotado", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onPause() {
@@ -263,5 +264,6 @@ open class ScoreboardActivity : MainActivity() {
         runCatching { recognizer.close() }
         runCatching { model.close() }
     }
+
 
 }

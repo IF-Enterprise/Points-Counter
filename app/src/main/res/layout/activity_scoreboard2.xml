@@ -19,6 +19,7 @@
         app:cardElevation="0dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="@+id/guideline7"
         app:layout_constraintTop_toTopOf="@+id/guideline5">
 
         <TextView
@@ -79,6 +80,7 @@
         app:cardBackgroundColor="@android:color/transparent"
         app:cardElevation="0dp"
         app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/guideline5">
 
@@ -105,6 +107,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:text="-" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
     </androidx.cardview.widget.CardView>
 
     <!-- games player red(left) and blue(right) -->
@@ -193,6 +201,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="400dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="56dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="675dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

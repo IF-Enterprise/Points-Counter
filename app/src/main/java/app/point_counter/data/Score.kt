@@ -74,8 +74,8 @@ class Score(
     }
 
     fun addGames(player: Int) {
-        if (player == 1) player1Sets++
-        if (player == 2) player2Sets++
+        if (player == 1) player1Games++
+        if (player == 2) player2Games++
     }
 
     fun subGames(player: Int) {
