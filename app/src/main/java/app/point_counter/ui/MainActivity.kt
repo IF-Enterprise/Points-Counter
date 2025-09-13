@@ -37,7 +37,7 @@ open class MainActivity : AppCompatActivity() {
         setupButtons()
 
         // Music
-        mediaPlayer = MediaPlayer.create(this, R.raw.lofisweetsong265674)
+        mediaPlayer = MediaPlayer.create(this, R.raw.midnightthoughtslofihiphop335739)
         mediaPlayer.isLooping = true   // 🔁 Que suene en bucle
         mediaPlayer.start()
 
