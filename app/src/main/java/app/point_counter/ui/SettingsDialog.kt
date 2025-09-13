@@ -14,11 +14,11 @@ class SettingsDialog : DialogFragment() {
 
     companion object {
         fun newInstance(sportType: String): SettingsDialog {
-            val dialog = SettingsDialog()
-            val args = Bundle()
-            args.putString("sportType", sportType)
-            dialog.arguments = args
-            return dialog
+            return SettingsDialog().apply {
+                arguments = Bundle().apply {
+                    putString("sportType", sportType)
+                }
+            }
         }
     }
 
@@ -31,23 +31,22 @@ class SettingsDialog : DialogFragment() {
         val dialog = builder.create()
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-        // Referencias UI
+        // --- Referencias UI ---
         val tvSets = view.findViewById<TextView>(R.id.tvSets)
         val seekSets = view.findViewById<SeekBar>(R.id.seekBarSets)
+
         val tvJugadores = view.findViewById<TextView>(R.id.tvJugadores)
         val seekJugadores = view.findViewById<SeekBar>(R.id.seekBarJugadores)
-        val btnConfirmar = view.findViewById<Button>(R.id.btnConfirmar)
 
-        // NUEVO → bloque Games
         val tvGames = view.findViewById<TextView>(R.id.tvGames)
         val seekGames = view.findViewById<SeekBar>(R.id.seekBarGames)
 
-        // Recuperar el sportType
-        val sportType = arguments?.getString("sportType") ?: "pingpong"
+        val btnConfirmar = view.findViewById<Button>(R.id.btnConfirmar)
 
-        // --- Configuración según deporte ---
+        // --- Tipo de deporte ---
+        val sportType = arguments?.getString("sportType") ?: "pingpong"
         if (sportType.equals("tennis", ignoreCase = true)) {
-            // Mostrar Games solo en tenis
+            // Mostrar opción de games solo para tenis
             tvGames.visibility = View.VISIBLE
             seekGames.visibility = View.VISIBLE
 
@@ -59,12 +58,11 @@ class SettingsDialog : DialogFragment() {
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {}
             })
         } else {
-            // Ocultar en otros deportes
             tvGames.visibility = View.GONE
             seekGames.visibility = View.GONE
         }
 
-        // Listeners de SeekBars normales
+        // --- Listeners generales ---
         seekSets.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 tvSets.text = "Número de sets: $progress"
@@ -81,18 +79,18 @@ class SettingsDialog : DialogFragment() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
-        // Acción del botón
+        // --- Acción confirmar ---
         btnConfirmar.setOnClickListener {
-            startActivity(Intent(requireContext(), ScoreboardActivity::class.java).apply {
+            val intent = Intent(requireContext(), ScoreboardActivity::class.java).apply {
                 putExtra("sportType", sportType)
                 putExtra("sets", seekSets.progress)
                 putExtra("jugadores", seekJugadores.progress)
 
-                // ✅ Solo añadir games si es tenis
                 if (sportType.equals("tennis", ignoreCase = true)) {
                     putExtra("games", seekGames.progress)
                 }
-            })
+            }
+            startActivity(intent)
             dismiss()
         }
 

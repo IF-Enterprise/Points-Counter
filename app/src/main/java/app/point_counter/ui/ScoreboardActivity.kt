@@ -53,18 +53,19 @@ open class ScoreboardActivity : MainActivity() {
 
         // Configuración inicial del juego
         val sportType = intent.getStringExtra("sportType")
-        val setsToWin = intent.getIntExtra("sets", 3)
+        // val setsToWin = intent.getIntExtra("sets", 3) NO INTENTAR ENLAZARLO CON RULES
+
         if (sportType == "pingpong") {
             scoreManager.setSport(PingPong())
             //scoreManager.setToWin(setsToWin)
         }else if(sportType == "tennis"){
-            val gamesToWin = intent.getIntExtra("games", 0)
             scoreManager.setSport(Tennis())
+            //val gamesToWin = intent.getIntExtra("games", 0)
         }
 
         setContentView(R.layout.activity_scoreboard2)
 
-        // Inicializar UI
+        // Inicializar TEXTS VIEWS
         redScorePts = findViewById(R.id.red_pts)
         blueScorePts = findViewById(R.id.blue_pts)
 
@@ -74,7 +75,7 @@ open class ScoreboardActivity : MainActivity() {
         redScoreGames = findViewById(R.id.red_games)
         blueScoreGames = findViewById(R.id.blue_games)
 
-        // Configurar botones
+        // Setup buttons ADD SUBSTRACT pts
         setupButtons()
     }
 
@@ -98,6 +99,7 @@ open class ScoreboardActivity : MainActivity() {
     }
 
     private fun updateScore() {
+        //updates the score (pts, game, sets)
         redScorePts.text = scoreManager.getPtsPlayer(1).toString()
         blueScorePts.text = scoreManager.getPtsPlayer(2).toString()
         redScoreSets.text = scoreManager.getSetsPlayer(1).toString()
@@ -105,6 +107,7 @@ open class ScoreboardActivity : MainActivity() {
         redScoreGames.text = scoreManager.getGamesPlayer(1).toString()
         blueScoreGames.text = scoreManager.getGamesPlayer(2).toString()
 
+        // When the score is updated we check if someone won
         if (scoreManager.checkWin() == 1) {
             WinDialog.newInstance("Player 1").show(supportFragmentManager, "WinDialog")
             saveGameScore()
@@ -117,6 +120,9 @@ open class ScoreboardActivity : MainActivity() {
 
     }
 
+
+
+    // ⚠️//CAUTION//⚠️                                             ⚠️//CAUTION//⚠️
     //////////////////////////////////////////VOSK///////////////////////////////////////////////////
     companion object {
         private const val RECORD_AUDIO_REQUEST_CODE = 1

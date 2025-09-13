@@ -15,8 +15,21 @@ class PrevGamesActivity : MainActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_prevgames)
 
+        //Contains all the games
         containerGames = findViewById(R.id.containerGames)
 
+        setupButtons()
+
+        // Load all the games in the view
+        scoreManager.loadGames(this)
+        val games = scoreManager.getGames()
+        for ((index, game) in games.withIndex()) {
+            addGameView(game, index)
+        }
+    }
+
+    //-----------------------------------------BUTTONS-----------------------------------------
+    private fun setupButtons() {
         // Botón Clear Games
         val btnClear = findViewById<TextView>(R.id.btnClearGames)
         btnClear.setOnClickListener {
@@ -31,13 +44,6 @@ class PrevGamesActivity : MainActivity() {
             finish() // Opcional, para cerrar esta actividad
         }
 
-        // Cargar partidas
-        scoreManager.loadGames(this)
-        val games = scoreManager.getGames()
-
-        for ((index, game) in games.withIndex()) {
-            addGameView(game, index)
-        }
     }
     private fun addGameView(game: Score, index: Int) {
         // Inflamos el layout personalizado
@@ -45,22 +51,23 @@ class PrevGamesActivity : MainActivity() {
 
         // Referenciamos los TextView para rellenarlos
         val tvTitulo = gameView.findViewById<TextView>(R.id.tvTituloPartida)
-        val tvDetalle = gameView.findViewById<TextView>(R.id.tvDetallePartida)
-
         tvTitulo.text = "Partida ${index + 1}"
-        // Ajusta aquí la forma de obtener los sets y puntos desde Score
-        tvDetalle.text = game.toStringPlayer(1)+" - "+game.toStringPlayer(2)
 
-        // Opcional: añadir listener para clicks
-        gameView.setOnClickListener {
-            //scoreManager.setScore(game.player1Pts, game.player2Pts, game.setPlayer1, game.setPlayer2)
-            //startActivity(Intent(this, ScoreboardActivity::class.java))
-        }
+        val tvDetalle = gameView.findViewById<TextView>(R.id.tvDetallePartida)
+        tvDetalle.text = game.toStringPlayer(1)+" - "+game.toStringPlayer(2)
 
         val btnEliminar = gameView.findViewById<TextView>(R.id.btnDeleteGame)
         btnEliminar.setOnClickListener {
             scoreManager.deleteGame(this, game)
             containerGames.removeView(gameView)
+        }
+
+
+        //retoomar una partida
+        ///////////////////////// //resume a game//////////////////////////////////////////
+        gameView.setOnClickListener {
+            //scoreManager.setScore(game.player1Pts, game.player2Pts, game.setPlayer1, game.setPlayer2)
+            //startActivity(Intent(this, ScoreboardActivity::class.java))
         }
 
         // Añadimos la vista al contenedor

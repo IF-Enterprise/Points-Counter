@@ -3,21 +3,23 @@ package app.point_counter.ui
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import app.point_counter.R
-import android.widget.*
-import android.content.Intent
-import androidx.core.os.bundleOf
 
-class WinDialog: DialogFragment() {
+class WinDialog : DialogFragment() {
+
     companion object {
         fun newInstance(winner: String): WinDialog {
-            val dialog = WinDialog()
-            val args = Bundle()
-            args.putString("winner", winner)
-            dialog.arguments = args
-            return dialog
+            return WinDialog().apply {
+                arguments = Bundle().apply {
+                    putString("winner", winner)
+                }
+            }
         }
     }
 
@@ -27,32 +29,37 @@ class WinDialog: DialogFragment() {
         parentFragmentManager.setFragmentResult("winDialogClosed", bundleOf())
     }
 
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext())
         val inflater = requireActivity().layoutInflater
-        val view = inflater.inflate(R.layout.activity_win, null) // ⚠️ usa un layout tipo diálogo
+        val view = inflater.inflate(R.layout.activity_win, null)
 
         builder.setView(view)
         val dialog = builder.create()
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
+        // --- Recuperar argumentos ---
         val winner = arguments?.getString("winner")
 
+        // --- Referencias UI ---
         val tvWinner = view.findViewById<TextView>(R.id.tvTituloAjustes)
+        val btnAgain = view.findViewById<Button>(R.id.btnAgain)
+        val btnMenu = view.findViewById<Button>(R.id.btonMenu)
+
+        // --- Configuración UI ---
         tvWinner.text = "VICTORY PLAYER $winner"
 
-        val btnAgain = view.findViewById<Button>(R.id.btnAgain)
+        // --- Acciones ---
         btnAgain.setOnClickListener {
             parentFragmentManager.setFragmentResult("winDialogClosed", bundleOf())
-            dismiss() // Cierra el WinDialog
+            dismiss()
+            startActivity(Intent(requireContext(), ScoreboardActivity::class.java))
         }
 
-        val btnMenu = view.findViewById<Button>(R.id.btonMenu)
         btnMenu.setOnClickListener {
             parentFragmentManager.setFragmentResult("winDialogClosed", bundleOf())
-            startActivity(Intent(requireContext(), MainActivity::class.java))
             dismiss()
+            startActivity(Intent(requireContext(), MainActivity::class.java))
         }
 
         return dialog
