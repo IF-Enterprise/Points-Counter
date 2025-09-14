@@ -13,6 +13,7 @@ abstract class Sport {
     data class SportRules(
         var setsToWin: Int = 0,
         val pointsPerGames: Int = 0,
+        val maxPoints: Int = 0,
         val gamesPerSet: Int = 0,
         val pointsPerSet: Int = 0,
         val diff2Pts: Boolean = false,
@@ -20,7 +21,7 @@ abstract class Sport {
         val diff2Sets: Boolean = false,
         val hasTieBreak: Boolean = false,
         val tieBreakPoints: Int = 0,
-        val tieBreak2Diff: Boolean = false
+        val tieBreak2Diff: Boolean = false,
     )
 
     /* -------- SPORT SPECIFIC METHODS -------- */

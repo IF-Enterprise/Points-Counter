@@ -25,7 +25,7 @@ class ScoreViewModel: ViewModel() {
     fun getPtsPlayer(player: Int): Int = sport.getPtsPlayer(player)
 
     fun getPtsPlayerString(player: Int): String {
-        if (sport.getSport() == "Tennis") {
+        if (sport.getSport() == "Tennis" || sport.getSport() == "Padel") {
             if (player == 1)
             {
                 if (sport.score.player1Pts == 50)

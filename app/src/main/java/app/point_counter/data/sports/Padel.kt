@@ -110,7 +110,7 @@ class Padel : Sport() {
             }
         } else if (player == 2) {
             score.addGames(2)
-            if (score.player2Games == rules.gamesPerSet && score.player1Games - score.player2Games >= 2)
+            if (score.player2Games == rules.gamesPerSet && score.player2Games - score.player1Games >= 2)
             {
                 score.resetGames()
                 if (checkWin() != 2)
