@@ -66,14 +66,14 @@ class Tennis : Sport() {
         score.addPts(player)
         if (player == 1) {
             if (score.player1Pts >= 7 && score.player1Pts - score.player2Pts >= 2) {
-                score.addGames(1)
-                score.resetPts()
+                score.addSet(1)
+                score.resetGames()
                 tieBreak = false
             }
         } else if (player == 2) {
             if (score.player2Pts >= 7 && score.player2Pts - score.player1Pts >= 2) {
-                score.addGames(2)
-                score.resetPts()
+                score.addSet(2)
+                score.resetGames()
                 tieBreak = false
             }
         }
