@@ -72,17 +72,17 @@ open class MainActivity : AppCompatActivity() {
 
         // PADEL
         imBtnPadel = findViewById(R.id.my_image_btn_padel)
-        imBtnTennis.setOnClickListener { v ->
+        imBtnPadel.setOnClickListener { v ->
             animateClickBounce(v)
             setupHoverEffect(v)
 
-            val settingsDialog = SettingsDialog.newInstance("tennis")
+            val settingsDialog = SettingsDialog.newInstance("padel")
             settingsDialog.show(supportFragmentManager, "SettingsDialog")
         }
 
         //FOOTBALL
         imBtnFootball = findViewById(R.id.my_image_btn_football)
-        imBtnTennis.setOnClickListener { v ->
+        imBtnFootball.setOnClickListener { v ->
             animateClickBounce(v)
             setupHoverEffect(v)
 
