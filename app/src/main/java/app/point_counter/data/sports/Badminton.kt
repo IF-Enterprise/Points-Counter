@@ -27,13 +27,21 @@ class Badminton : Sport() {
     }
 
     override fun substractPointToPlayer(player: Int) {
-
+        if (player == 1) {
+            if (score.player1Pts > 0) {
+                score.subPts(1)
+            }
+        } else if (player == 2) {
+            if (score.player2Pts > 0) {
+                score.subPts(2)
+            }
+        }
     }
 
     override fun checkWin(): Int {
-        if (score.player1Sets == rules.setsToWin && score.player1Games - score.player2Games >= 2)
+        if (score.player1Sets == rules.setsToWin)
             return 1
-        else if (score.player2Sets == rules.setsToWin && score.player2Games - score.player1Games >= 2)
+        else if (score.player2Sets == rules.setsToWin)
             return 2
         else
             return 0
