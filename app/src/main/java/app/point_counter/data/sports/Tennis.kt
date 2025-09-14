@@ -103,7 +103,7 @@ class Tennis : Sport() {
     fun addGamesToPlayer(player: Int) {
         if (player == 1) {
             score.addGames(1)
-            if (score.player1Games == rules.gamesPerSet)
+            if (score.player1Games == rules.gamesPerSet && score.player1Games - score.player2Games >= 2)
             {
                 score.resetGames()
                 if (checkWin() != 1)
@@ -111,7 +111,7 @@ class Tennis : Sport() {
             }
         } else if (player == 2) {
             score.addGames(2)
-            if (score.player2Games == rules.gamesPerSet)
+            if (score.player2Games == rules.gamesPerSet && score.player1Games - score.player2Games >= 2)
             {
                 score.resetGames()
                 if (checkWin() != 2)
