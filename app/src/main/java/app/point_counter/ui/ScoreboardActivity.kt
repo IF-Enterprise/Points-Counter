@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import app.point_counter.R
+import app.point_counter.data.sports.Badminton
 import app.point_counter.data.sports.PingPong
 import app.point_counter.data.sports.Tennis
 import app.point_counter.data.sports.Padel
@@ -65,7 +66,7 @@ open class ScoreboardActivity : MainActivity() {
         }else if(sportType== "padel"){
             scoreManager.setSport(Padel())
         }else if (sportType == "badminton"){
-            //scoreManager.setSport(Badminton())
+            scoreManager.setSport(Badminton())
         }else if (sportType == "football"){
             //scoreManager.setSport(Football())
         }else if (sportType== "basketball"){
