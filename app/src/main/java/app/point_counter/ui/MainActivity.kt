@@ -25,6 +25,7 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var imBtnPingPong: ImageButton
     private lateinit var imBtnTennis: ImageButton
     private lateinit var imBtnPadel: ImageButton
+    private lateinit var imBtnBadminton: ImageButton
     private lateinit var imBtnFootball: ImageButton
 
     private lateinit var mediaPlayer: MediaPlayer//Music
@@ -79,6 +80,24 @@ open class MainActivity : AppCompatActivity() {
             val settingsDialog = SettingsDialog.newInstance("padel")
             settingsDialog.show(supportFragmentManager, "SettingsDialog")
         }
+        //BADMINTON
+        imBtnBadminton = findViewById(R.id.my_image_btn_badminton)
+        imBtnBadminton.setOnClickListener { v ->
+            animateClickBounce(v)
+            setupHoverEffect(v)
+
+            val settingsDialog = SettingsDialog.newInstance("badminton")
+            settingsDialog.show(supportFragmentManager, "SettingsDialog")
+        }
+        //BASKETBALL
+        //imBtnBasketball = findViewById(R.id.my_image_btn_basketball)
+        //imBtnBasketball.setOnClickListener { v ->
+        //    animateClickBounce(v)
+        //    setupHoverEffect(v)
+        //
+        //    val settingsDialog = SettingsDialog.newInstance("basketball")
+        //    settingsDialog.show(supportFragmentManager, "SettingsDialog")
+        //}
 
         //FOOTBALL
         imBtnFootball = findViewById(R.id.my_image_btn_football)
@@ -86,7 +105,7 @@ open class MainActivity : AppCompatActivity() {
             animateClickBounce(v)
             setupHoverEffect(v)
 
-            val settingsDialog = SettingsDialog.newInstance("tennis")
+            val settingsDialog = SettingsDialog.newInstance("football")
             settingsDialog.show(supportFragmentManager, "SettingsDialog")
         }
 

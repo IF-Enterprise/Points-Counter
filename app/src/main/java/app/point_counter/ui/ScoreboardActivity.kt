@@ -64,6 +64,12 @@ open class ScoreboardActivity : MainActivity() {
             //val gamesToWin = intent.getIntExtra("games", 0)
         }else if(sportType== "padel"){
             scoreManager.setSport(Padel())
+        }else if (sportType == "badminton"){
+            //scoreManager.setSport(Badminton())
+        }else if (sportType == "football"){
+            //scoreManager.setSport(Football())
+        }else if (sportType== "basketball"){
+            //scoreManager.setSport(Basketball())
         }
 
         setContentView(R.layout.activity_scoreboard2)
