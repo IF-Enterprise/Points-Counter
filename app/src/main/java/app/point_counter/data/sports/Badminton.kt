@@ -13,13 +13,13 @@ class Badminton : Sport() {
     override fun addPointToPlayer(player: Int) {
         if (player == 1) {
             score.addPts(1)
-            if (score.player1Pts >= 21 && score.player1Pts - score.player2Pts >= 2) {
+            if ((score.player1Pts >= 21 && score.player1Pts - score.player2Pts >= 2) || score.player1Pts == rules.maxPoints) {
                 score.addSet(1)
                 score.resetPts()
             }
         } else if (player == 2) {
             score.addPts(2)
-            if (score.player2Pts >= 21 && score.player2Pts - score.player1Pts >= 2) {
+            if ((score.player2Pts >= 21 && score.player2Pts - score.player1Pts >= 2) || score.player1Pts == rules.maxPoints) {
                 score.addSet(2)
                 score.resetPts()
             }
@@ -58,7 +58,7 @@ class Badminton : Sport() {
 - Gana el juego el primero en llegar a 21 con diferencia de 2.
   - Ejemplo: 21-18.
 - Si hay empate a 20-20: Se debe ganar por diferencia de 2.
-- Límite: el juego termina en 30 puntos (30-29 es el máximo posible).
+- Límite: el juego termina en 30 puntos (30-29 es el máximo posible). !!!
 
 [SET]
 - Un set equivale a un juego ganado a 21 (con las condiciones anteriores).
