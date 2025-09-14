@@ -35,7 +35,7 @@ class ScoreViewModel: ViewModel() {
             }
             else if (player == 2)
             {
-                if (sport.score.player1Pts == 50)
+                if (sport.score.player2Pts == 50)
                     return "AV"
                 else
                     return getPtsPlayer(player).toString()
