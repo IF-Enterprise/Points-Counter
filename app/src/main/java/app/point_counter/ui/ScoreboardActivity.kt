@@ -100,8 +100,8 @@ open class ScoreboardActivity : MainActivity() {
 
     private fun updateScore() {
         //updates the score (pts, game, sets)
-        redScorePts.text = scoreManager.getPtsPlayer(1).toString()
-        blueScorePts.text = scoreManager.getPtsPlayer(2).toString()
+        redScorePts.text = scoreManager.getPtsPlayerString(1)
+        blueScorePts.text = scoreManager.getPtsPlayerString(2)
         redScoreSets.text = scoreManager.getSetsPlayer(1).toString()
         blueScoreSets.text = scoreManager.getSetsPlayer(2).toString()
         redScoreGames.text = scoreManager.getGamesPlayer(1).toString()

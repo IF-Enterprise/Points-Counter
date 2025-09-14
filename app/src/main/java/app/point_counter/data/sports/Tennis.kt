@@ -44,9 +44,9 @@ class Tennis : Sport() {
                 30 -> score.addPts(2, 10) // 50 MEANS AV !!!
                 40 -> {
                     if (score.player1Pts == 50)
-                        score.addPts(1, -10); // Both go back to 40
+                        score.addPts(1, -10) // Both go back to 40
                     else
-                        score.addPts(2, 10); // AV to Plr 2
+                        score.addPts(2, 10) // AV to Plr 2
                 }
                 50 -> {
                     score.resetPts()
@@ -57,7 +57,24 @@ class Tennis : Sport() {
     }
 
     override fun substractPointToPlayer(player: Int) {
-        TODO("Not yet implemented")
+        if (player == 1)
+        {
+            if (score.player1Pts > 0) {
+                when (score.player1Pts) {
+                    15, 30 -> score.subPts(1, 15)
+                    40, 50 -> score.subPts(1, 10)
+                }
+            }
+        }
+        if (player == 2)
+        {
+            if (score.player2Pts > 0) {
+                when (score.player2Pts) {
+                    15, 30 -> score.subPts(2, 15)
+                    40, 50 -> score.subPts(2, 10)
+                }
+            }
+        }
     }
 
     fun addGamesToPlayer(player: Int) {
@@ -90,13 +107,6 @@ class Tennis : Sport() {
     }
 
     override fun getSport(): String = "Tennis"
-
-    /*
-    override fun setToWin(toWin: Int): Any {
-        TODO("Not yet implemented")
-    }
-
-     */
 }
 
 /*
