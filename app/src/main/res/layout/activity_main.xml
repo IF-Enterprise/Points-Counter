@@ -8,50 +8,76 @@
     android:background="#121212"
     tools:context=".ui.MainActivity">
 
-    <!-- 🏓 Botón con efecto “hover” y sombra -->
-
-    <ImageButton
-        android:id="@+id/my_image_btn_pingpong"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:background="@drawable/rounded_button_bg"
-        android:contentDescription="string/boton_pingpong"
-        android:elevation="10dp"
-        android:padding="10dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/pingpongpixel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.929"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.497" />
-
-    <ImageButton
-        android:id="@+id/my_image_btn_tennis"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:background="@drawable/rounded_button_bg"
-        android:contentDescription="string/boton_tenis"
-        android:elevation="10dp"
-        android:padding="10dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/tennis"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.553"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.497" />
-
     <Button
         android:id="@+id/button_games"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Prev Games"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="567dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp" />
 
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#121212"
+        app:layout_constraintTop_toBottomOf="@id/button_games"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingVertical="40dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp">
+
+            <ImageButton
+                android:id="@+id/my_image_btn_football"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:background="@drawable/rounded_button_bg"
+                android:elevation="10dp"
+                android:padding="10dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/tennis"
+                android:layout_marginEnd="16dp" />
+
+            <ImageButton
+                android:id="@+id/my_image_btn_padel"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:background="@drawable/rounded_button_bg"
+                android:elevation="10dp"
+                android:padding="10dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/tennis"
+                android:layout_marginEnd="16dp" />
+
+            <ImageButton
+                android:id="@+id/my_image_btn_tennis"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:background="@drawable/rounded_button_bg"
+                android:elevation="10dp"
+                android:padding="10dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/tennis"
+                android:layout_marginEnd="16dp" />
+
+            <ImageButton
+                android:id="@+id/my_image_btn_pingpong"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:background="@drawable/rounded_button_bg"
+                android:elevation="10dp"
+                android:padding="10dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/pingpongpixel" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

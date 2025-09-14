@@ -24,6 +24,8 @@ open class MainActivity : AppCompatActivity() {
     val scoreManager = ScoreViewModel()  // ahora es solo un objeto normal
     private lateinit var imBtnPingPong: ImageButton
     private lateinit var imBtnTennis: ImageButton
+    private lateinit var imBtnPadel: ImageButton
+    private lateinit var imBtnFootball: ImageButton
 
     private lateinit var mediaPlayer: MediaPlayer//Music
 
@@ -60,6 +62,26 @@ open class MainActivity : AppCompatActivity() {
 
         // TENNIS
         imBtnTennis = findViewById(R.id.my_image_btn_tennis)
+        imBtnTennis.setOnClickListener { v ->
+            animateClickBounce(v)
+            setupHoverEffect(v)
+
+            val settingsDialog = SettingsDialog.newInstance("tennis")
+            settingsDialog.show(supportFragmentManager, "SettingsDialog")
+        }
+
+        // PADEL
+        imBtnPadel = findViewById(R.id.my_image_btn_padel)
+        imBtnTennis.setOnClickListener { v ->
+            animateClickBounce(v)
+            setupHoverEffect(v)
+
+            val settingsDialog = SettingsDialog.newInstance("tennis")
+            settingsDialog.show(supportFragmentManager, "SettingsDialog")
+        }
+
+        //FOOTBALL
+        imBtnFootball = findViewById(R.id.my_image_btn_football)
         imBtnTennis.setOnClickListener { v ->
             animateClickBounce(v)
             setupHoverEffect(v)
