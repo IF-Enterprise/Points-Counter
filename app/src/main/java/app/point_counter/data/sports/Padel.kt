@@ -2,18 +2,17 @@ package app.point_counter.data.sports
 
 import app.point_counter.data.Sport
 
-
 /*
-* Class Tennis child from app.point_counter.data.Sport
+* Class Padel child from app.point_counter.data.Sport
 *
 * Points:   [00/15/30/40/AV] // AV = 50
 * Games:
 * Sets
  */
-class Tennis : Sport() {
+class Padel : Sport() {
     override val rules: SportRules = SportRules(
-        setsToWin = 3, // 3 | 5 Grand Slams
-        gamesPerSet = 6,
+        setsToWin = 3, // 3
+        gamesPerSet = 6, // diff 2
         diff2Sets = true,
         pointsPerGames = 4, // 0, 15, 30, 40, AV, Game
         hasTieBreak = true,
@@ -132,33 +131,5 @@ class Tennis : Sport() {
             return 0
     }
 
-    override fun getSport(): String = "Tennis"
+    override fun getSport(): String = "Padel"
 }
-
-/*
-[TENIS]
-[PUNTUACIÓN]
-- Juego (Game): 0 (Love) → 15 → 30 → 40 → Juego.
-- Ventaja (AD): Solo si hay 40-40 ("Deuce").
-  - Si el jugador con AD gana el punto: Gana el juego.
-  - Si pierde: Vuelve a 40-40.
-
-[SET]
-- Gana el set el primero en llegar a 6 juegos con diferencia de 2.
-  - Ejemplo: 6-4, 7-5.
-- Si hay empate 6-6: Se juega tiebreak.
-
-[TIEBREAK]
-- Puntos normales (1, 2, 3...).
-- Gana el primero en llegar a 7 puntos con diferencia de 2.
-  - Ejemplo: 7-5, 8-6.
-
-[PARTIDO]
-- Mejor de 3 sets (gana quien gane 2 sets).
-- En Grand Slams masculinos: Mejor de 5 sets (gana quien gane 3 sets).
-
-[SUPER TIEBREAK (OPCIONAL)]
-- Algunos torneos usan Super TieBreak en lugar del 3er set.
-- Gana el primero en llegar a 10 puntos con diferencia de 2.
-  - Ejemplo: 10-8.
- */
