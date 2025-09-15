@@ -26,6 +26,8 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var imBtnTennis: ImageButton
     private lateinit var imBtnPadel: ImageButton
     private lateinit var imBtnBadminton: ImageButton
+
+    private lateinit var imBtnVoley: ImageButton
     private lateinit var imBtnFootball: ImageButton
 
     private lateinit var mediaPlayer: MediaPlayer//Music
@@ -87,6 +89,15 @@ open class MainActivity : AppCompatActivity() {
             setupHoverEffect(v)
 
             val settingsDialog = SettingsDialog.newInstance("badminton")
+            settingsDialog.show(supportFragmentManager, "SettingsDialog")
+        }
+        //BADMINTON
+        imBtnVoley = findViewById(R.id.my_image_btn_voley)
+        imBtnVoley.setOnClickListener { v ->
+            animateClickBounce(v)
+            setupHoverEffect(v)
+
+            val settingsDialog = SettingsDialog.newInstance("voley")
             settingsDialog.show(supportFragmentManager, "SettingsDialog")
         }
         //BASKETBALL

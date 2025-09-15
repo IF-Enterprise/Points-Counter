@@ -17,6 +17,7 @@ import app.point_counter.data.sports.Badminton
 import app.point_counter.data.sports.PingPong
 import app.point_counter.data.sports.Tennis
 import app.point_counter.data.sports.Padel
+import app.point_counter.data.sports.Voley
 import com.yourpackage.utils.VoskHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -65,8 +66,10 @@ open class ScoreboardActivity : MainActivity() {
             //val gamesToWin = intent.getIntExtra("games", 0)
         }else if(sportType== "padel"){
             scoreManager.setSport(Padel())
-        }else if (sportType == "badminton"){
+        }else if (sportType == "badminton") {
             scoreManager.setSport(Badminton())
+        }else if (sportType == "voley") {
+            scoreManager.setSport(Voley())
         }else if (sportType == "football"){
             //scoreManager.setSport(Football())
         }else if (sportType== "basketball"){

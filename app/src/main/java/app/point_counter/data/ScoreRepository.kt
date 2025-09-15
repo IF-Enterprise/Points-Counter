@@ -40,7 +40,6 @@ object ScoreRepository {
     fun loadGames(context: Context): MutableList<Score> {
         val file = File(context.filesDir, FILE_NAME)
 
-        // ✅ Si no existe el archivo, creamos uno vacío y devolvemos lista vacía
         if (!file.exists()) {
             file.writeText("[]")
             return mutableListOf()
