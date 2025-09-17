@@ -60,23 +60,28 @@ open class ScoreboardActivity : MainActivity() {
 
         if (sportType == "pingpong") {
             scoreManager.setSport(PingPong())
+            setContentView(R.layout.activity_scoreboard2)
             //scoreManager.setToWin(setsToWin)
         }else if(sportType == "tennis"){
+            setContentView(R.layout.activity_scoreboard2)
             scoreManager.setSport(Tennis())
             //val gamesToWin = intent.getIntExtra("games", 0)
         }else if(sportType== "padel"){
+            setContentView(R.layout.activity_scoreboard2)
             scoreManager.setSport(Padel())
         }else if (sportType == "badminton") {
+            setContentView(R.layout.activity_scoreboard2)
             scoreManager.setSport(Badminton())
         }else if (sportType == "voley") {
+            setContentView(R.layout.activity_scoreboard2)
             scoreManager.setSport(Voley())
         }else if (sportType == "football"){
+            setContentView(R.layout.activity_scoreboard)
             //scoreManager.setSport(Football())
         }else if (sportType== "basketball"){
+            setContentView(R.layout.activity_scoreboard2)
             //scoreManager.setSport(Basketball())
         }
-
-        setContentView(R.layout.activity_scoreboard2)
 
         // Inicializar TEXTS VIEWS
         redScorePts = findViewById(R.id.red_pts)

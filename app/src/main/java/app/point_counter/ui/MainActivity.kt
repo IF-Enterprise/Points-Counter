@@ -91,7 +91,7 @@ open class MainActivity : AppCompatActivity() {
             val settingsDialog = SettingsDialog.newInstance("badminton")
             settingsDialog.show(supportFragmentManager, "SettingsDialog")
         }
-        //BADMINTON
+        //VOLEY
         imBtnVoley = findViewById(R.id.my_image_btn_voley)
         imBtnVoley.setOnClickListener { v ->
             animateClickBounce(v)
