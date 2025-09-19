@@ -2,10 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission
-        android:name="android.permission.RECORD_AUDIO"
-        android:attributionTags="voice_recognition"
-        tools:targetApi="s" />
+    <!-- Permisos -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +14,8 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Point_counter">
+        android:theme="@style/Theme.Point_counter"
+        android:attributionTags="voice_recognition">
 
         <activity
             android:name=".ui.MainActivity"
@@ -31,11 +30,12 @@
         <activity
             android:name=".ui.ScoreboardActivity"
             android:exported="true"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
+
         <activity
             android:name=".ui.PrevGamesActivity"
             android:exported="true"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
 
     </application>
 </manifest>

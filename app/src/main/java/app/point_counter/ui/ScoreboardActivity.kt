@@ -37,14 +37,15 @@ open class ScoreboardActivity : MainActivity() {
 
     private var speechService: SpeechService? = null
 
-    private lateinit var redScorePts: TextView
-    private lateinit var blueScorePts: TextView
+    //make them null in case we don't use them
+    private var redScorePts: TextView? = null
+    private var blueScorePts: TextView? = null
 
-    private lateinit var redScoreSets: TextView
-    private lateinit var blueScoreSets: TextView
+    private var redScoreSets: TextView? = null
+    private var blueScoreSets: TextView? = null
 
-    private lateinit var redScoreGames: TextView
-    private lateinit var blueScoreGames: TextView
+    private var redScoreGames: TextView? = null
+    private var blueScoreGames: TextView? = null
 
 
     @SuppressLint("MissingInflatedId")
@@ -70,7 +71,7 @@ open class ScoreboardActivity : MainActivity() {
             setContentView(R.layout.activity_scoreboard2)
             scoreManager.setSport(Padel())
         }else if (sportType == "badminton") {
-            setContentView(R.layout.activity_scoreboard2)
+            setContentView(R.layout.activity_scoreboard_badminton)
             scoreManager.setSport(Badminton())
         }else if (sportType == "voley") {
             setContentView(R.layout.activity_scoreboard2)
@@ -92,6 +93,7 @@ open class ScoreboardActivity : MainActivity() {
 
         redScoreGames = findViewById(R.id.red_games)
         blueScoreGames = findViewById(R.id.blue_games)
+
 
         // Setup buttons ADD SUBSTRACT pts
         setupButtons()
@@ -118,12 +120,15 @@ open class ScoreboardActivity : MainActivity() {
 
     private fun updateScore() {
         //updates the score (pts, game, sets)
-        redScorePts.text = scoreManager.getPtsPlayerString(1)
-        blueScorePts.text = scoreManager.getPtsPlayerString(2)
-        redScoreSets.text = scoreManager.getSetsPlayer(1).toString()
-        blueScoreSets.text = scoreManager.getSetsPlayer(2).toString()
-        redScoreGames.text = scoreManager.getGamesPlayer(1).toString()
-        blueScoreGames.text = scoreManager.getGamesPlayer(2).toString()
+        redScorePts?.text = scoreManager.getPtsPlayerString(1)
+        blueScorePts?.text = scoreManager.getPtsPlayerString(2)
+
+        redScoreSets?.text = scoreManager.getSetsPlayer(1).toString()
+        blueScoreSets?.text = scoreManager.getSetsPlayer(2).toString()
+
+        redScoreGames?.text = scoreManager.getGamesPlayer(1).toString()
+        blueScoreGames?.text = scoreManager.getGamesPlayer(2).toString()
+
 
         // When the score is updated we check if someone won
         if (scoreManager.checkWin() == 1) {
