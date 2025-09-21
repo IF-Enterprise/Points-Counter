@@ -21,7 +21,7 @@ class ScoreViewModel: ViewModel() {
 
     /* -------- GETTERS -------- */
     fun getServingPlayer(): Int{
-        return getServingPlayer()
+        return sport.getServingPlayer()
     }
 
     fun getSport(): String = sport.getSport()

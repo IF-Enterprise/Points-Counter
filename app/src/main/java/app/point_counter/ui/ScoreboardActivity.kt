@@ -139,8 +139,11 @@ open class ScoreboardActivity : MainActivity() {
         val serveBlue = findViewById<ImageView>(R.id.serve_blue)
 
 
+
         serveRed.visibility = if (scoreManager.getServingPlayer() == 1) View.VISIBLE else View.GONE
         serveBlue.visibility = if (scoreManager.getServingPlayer() == 2) View.VISIBLE else View.GONE
+
+
 
 
         // When the score is updated we check if someone won
