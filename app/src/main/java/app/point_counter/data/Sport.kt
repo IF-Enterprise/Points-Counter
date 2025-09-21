@@ -22,6 +22,7 @@ abstract class Sport {
         val hasTieBreak: Boolean = false,
         val tieBreakPoints: Int = 0,
         val tieBreak2Diff: Boolean = false,
+        val PlayerServing: Int = 1
     )
 
     /* -------- SPORT SPECIFIC METHODS -------- */
@@ -30,6 +31,8 @@ abstract class Sport {
     abstract fun substractPointToPlayer(player: Int)
     abstract fun checkWin(): Int
     abstract fun getSport(): String
+
+    abstract fun getServingPlayer(): Int
 
     /* -------- GETTERS -------- */
 

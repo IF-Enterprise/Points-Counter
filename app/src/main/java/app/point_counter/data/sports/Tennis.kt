@@ -20,8 +20,10 @@ class Tennis : Sport() {
         tieBreakPoints = 7,
         tieBreak2Diff = true,
     )
-
+    private var servingPlayer: Int = rules.PlayerServing //gets the player who initially serves
     var tieBreak = false
+
+    private var timesServed:Int=0
 
     override fun addPointToPlayer(player: Int) {
         if (!tieBreak) {
@@ -64,17 +66,20 @@ class Tennis : Sport() {
 
     fun addPointToPlayerTieBreak(player: Int) {
         score.addPts(player)
+        changeServingPlayerAt(2)
         if (player == 1) {
             if (score.player1Pts >= 7 && score.player1Pts - score.player2Pts >= 2) {
                 score.addSet(1)
                 score.resetGames()
                 tieBreak = false
+                reverseServingPlayer()
             }
         } else if (player == 2) {
             if (score.player2Pts >= 7 && score.player2Pts - score.player1Pts >= 2) {
                 score.addSet(2)
                 score.resetGames()
                 tieBreak = false
+                reverseServingPlayer()
             }
         }
     }
@@ -101,6 +106,8 @@ class Tennis : Sport() {
     }
 
     fun addGamesToPlayer(player: Int) {
+        reverseServingPlayer()
+
         if (player == 1) {
             score.addGames(1)
             if (score.player1Games == rules.gamesPerSet && score.player1Games - score.player2Games >= 2)
@@ -132,7 +139,28 @@ class Tennis : Sport() {
             return 0
     }
 
+    fun changeServingPlayerAt(reaminingServes:Int) {
+        timesServed++
+        if (timesServed==reaminingServes){
+            reverseServingPlayer()
+            timesServed=0
+        }
+    }
+
+    //This method reverses the serving player
+    fun reverseServingPlayer() {
+        if (servingPlayer == 1){
+            servingPlayer= 2
+        }else{
+            servingPlayer=1
+        }
+    }
+
     override fun getSport(): String = "Tennis"
+
+    override fun getServingPlayer(): Int = servingPlayer
+
+
 }
 
 /*
@@ -161,4 +189,8 @@ class Tennis : Sport() {
 - Algunos torneos usan Super TieBreak en lugar del 3er set.
 - Gana el primero en llegar a 10 puntos con diferencia de 2.
   - Ejemplo: 10-8.
+
+
+  [Serving]
+  Cada cambio de juego saca el otro
  */

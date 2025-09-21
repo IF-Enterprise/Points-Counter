@@ -7,10 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_scoreboard">
 
-    <!-- ==================== SCORE RED ==================== -->
-
-    <!-- ==================== SCORE BLUE ==================== -->
-
+    <!-- ==================== Red pts ==================== -->
     <LinearLayout
         android:id="@+id/red_container"
         android:layout_width="231dp"
@@ -48,10 +45,7 @@
             android:text="-" />
     </LinearLayout>
 
-    <!-- ==================== SETS ==================== -->
-
-    <!-- ==================== GAMES ==================== -->
-
+    <!-- ==================== Blue pts ==================== -->
     <LinearLayout
         android:id="@+id/blue_container"
         android:layout_width="220dp"
@@ -89,6 +83,7 @@
             android:text="-" />
     </LinearLayout>
 
+    <!-- ==================== Red sets ==================== -->
     <TextView
         android:id="@+id/red_sets"
         android:layout_width="41dp"
@@ -104,6 +99,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- ==================== Blue sets ==================== -->
     <TextView
         android:id="@+id/blue_sets"
         android:layout_width="58dp"
@@ -147,6 +143,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="353dp" />
 
+    <!-- ==================== Red games ==================== -->
     <TextView
         android:id="@+id/red_games"
         android:layout_width="0dp"
@@ -162,6 +159,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline_mid"
         app:layout_constraintEnd_toStartOf="@+id/guideline_center" />
 
+    <!-- ==================== Blue games ==================== -->
     <TextView
         android:id="@+id/blue_games"
         android:layout_width="0dp"

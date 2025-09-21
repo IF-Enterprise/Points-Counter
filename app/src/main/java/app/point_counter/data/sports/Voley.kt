@@ -8,7 +8,7 @@ class Voley : Sport() {
         diff2Pts = true,
         pointsPerSet = 25,
     )
-
+    private var servingPlayer: Int = rules.PlayerServing //gets the player who initially serves
     var ptsPerSet: Int = rules.pointsPerSet
 
     override fun addPointToPlayer(player: Int) {
@@ -17,12 +17,14 @@ class Voley : Sport() {
             if (score.player1Pts >= ptsPerSet && score.player1Pts - score.player2Pts >= 2) {
                 score.addSet(1)
                 score.resetPts()
+                servingPlayer=1
             }
         } else if (player == 2) {
             score.addPts(2)
             if (score.player2Pts >= ptsPerSet && score.player2Pts - score.player1Pts >= 2) {
                 score.addSet(2)
                 score.resetPts()
+                servingPlayer=2
             }
         }
         if (score.player1Sets == 2 && score.player2Sets == 2)
@@ -33,10 +35,12 @@ class Voley : Sport() {
         if (player == 1) {
             if (score.player1Pts > 0) {
                 score.subPts(1)
+                servingPlayer=2
             }
         } else if (player == 2) {
             if (score.player2Pts > 0) {
                 score.subPts(2)
+                servingPlayer=1
             }
         }
     }
@@ -51,6 +55,8 @@ class Voley : Sport() {
     }
 
     override fun getSport(): String = "Voley"
+
+    override fun getServingPlayer(): Int = servingPlayer
 }
 
 /*
@@ -69,4 +75,10 @@ class Voley : Sport() {
 
 [PARTIDO]
 - Mejor de 5 sets (gana quien gane 3 sets).
+[Saque]
+-Debera sacar el equipo que haya ganado el punto anterior
+
+
+Serving
+Rally Point
 */

@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -29,6 +30,7 @@ import org.vosk.android.SpeechService
 import org.vosk.android.RecognitionListener
 import java.io.File
 import java.io.IOException
+import android.widget.ImageView
 
 open class ScoreboardActivity : MainActivity() {
 
@@ -46,6 +48,9 @@ open class ScoreboardActivity : MainActivity() {
 
     private var redScoreGames: TextView? = null
     private var blueScoreGames: TextView? = null
+
+    private var serveRed: ImageView?=null
+    private var serveBlue: ImageView?=null
 
 
     @SuppressLint("MissingInflatedId")
@@ -128,6 +133,14 @@ open class ScoreboardActivity : MainActivity() {
 
         redScoreGames?.text = scoreManager.getGamesPlayer(1).toString()
         blueScoreGames?.text = scoreManager.getGamesPlayer(2).toString()
+
+
+        val serveRed = findViewById<ImageView>(R.id.serve_red)
+        val serveBlue = findViewById<ImageView>(R.id.serve_blue)
+
+
+        serveRed.visibility = if (scoreManager.getServingPlayer() == 1) View.VISIBLE else View.GONE
+        serveBlue.visibility = if (scoreManager.getServingPlayer() == 2) View.VISIBLE else View.GONE
 
 
         // When the score is updated we check if someone won

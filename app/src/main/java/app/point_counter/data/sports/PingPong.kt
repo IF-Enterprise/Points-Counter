@@ -10,16 +10,29 @@ class PingPong() : Sport() {
         hasTieBreak = true,
         tieBreakPoints = 7,
     )
+    private var servingPlayer: Int = rules.PlayerServing //gets the player who initially serves
+    private var timesServed:Int=0
 
     override fun addPointToPlayer(player: Int) {
         score.addPts(player)
 
+        //The changes Serving its usually each 2 serves but when its over 10-10 it changes every point
+        if (score.player1Pts >= 10 && score.player2Pts >= 10) {
+            // Empate a 10 o más → saque cada punto
+            changeServingPlayerAt(1)
+        } else {
+            // Antes del 10-10 → saque cada dos puntos
+            changeServingPlayerAt(2)
+        }
+
         // Regla de ping pong: si un jugador tiene 11 y diferencia de 2 → gana el set
         if (score.player1Pts >= 11 && score.player1Pts - score.player2Pts >= 2) {
             score.addSet(1)
+            reverseServingPlayer()
         }
         if (score.player2Pts >= 11 && score.player2Pts - score.player1Pts >= 2) {
             score.addSet(2)
+            reverseServingPlayer()
         }
     }
 
@@ -35,8 +48,24 @@ class PingPong() : Sport() {
             else -> 0
         }
     }
+    fun changeServingPlayerAt(reaminingServes:Int) {
+        timesServed++
+        if (timesServed==reaminingServes){
+            reverseServingPlayer()
+            timesServed=0
+        }
+    }
+    fun reverseServingPlayer() {
+        if (servingPlayer == 1){
+            servingPlayer= 2
+        }else{
+            servingPlayer=1
+        }
+    }
 
     override fun getSport(): String = "Ping Pong"
+
+    override fun getServingPlayer(): Int = servingPlayer
 }
 
 /*
@@ -48,4 +77,8 @@ Ventaja de dos puntos: Si ambos jugadores alcanzan 10 puntos, el juego continúa
 Saques alternados: Los jugadores sirven dos veces seguidas, cambiando el saque después de cada dos puntos, hasta que se llega al 10-10. A partir de ahí, se alternan los saques cada punto.
 Partidos: Los partidos generalmente se juegan al mejor de 3, 5 o 7 sets.
 Puntos: Un punto se gana cuando el oponente no logra devolver la pelota correctamente, ya sea porque la pelota rebota dos veces en su lado, no cruza la red, o sale de la mesa.
+
+
+ SERVING
+ Los cambios de saque cambian cada 2 pts pero cuando llega a 10-10 cambia a cada 1. Cuando un set es ganado cambia automaticamente el que ha ganado
  */

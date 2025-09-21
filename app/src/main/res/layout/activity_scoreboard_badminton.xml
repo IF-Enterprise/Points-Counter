@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/scoreboard_badminton">
 
-    <!-- ==================== SETS ==================== -->
 
-    <!-- ==================== GAMES ==================== -->
+    <!-- ==================== Red pts ==================== -->
 
     <LinearLayout
         android:id="@+id/red_container"
@@ -37,7 +36,7 @@
             android:gravity="center"
             android:text="0"
             android:textColor="@color/white"
-            android:textSize="48sp"
+            android:textSize="70sp"
             android:textStyle="bold" />
 
         <Button
@@ -47,6 +46,8 @@
             android:text="-" />
     </LinearLayout>
 
+
+    <!-- ==================== Blue pts ==================== -->
     <LinearLayout
         android:id="@+id/blue_container"
         android:layout_width="220dp"
@@ -74,7 +75,7 @@
             android:gravity="center"
             android:text="0"
             android:textColor="@color/white"
-            android:textSize="48sp"
+            android:textSize="70sp"
             android:textStyle="bold" />
 
         <Button
@@ -84,32 +85,35 @@
             android:text="-" />
     </LinearLayout>
 
+    <!-- ==================== Red sets ==================== -->
+
+
+    <!-- ==================== Blue sets ==================== -->
+
     <TextView
         android:id="@+id/red_sets"
-        android:layout_width="41dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="144dp"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="132dp"
         android:gravity="center"
         android:text="0"
         android:textColor="@color/red_player"
-        android:textSize="36sp"
+        android:textSize="50sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guideline_center"
-        app:layout_constraintHorizontal_bias="0.827"
+        app:layout_constraintHorizontal_bias="0.82"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- ==================== GUIDELINES ==================== -->
-
     <TextView
         android:id="@+id/blue_sets"
-        android:layout_width="58dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="144dp"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="132dp"
         android:gravity="center"
         android:text="0"
         android:textColor="@color/blue_dark"
-        android:textSize="36sp"
+        android:textSize="50sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.093"
@@ -129,6 +133,45 @@
 
     </LinearLayout>
 
+
+    <!-- ==================== Serve Indicator Container ==================== -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/serve_container"
+        android:layout_width="295dp"
+        android:layout_height="101dp"
+        android:layout_marginTop="220dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Bola del jugador azul a la izquierda -->
+        <ImageView
+            android:id="@+id/serve_blue"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/badmint_ball"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <!-- Bola del jugador rojo a la derecha -->
+        <ImageView
+            android:id="@+id/serve_red"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/badmint_ball"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <!-- ==================== Guidelines ==================== -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_center"
         android:layout_width="wrap_content"

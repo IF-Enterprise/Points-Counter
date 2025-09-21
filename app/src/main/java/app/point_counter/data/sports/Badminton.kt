@@ -10,18 +10,22 @@ class Badminton : Sport() {
         maxPoints = 30,
         )
 
+    private var servingPlayer: Int = rules.PlayerServing //gets the player who initially serves
+
     override fun addPointToPlayer(player: Int) {
         if (player == 1) {
             score.addPts(1)
             if ((score.player1Pts >= 21 && score.player1Pts - score.player2Pts >= 2) || score.player1Pts == rules.maxPoints) {
                 score.addSet(1)
                 score.resetPts()
+                servingPlayer=1
             }
         } else if (player == 2) {
             score.addPts(2)
             if ((score.player2Pts >= 21 && score.player2Pts - score.player1Pts >= 2) || score.player1Pts == rules.maxPoints) {
                 score.addSet(2)
                 score.resetPts()
+                servingPlayer=2
             }
         }
     }
@@ -48,7 +52,10 @@ class Badminton : Sport() {
     }
 
     override fun getSport(): String = "Badminton"
+
+    override fun getServingPlayer(): Int = servingPlayer
 }
+
 
 /*
 [BÁDMINTON]
@@ -65,4 +72,8 @@ class Badminton : Sport() {
 
 [PARTIDO]
 - Se juega al mejor de 3 sets (gana quien gane 2 sets).
+
+
+Serving
+Rally Point
 */
