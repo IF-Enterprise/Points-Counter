@@ -140,10 +140,19 @@ open class ScoreboardActivity : MainActivity() {
 
 
 
-        serveRed.visibility = if (scoreManager.getServingPlayer() == 1) View.VISIBLE else View.GONE
-        serveBlue.visibility = if (scoreManager.getServingPlayer() == 2) View.VISIBLE else View.GONE
+        val serving = scoreManager.getServingPlayer()
+        Log.d("Serving", "Serving player: $serving")
 
+        // Reset de visibilidad
+        serveRed.visibility = View.INVISIBLE
+        serveBlue.visibility = View.INVISIBLE
 
+        // Mostrar la bola en el jugador que saca
+        if (serving == 1) {
+            serveRed.visibility = View.VISIBLE
+        } else if (serving == 2) {
+            serveBlue.visibility = View.VISIBLE
+        }
 
 
         // When the score is updated we check if someone won

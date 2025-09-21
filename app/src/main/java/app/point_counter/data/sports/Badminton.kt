@@ -18,16 +18,15 @@ class Badminton : Sport() {
             if ((score.player1Pts >= 21 && score.player1Pts - score.player2Pts >= 2) || score.player1Pts == rules.maxPoints) {
                 score.addSet(1)
                 score.resetPts()
-                servingPlayer=1
             }
         } else if (player == 2) {
             score.addPts(2)
             if ((score.player2Pts >= 21 && score.player2Pts - score.player1Pts >= 2) || score.player1Pts == rules.maxPoints) {
                 score.addSet(2)
                 score.resetPts()
-                servingPlayer=2
             }
         }
+        servingPlayer = player
     }
 
     override fun substractPointToPlayer(player: Int) {

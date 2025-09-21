@@ -17,16 +17,16 @@ class Voley : Sport() {
             if (score.player1Pts >= ptsPerSet && score.player1Pts - score.player2Pts >= 2) {
                 score.addSet(1)
                 score.resetPts()
-                servingPlayer=1
             }
         } else if (player == 2) {
             score.addPts(2)
             if (score.player2Pts >= ptsPerSet && score.player2Pts - score.player1Pts >= 2) {
                 score.addSet(2)
                 score.resetPts()
-                servingPlayer=2
             }
         }
+        servingPlayer = player
+
         if (score.player1Sets == 2 && score.player2Sets == 2)
             ptsPerSet = 15
     }
