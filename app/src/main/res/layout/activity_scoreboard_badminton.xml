@@ -150,10 +150,10 @@
         <!-- Bola del jugador rojo a la derecha -->
 
         <ImageView
-            android:id="@+id/serve_blue"
+            android:id="@+id/serve_red"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="144dp"
+            android:layout_marginStart="16dp"
             android:src="@drawable/badmint_ball"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -162,7 +162,7 @@
             app:layout_constraintVertical_bias="0.346" />
 
         <ImageView
-            android:id="@+id/serve_red"
+            android:id="@+id/serve_blue"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/badmint_ball"
