@@ -8,7 +8,7 @@ class Voley : Sport() {
         diff2Pts = true,
         pointsPerSet = 25,
     )
-    private var servingPlayer: Int = rules.PlayerServing //gets the player who initially serves
+    private var servingPlayer: Int = rules.playerServing //gets the player who initially serves
     var ptsPerSet: Int = rules.pointsPerSet
 
     override fun addPointToPlayer(player: Int) {

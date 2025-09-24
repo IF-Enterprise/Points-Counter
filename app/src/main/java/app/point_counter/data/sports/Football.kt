@@ -1,14 +1,10 @@
 package app.point_counter.data.sports
 
-import app.point_counter.data.Score
 import app.point_counter.data.Sport
 
-class PingPong() : Sport() {
+class Football: Sport() {
     override val rules: SportRules = SportRules(
-        setsToWin = 3,
-        pointsPerSet = 6,
-        hasTieBreak = true,
-        tieBreakPoints = 7,
+
     )
     private var servingPlayer: Int = rules.playerServing //gets the player who initially serves
     private var timesServed:Int=0
@@ -67,18 +63,3 @@ class PingPong() : Sport() {
 
     override fun getServingPlayer(): Int = servingPlayer
 }
-
-/*
-REGLAMENTO
-En el ping pong, un juego se gana al alcanzar 11 puntos, siempre y cuando haya una diferencia de al menos dos puntos sobre el oponente. Si el marcador llega a 10-10, el juego continúa hasta que un jugador obtenga una ventaja de dos puntos.
-Detalles de la puntuación en tenis de mesa:
-11 puntos para ganar: Un juego se gana cuando un jugador llega a 11 puntos primero.
-Ventaja de dos puntos: Si ambos jugadores alcanzan 10 puntos, el juego continúa hasta que uno de ellos logre una ventaja de dos puntos (por ejemplo, 12-10, 13-11).
-Saques alternados: Los jugadores sirven dos veces seguidas, cambiando el saque después de cada dos puntos, hasta que se llega al 10-10. A partir de ahí, se alternan los saques cada punto.
-Partidos: Los partidos generalmente se juegan al mejor de 3, 5 o 7 sets.
-Puntos: Un punto se gana cuando el oponente no logra devolver la pelota correctamente, ya sea porque la pelota rebota dos veces en su lado, no cruza la red, o sale de la mesa.
-
-
- SERVING
- Los cambios de saque cambian cada 2 pts pero cuando llega a 10-10 cambia a cada 1. Cuando un set es ganado cambia automaticamente el que ha ganado
- */

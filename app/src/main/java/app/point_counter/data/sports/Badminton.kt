@@ -10,7 +10,7 @@ class Badminton : Sport() {
         maxPoints = 30,
         )
 
-    private var servingPlayer: Int = rules.PlayerServing //gets the player who initially serves
+    private var servingPlayer: Int = rules.playerServing //gets the player who initially serves
 
     override fun addPointToPlayer(player: Int) {
         if (player == 1) {
@@ -74,5 +74,5 @@ class Badminton : Sport() {
 
 
 Serving
-Rally Point
+Rally Point (who wins sacate)
 */

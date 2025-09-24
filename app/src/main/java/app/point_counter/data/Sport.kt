@@ -1,5 +1,8 @@
 package app.point_counter.data
 
+import java.lang.Math.random
+import kotlin.random.Random
+
 /*
     Sport.kt
     Mother Class of all Sports, has basic function which are common with all the available sports.
@@ -22,7 +25,8 @@ abstract class Sport {
         val hasTieBreak: Boolean = false,
         val tieBreakPoints: Int = 0,
         val tieBreak2Diff: Boolean = false,
-        val PlayerServing: Int = 1
+        val playerServing: Int = Random.nextInt(1, 2),
+        val duration: Int = 0
     )
 
     /* -------- SPORT SPECIFIC METHODS -------- */

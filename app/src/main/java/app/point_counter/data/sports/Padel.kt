@@ -19,7 +19,7 @@ class Padel : Sport() {
         tieBreakPoints = 7,
         tieBreak2Diff = true,
     )
-    private var servingPlayer: Int = rules.PlayerServing //gets the player who initially serves
+    private var servingPlayer: Int = rules.playerServing //gets the player who initially serves
     var tieBreak = false
 
     private var timesServed:Int=0
