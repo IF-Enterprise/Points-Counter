@@ -19,6 +19,7 @@ import app.point_counter.data.sports.PingPong
 import app.point_counter.data.sports.Tennis
 import app.point_counter.data.sports.Padel
 import app.point_counter.data.sports.Voley
+import app.point_counter.data.sports.Football
 import com.yourpackage.utils.VoskHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -66,7 +67,7 @@ open class ScoreboardActivity : MainActivity() {
 
         if (sportType == "pingpong") {
             scoreManager.setSport(PingPong())
-            setContentView(R.layout.activity_scoreboard2)
+            setContentView(R.layout.activity_scoreboard_badminton)
             //scoreManager.setToWin(setsToWin)
         }else if(sportType == "tennis"){
             setContentView(R.layout.activity_scoreboard2)
@@ -83,7 +84,7 @@ open class ScoreboardActivity : MainActivity() {
             scoreManager.setSport(Voley())
         }else if (sportType == "football"){
             setContentView(R.layout.activity_scoreboard)
-            //scoreManager.setSport(Football())
+            scoreManager.setSport(Football())
         }else if (sportType== "basketball"){
             setContentView(R.layout.activity_scoreboard2)
             //scoreManager.setSport(Basketball())

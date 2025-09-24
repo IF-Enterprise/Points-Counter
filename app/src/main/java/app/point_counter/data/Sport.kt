@@ -25,7 +25,7 @@ abstract class Sport {
         val hasTieBreak: Boolean = false,
         val tieBreakPoints: Int = 0,
         val tieBreak2Diff: Boolean = false,
-        val playerServing: Int = Random.nextInt(1, 2),
+        val playerServing: Int = Random.nextInt(1, 3),
         val duration: Int = 0
     )
 
