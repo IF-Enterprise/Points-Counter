@@ -1,14 +1,18 @@
 package app.point_counter.data.sports
 
 import android.os.CountDownTimer
+import android.util.Log
 import app.point_counter.data.Sport
+
 
 class Football: Sport() {
     override val rules: SportRules = SportRules(
-        duration = 90
+        duration = 90,
+        halfDuration = 45,
+        setsToWin = 0,
+        pointsPerGames = 1
     )
     private var servingPlayer: Int = rules.playerServing //gets the player who initially serves
-    var timer: CountDownTimer? = null
 
     override fun addPointToPlayer(player: Int) {
         score.addPts(player)
@@ -39,31 +43,11 @@ class Football: Sport() {
         }
     }
 
-    fun startTimer() {
-        timer = object : CountDownTimer(halfDuration, 1000) { // tick every 1 second
-            override fun onTick(millisUntilFinished: Long) {
-                val minutes = (millisUntilFinished / 1000) / 60
-                val seconds = (millisUntilFinished / 1000) % 60
-                timerTextView.text = String.format("%02d:%02d", minutes, seconds)
-            }
 
-            override fun onFinish() {
-                // Half-time reached
-                Toast.makeText(context, "Half-time!", Toast.LENGTH_SHORT).show()
-            }
-        }.start()
-    }
 
-    fun pauseTimer() {
-        timer?.cancel() // store remaining time if needed
-    }
-
-    fun resetTimer() {
-        timer?.cancel()
-        timerTextView.text = "45:00"
-    }
 
     override fun getServingPlayer(): Int = servingPlayer
 
     override fun getSport(): String = "Football"
 }
+

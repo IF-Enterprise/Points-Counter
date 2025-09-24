@@ -1,16 +1,25 @@
 package app.point_counter.data
 
-import java.lang.Math.random
 import kotlin.random.Random
+import SportTimer
 
 /*
     Sport.kt
     Mother Class of all Sports, has basic function which are common with all the available sports.
 */
 abstract class Sport {
-    val score = Score() // Calls the new class Score
+    val score = Score()
 
-    abstract val rules: SportRules?
+    // ✅ rules is now non-nullable
+    abstract val rules: SportRules
+
+    // ✅ sportTimer uses non-nullable values
+    val sportTimer: SportTimer by lazy {
+        SportTimer(
+            durationMinutes = rules.duration,
+            halfMinutes = rules.halfDuration
+        )
+    }
 
     // Rules data class
     data class SportRules(
@@ -26,44 +35,34 @@ abstract class Sport {
         val tieBreakPoints: Int = 0,
         val tieBreak2Diff: Boolean = false,
         val playerServing: Int = Random.nextInt(1, 3),
-        val duration: Int = 0
-        val
+        val duration: Int = 0,
+        val halfDuration: Int = 0
     )
 
     /* -------- SPORT SPECIFIC METHODS -------- */
-
     abstract fun addPointToPlayer(player: Int)
     abstract fun substractPointToPlayer(player: Int)
     abstract fun checkWin(): Int
     abstract fun getSport(): String
-
     abstract fun getServingPlayer(): Int
 
+    open fun startTimer() {
+        sportTimer.startTimer()
+    }
+
     /* -------- GETTERS -------- */
+    fun getSetsToWin(): Int = rules.setsToWin
 
-    fun getSetsToWin(): Int {
-        return rules!!.setsToWin
-    }
-    open fun getPtsPlayer(player: Int): Int {
-        if (player == 1) return score.player1Pts
-        if (player == 2) return score.player2Pts
-        return -1
-    }
+    open fun getPtsPlayer(player: Int): Int =
+        if (player == 1) score.player1Pts else if (player == 2) score.player2Pts else -1
 
-    open fun getSetsPlayer(player: Int): Int {
-        if (player == 1) return score.player1Sets
-        if (player == 2) return score.player2Sets
-        return -1
-    }
+    open fun getSetsPlayer(player: Int): Int =
+        if (player == 1) score.player1Sets else if (player == 2) score.player2Sets else -1
 
-    open fun getGamesPlayer(player: Int):Int {
-        if (player == 1) return score.player1Games
-        if (player == 2) return score.player2Games
-        return -1
-    }
+    open fun getGamesPlayer(player: Int): Int =
+        if (player == 1) score.player1Games else if (player == 2) score.player2Games else -1
 
     /* -------- SETTERS -------- */
-
     open fun setScore(player1Pts: Int, player2Pts: Int, player1Sets: Int, player2Sets: Int) {
         score.player1Pts = player1Pts
         score.player2Pts = player2Pts
@@ -72,9 +71,7 @@ abstract class Sport {
     }
 
     /* -------- SCORE FUNCTIONS -------- */
-    open fun toStringPlayer(player : Int): String {
-        return score.toStringPlayer(player)
-    }
+    open fun toStringPlayer(player: Int): String = score.toStringPlayer(player)
 
     open fun resetScore() = score.resetAll()
 }

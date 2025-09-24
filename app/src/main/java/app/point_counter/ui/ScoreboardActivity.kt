@@ -83,8 +83,9 @@ open class ScoreboardActivity : MainActivity() {
             setContentView(R.layout.activity_scoreboard2)
             scoreManager.setSport(Voley())
         }else if (sportType == "football"){
-            setContentView(R.layout.activity_scoreboard)
+            setContentView(R.layout.activity_scoreboard_football)
             scoreManager.setSport(Football())
+            scoreManager.startTimer()
         }else if (sportType== "basketball"){
             setContentView(R.layout.activity_scoreboard2)
             //scoreManager.setSport(Basketball())

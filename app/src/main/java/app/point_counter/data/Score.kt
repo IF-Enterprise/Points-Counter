@@ -1,5 +1,6 @@
 package app.point_counter.data
 
+import android.os.CountDownTimer
 import kotlinx.serialization.Serializable
 
 /*
@@ -13,7 +14,7 @@ class Score(
     var player1Sets: Int = 0,
     var player2Sets: Int = 0,
     var player1Games: Int = 0,
-    var player2Games: Int = 0
+    var player2Games: Int = 0,
     ) {
 
     /* -------- GETTERS -------- */

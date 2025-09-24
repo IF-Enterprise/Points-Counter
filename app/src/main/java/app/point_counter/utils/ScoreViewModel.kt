@@ -68,6 +68,7 @@ class ScoreViewModel: ViewModel() {
 
     fun checkWin(): Int = sport.checkWin()
 
+    fun startTimer() = sport.startTimer()
     /* -------- GAMES MANAGER -------- */
 
     fun loadGames(context: Context) {
