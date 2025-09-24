@@ -58,7 +58,7 @@ open class ScoreboardActivity : MainActivity() {
         super.onCreate(savedInstanceState)
 
         // ✅ Usamos la función en vez de código duplicado
-        checkAudioPermission()
+        //checkAudioPermission()
 
         // Configuración inicial del juego
         val sportType = intent.getStringExtra("sportType")
@@ -99,6 +99,7 @@ open class ScoreboardActivity : MainActivity() {
         redScoreGames = findViewById(R.id.red_games)
         blueScoreGames = findViewById(R.id.blue_games)
 
+        updateService()
 
         // Setup buttons ADD SUBSTRACT pts
         setupButtons()
@@ -135,25 +136,7 @@ open class ScoreboardActivity : MainActivity() {
         blueScoreGames?.text = scoreManager.getGamesPlayer(2).toString()
 
 
-        val serveRed = findViewById<ImageView>(R.id.serve_red)
-        val serveBlue = findViewById<ImageView>(R.id.serve_blue)
-
-
-
-        val serving = scoreManager.getServingPlayer()
-        Log.d("Serving", "Serving player: $serving")
-
-        // Reset de visibilidad
-        serveRed.visibility = View.INVISIBLE
-        serveBlue.visibility = View.INVISIBLE
-
-        // Mostrar la bola en el jugador que saca
-        if (serving == 1) {
-            serveRed.visibility = View.VISIBLE
-        } else if (serving == 2) {
-            serveBlue.visibility = View.VISIBLE
-        }
-
+        updateService()
 
         // When the score is updated we check if someone won
         if (scoreManager.checkWin() == 1) {
@@ -168,6 +151,25 @@ open class ScoreboardActivity : MainActivity() {
 
     }
 
+    private fun updateService(){
+
+        val serveRed = findViewById<ImageView>(R.id.serve_red)
+        val serveBlue = findViewById<ImageView>(R.id.serve_blue)
+
+        val serving = scoreManager.getServingPlayer()
+        Log.d("Serving", "Serving player: $serving")
+
+        // Reset de visibilidad
+        serveRed.visibility = View.INVISIBLE
+        serveBlue.visibility = View.INVISIBLE
+
+        // Mostrar la bola en el jugador que saca
+        if (serving == 1) {
+            serveRed.visibility = View.VISIBLE
+        } else if (serving == 2) {
+            serveBlue.visibility = View.VISIBLE
+        }
+    }
 
 
     // ⚠️//CAUTION//⚠️                                             ⚠️//CAUTION//⚠️
