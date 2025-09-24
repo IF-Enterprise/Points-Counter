@@ -27,6 +27,7 @@ abstract class Sport {
         val tieBreak2Diff: Boolean = false,
         val playerServing: Int = Random.nextInt(1, 2),
         val duration: Int = 0
+        val
     )
 
     /* -------- SPORT SPECIFIC METHODS -------- */

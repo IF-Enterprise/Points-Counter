@@ -1,35 +1,21 @@
 package app.point_counter.data.sports
 
+import android.os.CountDownTimer
 import app.point_counter.data.Sport
 
 class Football: Sport() {
     override val rules: SportRules = SportRules(
-
+        duration = 90
     )
     private var servingPlayer: Int = rules.playerServing //gets the player who initially serves
-    private var timesServed:Int=0
+    var timer: CountDownTimer? = null
 
     override fun addPointToPlayer(player: Int) {
         score.addPts(player)
-
-        //The changes Serving its usually each 2 serves but when its over 10-10 it changes every point
-        if (score.player1Pts >= 10 && score.player2Pts >= 10) {
-            // Empate a 10 o más → saque cada punto
-            changeServingPlayerAt(1)
-        } else {
-            // Antes del 10-10 → saque cada dos puntos
-            changeServingPlayerAt(2)
-        }
-
-        // Regla de ping pong: si un jugador tiene 11 y diferencia de 2 → gana el set
-        if (score.player1Pts >= 11 && score.player1Pts - score.player2Pts >= 2) {
-            score.addSet(1)
-            reverseServingPlayer()
-        }
-        if (score.player2Pts >= 11 && score.player2Pts - score.player1Pts >= 2) {
-            score.addSet(2)
-            reverseServingPlayer()
-        }
+        if (player == 1)
+            servingPlayer = 2
+        else if (player == 2)
+            servingPlayer = 1
     }
 
     override fun substractPointToPlayer(player: Int) {
@@ -44,13 +30,7 @@ class Football: Sport() {
             else -> 0
         }
     }
-    fun changeServingPlayerAt(remainingServes:Int) {
-        timesServed++
-        if (timesServed==remainingServes){
-            reverseServingPlayer()
-            timesServed=0
-        }
-    }
+
     fun reverseServingPlayer() {
         if (servingPlayer == 1){
             servingPlayer= 2
@@ -59,7 +39,31 @@ class Football: Sport() {
         }
     }
 
-    override fun getSport(): String = "Ping Pong"
+    fun startTimer() {
+        timer = object : CountDownTimer(halfDuration, 1000) { // tick every 1 second
+            override fun onTick(millisUntilFinished: Long) {
+                val minutes = (millisUntilFinished / 1000) / 60
+                val seconds = (millisUntilFinished / 1000) % 60
+                timerTextView.text = String.format("%02d:%02d", minutes, seconds)
+            }
+
+            override fun onFinish() {
+                // Half-time reached
+                Toast.makeText(context, "Half-time!", Toast.LENGTH_SHORT).show()
+            }
+        }.start()
+    }
+
+    fun pauseTimer() {
+        timer?.cancel() // store remaining time if needed
+    }
+
+    fun resetTimer() {
+        timer?.cancel()
+        timerTextView.text = "45:00"
+    }
 
     override fun getServingPlayer(): Int = servingPlayer
+
+    override fun getSport(): String = "Football"
 }
