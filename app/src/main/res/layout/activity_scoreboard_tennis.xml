@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/scoreboard_tennis">
+
+    <!-- ==================== Red pts ==================== -->
+
+    <!-- ==================== Blue pts ==================== -->
+
+    <LinearLayout
+        android:id="@+id/red_container"
+        android:layout_width="157dp"
+        android:layout_height="144dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_center"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.014">
+
+        <Button
+            android:id="@+id/red_plus"
+            android:layout_width="164dp"
+            android:layout_height="wrap_content"
+            android:text="+" />
+
+        <TextView
+            android:id="@+id/red_pts"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="48sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/red_minus"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="-" />
+    </LinearLayout>
+
+    <!-- ==================== Red sets ==================== -->
+
+    <!-- ==================== Blue sets ==================== -->
+
+    <LinearLayout
+        android:id="@+id/blue_container"
+        android:layout_width="177dp"
+        android:layout_height="152dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_mid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.078"
+        app:layout_constraintStart_toEndOf="@+id/guideline_center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.021">
+
+        <Button
+            android:id="@+id/blue_plus"
+            android:layout_width="165dp"
+            android:layout_height="wrap_content"
+            android:text="+" />
+
+        <TextView
+            android:id="@+id/blue_pts"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="48sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/blue_minus"
+            android:layout_width="131dp"
+            android:layout_height="wrap_content"
+            android:text="-" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/red_sets"
+        android:layout_width="41dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="192dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/red_player"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_center"
+        app:layout_constraintHorizontal_bias="0.891"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- ==================== GUIDELINES ==================== -->
+
+    <TextView
+        android:id="@+id/blue_sets"
+        android:layout_width="58dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="188dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/blue_dark"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/guideline_center"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_mid">
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="445dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_mid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="353dp" />
+
+    <!-- ==================== Red games ==================== -->
+
+    <!-- ==================== Blue games ==================== -->
+
+
+    <!-- ==================== Serve Indicator Container ==================== -->
+
+    <TextView
+        android:id="@+id/red_games"
+        android:layout_width="50dp"
+        android:layout_height="52dp"
+        android:layout_marginEnd="160dp"
+        android:layout_marginBottom="116dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/red_dark"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_mid"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_center" />
+
+    <TextView
+        android:id="@+id/blue_games"
+        android:layout_width="46dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginBottom="112dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/blue_dark"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_mid"
+        app:layout_constraintStart_toStartOf="@+id/guideline_center" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/serve_container"
+        android:layout_width="582dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.462"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Bola del jugador azul a la izquierda -->
+
+        <!-- Bola del jugador rojo a la derecha -->
+
+        <ImageView
+            android:id="@+id/serve_red"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/badmint_ball"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.346" />
+
+        <ImageView
+            android:id="@+id/serve_blue"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/badmint_ball"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

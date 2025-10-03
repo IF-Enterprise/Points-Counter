@@ -70,7 +70,7 @@ open class ScoreboardActivity : MainActivity() {
             setContentView(R.layout.activity_scoreboard_badminton)
             //scoreManager.setToWin(setsToWin)
         }else if(sportType == "tennis"){
-            setContentView(R.layout.activity_scoreboard2)
+            setContentView(R.layout.activity_scoreboard_tennis)
             scoreManager.setSport(Tennis())
             //val gamesToWin = intent.getIntExtra("games", 0)
         }else if(sportType== "padel"){
@@ -87,7 +87,9 @@ open class ScoreboardActivity : MainActivity() {
             scoreManager.setSport(Football())
             scoreManager.startTimer()
         }else if (sportType== "basketball"){
-            setContentView(R.layout.activity_scoreboard2)
+            setContentView(R.layout.activity_scoreboard_basket)
+            scoreManager.setSport(Tennis())
+            scoreManager.startTimer()
             //scoreManager.setSport(Basketball())
         }
 
