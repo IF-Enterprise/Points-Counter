@@ -36,5 +36,12 @@ class SportTimer(
         secondsElapsed = 0
     }
 
+    fun getTime(): String {
+        val minutes = secondsElapsed / 60
+        val seconds = secondsElapsed % 60
+        return String.format("%02d:%02d", minutes, seconds)
+    }
+
+
     fun getElapsedSeconds() = secondsElapsed
 }

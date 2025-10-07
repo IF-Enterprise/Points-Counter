@@ -17,6 +17,26 @@
         android:textStyle="bold"
         android:layout_gravity="center"/>
 
+
+    <!-- 🔥 Nuevo: Puntos por set -->
+    <TextView
+        android:id="@+id/tvPuntos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Puntos por set: 11"
+        android:textColor="#FFFF33"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"/>
+
+    <SeekBar
+        android:id="@+id/seekBarPuntos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="50"
+        android:progress="11"/>
+
+
+    <!-- Número de sets -->
     <TextView
         android:id="@+id/tvSets"
         android:layout_width="wrap_content"
@@ -24,36 +44,26 @@
         android:text="Número de sets: 3"
         android:textColor="#FFFF33"
         android:textSize="18sp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:visibility="gone"/>
 
     <SeekBar
         android:id="@+id/seekBarSets"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:max="6"
-        android:progress="3" />
+        android:progress="3"
+        android:visibility="gone"/>
 
-    <TextView
-        android:id="@+id/tvJugadores"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Número de jugadores: 2"
-        android:textColor="#FFFF33"
-        android:textSize="18sp"
-        android:layout_marginTop="20dp"/>
-
-    <SeekBar
-        android:id="@+id/seekBarJugadores"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="6"
-        android:progress="2"/>
-
+    <!-- Número de games (solo visible en tenis) -->
     <TextView
         android:id="@+id/tvGames"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Número de games: 0"
+        android:textColor="#FFFF33"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"
         android:visibility="gone"/>
 
     <SeekBar
@@ -64,6 +74,26 @@
         android:progress="0"
         android:visibility="gone"/>
 
+    <!-- 🔥 Nuevo: Duración del partido -->
+    <TextView
+        android:id="@+id/tvDuracion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Duración del partido (min): 90"
+        android:textColor="#FFFF33"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"/>
+
+    <SeekBar
+        android:id="@+id/seekBarDuracion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="180"
+        android:progress="90"
+        android:visibility="gone"/>
+
+    <!-- Botón confirmar -->
     <Button
         android:id="@+id/btnConfirmar"
         android:layout_width="wrap_content"
@@ -76,4 +106,3 @@
         android:layout_marginTop="30dp"/>
 
 </LinearLayout>
-

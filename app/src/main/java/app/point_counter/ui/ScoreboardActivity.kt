@@ -1,5 +1,6 @@
 package app.point_counter.ui
 
+import SportTimer
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
@@ -32,6 +33,7 @@ import org.vosk.android.RecognitionListener
 import java.io.File
 import java.io.IOException
 import android.widget.ImageView
+import kotlinx.coroutines.delay
 
 open class ScoreboardActivity : MainActivity() {
 
@@ -50,6 +52,9 @@ open class ScoreboardActivity : MainActivity() {
     private var redScoreGames: TextView? = null
     private var blueScoreGames: TextView? = null
 
+    private var timer: TextView? = null
+    private var sportTimer = SportTimer(90, 45)
+
     private var serveRed: ImageView?=null
     private var serveBlue: ImageView?=null
 
@@ -67,7 +72,7 @@ open class ScoreboardActivity : MainActivity() {
 
         if (sportType == "pingpong") {
             scoreManager.setSport(PingPong())
-            setContentView(R.layout.activity_scoreboard_badminton)
+            setContentView(R.layout.activity_scoreboard_pingpong)
             //scoreManager.setToWin(setsToWin)
         }else if(sportType == "tennis"){
             setContentView(R.layout.activity_scoreboard_tennis)
@@ -85,11 +90,11 @@ open class ScoreboardActivity : MainActivity() {
         }else if (sportType == "football"){
             setContentView(R.layout.activity_scoreboard_football)
             scoreManager.setSport(Football())
-            scoreManager.startTimer()
+            sportTimer.startTimer()
         }else if (sportType== "basketball"){
             setContentView(R.layout.activity_scoreboard_basket)
             scoreManager.setSport(Tennis())
-            scoreManager.startTimer()
+            sportTimer.startTimer()
             //scoreManager.setSport(Basketball())
         }
 
@@ -103,8 +108,17 @@ open class ScoreboardActivity : MainActivity() {
         redScoreGames = findViewById(R.id.red_games)
         blueScoreGames = findViewById(R.id.blue_games)
 
-        updateService()
+        timer=findViewById(R.id.timer)
 
+        //unstop the currency of the code
+        lifecycleScope.launch {
+            while (true) {
+                updateTimer()
+                delay(1000) // 1 segundo
+            }
+        }
+
+        updateService()
         // Setup buttons ADD SUBSTRACT pts
         setupButtons()
     }
@@ -126,6 +140,9 @@ open class ScoreboardActivity : MainActivity() {
             scoreManager.subPointToPlayer(2)
             updateScore()
         }
+    }
+    private fun updateTimer(){
+        timer?.text = sportTimer.getTime()
     }
 
     private fun updateScore() {
