@@ -9,7 +9,7 @@ class PingPong() : Sport() {
         pointsPerSet = 6,
         hasTieBreak = true,
         tieBreakPoints = 7,
-    )
+    )//change
     private var servingPlayer: Int = rules.playerServing //gets the player who initially serves
     private var timesServed:Int=0
 
