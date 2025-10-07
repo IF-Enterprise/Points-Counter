@@ -1,6 +1,7 @@
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.SeekBar
@@ -20,42 +21,50 @@ class SettingsDialog : DialogFragment() {
     companion object {
         fun newInstance(sportType: String): SettingsDialog {
             return SettingsDialog().apply {
-                arguments = Bundle().apply {
-                    putString("sportType", sportType)
-                }
+                arguments = Bundle().apply { putString("sportType", sportType) }
             }
         }
     }
 
+    private var _rootView: View? = null
+    private val rootView get() = _rootView!!
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(requireContext())
-        val inflater = requireActivity().layoutInflater
-        val view = inflater.inflate(R.layout.activity_settings, null)
-        builder.setView(view)
+        val context = context ?: return super.onCreateDialog(savedInstanceState)
+        val inflater = LayoutInflater.from(context)
+        _rootView = inflater.inflate(R.layout.activity_settings, null)
+
+        val builder = AlertDialog.Builder(context)
+            .setView(rootView)
+
         val dialog = builder.create()
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
+        setupUI()
+
+        return dialog
+    }
+
+    private fun setupUI() {
         // --- UI references ---
-        val tvSets = view.findViewById<TextView>(R.id.tvSets)
-        val seekSets = view.findViewById<SeekBar>(R.id.seekBarSets)
-        val tvGames = view.findViewById<TextView>(R.id.tvGames)
-        val seekGames = view.findViewById<SeekBar>(R.id.seekBarGames)
-        val tvDuracion = view.findViewById<TextView>(R.id.tvDuracion)
-        val seekDuracion = view.findViewById<SeekBar>(R.id.seekBarDuracion)
-        val tvPuntos = view.findViewById<TextView>(R.id.tvPuntos)
-        val seekPuntos = view.findViewById<SeekBar>(R.id.seekBarPuntos)
-        val btnConfirmar = view.findViewById<Button>(R.id.btnConfirmar)
+        val tvSets = rootView.findViewById<TextView>(R.id.tvSets)
+        val seekSets = rootView.findViewById<SeekBar>(R.id.seekBarSets)
+        val tvGames = rootView.findViewById<TextView>(R.id.tvGames)
+        val seekGames = rootView.findViewById<SeekBar>(R.id.seekBarGames)
+        val tvDuracion = rootView.findViewById<TextView>(R.id.tvDuracion)
+        val seekDuracion = rootView.findViewById<SeekBar>(R.id.seekBarDuracion)
+        val tvPuntos = rootView.findViewById<TextView>(R.id.tvPuntos)
+        val seekPuntos = rootView.findViewById<SeekBar>(R.id.seekBarPuntos)
+        val btnConfirmar = rootView.findViewById<Button>(R.id.btnConfirmar)
 
         // --- Tipo de deporte y reglas ---
         val sportType = arguments?.getString("sportType") ?: "pingpong"
         val rules = getRulesForSport(sportType)
 
         // --- Inicialización segura ---
-        // Puntos por set
         seekPuntos.progress = rules.pointsPerSet.coerceIn(1, seekPuntos.max)
         tvPuntos.text = "Puntos por set: ${seekPuntos.progress}"
 
-        // Sets
         if (sportType in listOf("tennis", "padel", "pingpong", "badminton", "voley")) {
             tvSets.visibility = View.VISIBLE
             seekSets.visibility = View.VISIBLE
@@ -66,7 +75,6 @@ class SettingsDialog : DialogFragment() {
             seekSets.visibility = View.GONE
         }
 
-        // Games (solo tenis y padel)
         if (sportType in listOf("tennis", "padel")) {
             tvGames.visibility = View.VISIBLE
             seekGames.visibility = View.VISIBLE
@@ -77,7 +85,6 @@ class SettingsDialog : DialogFragment() {
             seekGames.visibility = View.GONE
         }
 
-        // Timer (solo fútbol y baloncesto)
         if (sportType in listOf("football", "basketball")) {
             tvDuracion.visibility = View.VISIBLE
             seekDuracion.visibility = View.VISIBLE
@@ -88,41 +95,27 @@ class SettingsDialog : DialogFragment() {
             seekDuracion.visibility = View.GONE
         }
 
-        // --- Listeners ---
-        seekSets.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {
-                tvSets.text = "Número de sets: $progress"
-            }
-            override fun onStartTrackingTouch(sb: SeekBar?) {}
-            override fun onStopTrackingTouch(sb: SeekBar?) {}
+        // --- Listeners seguros ---
+        seekSets.setOnSeekBarChangeListener(createSafeListener { progress ->
+            if (isAdded) tvSets.text = "Número de sets: $progress"
         })
 
-        seekGames.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {
-                tvGames.text = "Número de games: $progress"
-            }
-            override fun onStartTrackingTouch(sb: SeekBar?) {}
-            override fun onStopTrackingTouch(sb: SeekBar?) {}
+        seekGames.setOnSeekBarChangeListener(createSafeListener { progress ->
+            if (isAdded) tvGames.text = "Número de games: $progress"
         })
 
-        seekDuracion.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {
-                tvDuracion.text = "Duración del partido (min): $progress"
-            }
-            override fun onStartTrackingTouch(sb: SeekBar?) {}
-            override fun onStopTrackingTouch(sb: SeekBar?) {}
+        seekDuracion.setOnSeekBarChangeListener(createSafeListener { progress ->
+            if (isAdded) tvDuracion.text = "Duración del partido (min): $progress"
         })
 
-        seekPuntos.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {
-                tvPuntos.text = "Puntos por set: $progress"
-            }
-            override fun onStartTrackingTouch(sb: SeekBar?) {}
-            override fun onStopTrackingTouch(sb: SeekBar?) {}
+        seekPuntos.setOnSeekBarChangeListener(createSafeListener { progress ->
+            if (isAdded) tvPuntos.text = "Puntos por set: $progress"
         })
 
         // --- Confirmar ---
         btnConfirmar.setOnClickListener {
+            if (!isAdded) return@setOnClickListener
+            btnConfirmar.isEnabled = false // Evitar doble click
             val intent = Intent(requireContext(), ScoreboardActivity::class.java).apply {
                 putExtra("sportType", sportType)
                 putExtra("sets", seekSets.progress)
@@ -133,13 +126,16 @@ class SettingsDialog : DialogFragment() {
                 }
             }
             startActivity(intent)
-            dismiss()
+            dismissAllowingStateLoss()
         }
-
-        return dialog
     }
 
-    // --- Reglas por defecto ---
+    private fun createSafeListener(onChange: (Int) -> Unit) = object : SeekBar.OnSeekBarChangeListener {
+        override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) = onChange(progress)
+        override fun onStartTrackingTouch(sb: SeekBar?) {}
+        override fun onStopTrackingTouch(sb: SeekBar?) {}
+    }
+
     private fun getRulesForSport(sportType: String): Sport.SportRules {
         return when (sportType.lowercase()) {
             "tennis" -> Tennis().rules
@@ -153,5 +149,10 @@ class SettingsDialog : DialogFragment() {
                 gamesPerSet = 6
             )
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _rootView = null // Evitar leaks y callbacks a views destruidas
     }
 }
