@@ -12,58 +12,81 @@ object VoskHelper {
         val modelDir = File(context.filesDir, modelName)
 
         try {
-            // Eliminar si existe
+            // Limpiar directorio existente
             if (modelDir.exists()) {
                 modelDir.deleteRecursively()
-                Log.d("VOSK", "Deleted existing model directory")
+            }
+            modelDir.mkdirs()
+
+            Log.d("VOSK", "Extrayendo modelo: $modelName")
+
+            // Listar y copiar todos los assets del modelo
+            val assets = context.assets.list(modelName)
+            if (assets.isNullOrEmpty()) {
+                throw IOException("No assets found for model: $modelName")
             }
 
-            // Crear directorio
-            if (!modelDir.mkdirs()) {
-                throw IOException("Failed to create model directory")
+            assets.forEach { asset ->
+                copyAssetRecursively(context, "$modelName/$asset", modelDir)
             }
 
-            // Copiar recursivamente
-            copyAssetFolder(context, modelName, modelDir)
-
-            // Verificación de archivos requeridos
-            val requiredFiles = listOf(
-                "am/final.mdl",
-                "conf/mfcc.conf",
-                "conf/model.conf",
-                "graph/HCLr.fst",
-                "graph/Gr.fst",
-                "ivector/final.ie",
-                "am/final.mdl"
-            )
-            requiredFiles.forEach { file ->
-                if (!File(modelDir, file).exists()) {
-                    throw IOException("Required model file '$file' is missing")
-                }
-            }
-
+            Log.d("VOSK", "Modelo extraído exitosamente")
             return modelDir.absolutePath
+
         } catch (e: Exception) {
             modelDir.deleteRecursively()
-            throw e
+            throw IOException("Error extrayendo modelo: ${e.message}", e)
         }
     }
 
-    private fun copyAssetFolder(context: Context, assetPath: String, destDir: File) {
-        val assets = context.assets.list(assetPath) ?: return
-        if (assets.isEmpty()) {
-            // Es un archivo
-            context.assets.open(assetPath).use { input ->
-                FileOutputStream(destDir).use { output ->
-                    input.copyTo(output)
+    private fun copyAssetRecursively(context: Context, assetPath: String, targetDir: File) {
+        return try {
+            // Intentar listar como directorio
+            val contents = context.assets.list(assetPath)
+            if (contents.isNullOrEmpty()) {
+                // Es un archivo
+                copySingleAsset(context, assetPath, targetDir)
+            } else {
+                // Es un directorio - crear subdirectorio y copiar contenido
+                val subDir = File(targetDir, File(assetPath).name)
+                subDir.mkdirs()
+                contents.forEach { item ->
+                    copyAssetRecursively(context, "$assetPath/$item", subDir)
                 }
             }
-        } else {
-            // Es un directorio
-            if (!destDir.exists()) destDir.mkdirs()
-            for (file in assets) {
-                copyAssetFolder(context, "$assetPath/$file", File(destDir, file))
+        } catch (e: Exception) {
+            // Si falla, intentar copiar como archivo
+            copySingleAsset(context, assetPath, targetDir)
+        }
+    }
+
+    private fun copySingleAsset(context: Context, assetPath: String, targetDir: File) {
+        context.assets.open(assetPath).use { input ->
+            val outputFile = File(targetDir, File(assetPath).name)
+            outputFile.parentFile?.mkdirs()
+
+            FileOutputStream(outputFile).use { output ->
+                input.copyTo(output)
+                Log.d("VOSK", "Copiado: ${outputFile.name}")
             }
         }
     }
+
+    private fun debugModelStructure(modelPath: String) {
+        val modelDir = File(modelPath)
+        Log.d("VOSK", "=== ESTRUCTURA DEL MODELO EXTRAÍDO ===")
+        Log.d("VOSK", "Directorio: $modelPath")
+
+        if (!modelDir.exists()) {
+            Log.e("VOSK", "❌ El directorio no existe")
+            return
+        }
+
+        modelDir.walk().forEach { file ->
+            val indent = "  ".repeat(file.relativeTo(modelDir).path.count { it == File.separatorChar })
+            val type = if (file.isDirectory) "📁" else "📄"
+            Log.d("VOSK", "$indent$type ${file.name}")
+        }
+    }
+
 }

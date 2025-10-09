@@ -211,20 +211,6 @@ open class ScoreboardActivity : MainActivity() {
     }
 
     // ✅ Nueva función para comprobar permisos
-    private fun checkAudioPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.RECORD_AUDIO),
-                RECORD_AUDIO_REQUEST_CODE
-            )
-        } else {
-            initializeVosk()
-        }
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -244,11 +230,19 @@ open class ScoreboardActivity : MainActivity() {
     private fun initializeVosk() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                // Extraer modelo (ya con tu VoskHelper)
-                val modelPath = VoskHelper.extractModel(this@ScoreboardActivity, "vosk_es")
+                Log.d("VOSK", "Starting model extraction...")
+
+                // Extraer modelo
+                val modelPath = VoskHelper.extractModel(this@ScoreboardActivity, "vosk-model-small-es-0.42")
                 Log.d("VOSK", "Model extracted to: $modelPath")
 
-                // Inicializar modelo
+                // Verificar que el directorio existe y tiene archivos
+                val modelDir = File(modelPath)
+                if (!modelDir.exists() || modelDir.listFiles().isNullOrEmpty()) {
+                    throw IOException("Model directory is empty or doesn't exist")
+                }
+
+                // Inicializar modelo con timeout
                 model = Model(modelPath).also {
                     if (it.pointer == null) throw IOException("Model initialization failed")
                 }
@@ -258,52 +252,40 @@ open class ScoreboardActivity : MainActivity() {
                 }
 
                 withContext(Dispatchers.Main) {
-                    // ✅ Usar el constructor simple que solo necesita Recognizer y sampleRate
-                    speechService = SpeechService(recognizer, 16000.0f)
+                    try {
+                        speechService = SpeechService(recognizer, 16000.0f)
+                        speechService?.startListening(recognitionListener)
 
-                    // Iniciar reconocimiento
-                    speechService?.startListening(recognitionListener)
-                    Toast.makeText(
-                        this@ScoreboardActivity,
-                        "Voice recognition enabled",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        Toast.makeText(
+                            this@ScoreboardActivity,
+                            "Reconocimiento de voz activado",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Log.d("VOSK", "Speech service started successfully")
+                    } catch (e: Exception) {
+                        Log.e("VOSK", "Failed to start speech service", e)
+                        Toast.makeText(
+                            this@ScoreboardActivity,
+                            "Error starting voice recognition",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
 
             } catch (e: Exception) {
+                Log.e("VOSK", "Vosk initialization failed", e)
                 withContext(Dispatchers.Main) {
                     val errorMsg = when (e) {
-                        is IOException -> "Failed to load voice model: ${e.message}"
-                        else -> "Unexpected error: ${e.message}"
+                        is IOException -> "Error cargando modelo de voz: ${e.message}"
+                        else -> "Error inesperado: ${e.message}"
                     }
                     Toast.makeText(this@ScoreboardActivity, errorMsg, Toast.LENGTH_LONG).show()
-                    Log.e("VOSK", "Full initialization error", e)
                 }
             }
         }
     }
 
 
-    private fun handleVoiceCommand(command: String) {
-        Log.d("VOSK", "Comando recibido: $command")
-        when {
-            command.contains("añadir") || command.contains("sumar") || command.contains("add") -> {
-                scoreManager.addPointToPlayer(1)
-                updateScore()
-            }
-            command.contains("quitar") || command.contains("restar") || command.contains("subtract") -> {
-                scoreManager.subPointToPlayer(1)
-                updateScore()
-            }
-            command.contains("reset") || command.contains("reiniciar") -> {
-                scoreManager.resetScore()
-                updateScore()
-            }
-            else -> runOnUiThread {
-                Toast.makeText(this@ScoreboardActivity, "Comando no reconocido: $command", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
 
     // Listener correctamente implementado para Vosk
     private val recognitionListener = object : RecognitionListener {
@@ -311,47 +293,194 @@ open class ScoreboardActivity : MainActivity() {
             try {
                 val jsonResult = JSONObject(result)
                 val recognizedText = jsonResult.getString("text").lowercase()
+                Log.d("VOSK", "Texto reconocido: $recognizedText")
                 handleVoiceCommand(recognizedText)
             } catch (e: Exception) {
-                Log.e("VOSK", "Error processing voice result", e)
+                Log.e("VOSK", "Error procesando resultado", e)
             }
         }
 
         override fun onFinalResult(hypothesis: String?) {
-            Log.d("Vosk", "Resultado final: $hypothesis")
-            Toast.makeText(this@ScoreboardActivity, "Reconocido: $hypothesis", Toast.LENGTH_SHORT).show()
+            Log.d("VOSK", "Resultado final: $hypothesis")
+            hypothesis?.let {
+                Toast.makeText(this@ScoreboardActivity, "Reconocido: $it", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        override fun onPartialResult(partialResult: String) { }
+        override fun onPartialResult(partialResult: String) {
+            // Procesar resultados parciales si lo deseas
+        }
+
         override fun onError(exception: Exception) {
+            Log.e("VOSK", "Error en reconocimiento", exception)
             runOnUiThread {
-                Toast.makeText(this@ScoreboardActivity, "Error en reconocimiento: ${exception.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ScoreboardActivity, "Error de voz: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
         }
 
         override fun onTimeout() {
-            runOnUiThread {
-                Toast.makeText(this@ScoreboardActivity, "Tiempo de espera agotado", Toast.LENGTH_SHORT).show()
+            Log.d("VOSK", "Timeout de reconocimiento")
+        }
+    }
+
+    private fun handleVoiceCommand(command: String) {
+        Log.d("VOSK", "Procesando comando: $command")
+
+        when {
+            // Comandos en español
+            command.contains("añadir") || command.contains("sumar") || command.contains("punto rojo") -> {
+                scoreManager.addPointToPlayer(1)
+                updateScore()
+                Toast.makeText(this, "✅ Punto añadido - Rojo", Toast.LENGTH_SHORT).show()
+            }
+            command.contains("añadir azul") || command.contains("sumar azul") || command.contains("punto azul") -> {
+                scoreManager.addPointToPlayer(2)
+                updateScore()
+                Toast.makeText(this, "✅ Punto añadido - Azul", Toast.LENGTH_SHORT).show()
+            }
+            command.contains("quitar") || command.contains("restar") || command.contains("quitar rojo") -> {
+                scoreManager.subPointToPlayer(1)
+                updateScore()
+                Toast.makeText(this, "❌ Punto quitado - Rojo", Toast.LENGTH_SHORT).show()
+            }
+            command.contains("quitar azul") || command.contains("restar azul") -> {
+                scoreManager.subPointToPlayer(2)
+                updateScore()
+                Toast.makeText(this, "❌ Punto quitado - Azul", Toast.LENGTH_SHORT).show()
+            }
+            command.contains("reiniciar") || command.contains("reset") -> {
+                scoreManager.resetScore()
+                updateScore()
+                Toast.makeText(this, "🔄 Marcador reiniciado", Toast.LENGTH_SHORT).show()
+            }
+
+            // Comandos en inglés (por si usas vosk_en)
+            command.contains("add") || command.contains("add red") -> {
+                scoreManager.addPointToPlayer(1)
+                updateScore()
+                Toast.makeText(this, "✅ Point added - Red", Toast.LENGTH_SHORT).show()
+            }
+            command.contains("add blue") -> {
+                scoreManager.addPointToPlayer(2)
+                updateScore()
+                Toast.makeText(this, "✅ Point added - Blue", Toast.LENGTH_SHORT).show()
+            }
+            command.contains("subtract") || command.contains("remove") -> {
+                scoreManager.subPointToPlayer(1)
+                updateScore()
+                Toast.makeText(this, "❌ Point removed - Red", Toast.LENGTH_SHORT).show()
+            }
+
+            else -> {
+                Log.d("VOSK", "Comando no reconocido: $command")
             }
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        runCatching { speechService?.stop() }
+
+
+    //---------------------------------------------------------------------------------------------
+    private fun checkAudioPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.RECORD_AUDIO),
+                RECORD_AUDIO_REQUEST_CODE
+            )
+        } else {
+            // Verificar qué modelos están disponibles
+            listAvailableModels()
+            // Usar el modelo español que tienes
+            initializeVosk("vosk_es")
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        runCatching { speechService?.startListening(recognitionListener) }
-    }
+    private fun listAvailableModels() {
+        try {
+            Log.d("VOSK", "=== VERIFICACIÓN RÁPIDA DE MODELOS ===")
 
-    override fun onDestroy() {
-        super.onDestroy()
-        runCatching { speechService?.stop() }
-        runCatching { recognizer.close() }
-        runCatching { model.close() }
-    }
+            // Verificar directamente los modelos que esperas
+            val expectedModels = listOf("vosk_es", "vosk_en")
 
+            expectedModels.forEach { modelName ->
+                try {
+                    val exists = assets.list(modelName) != null
+                    if (exists) {
+                        Log.d("VOSK", "✅ MODELO ENCONTRADO: $modelName")
+                        val contents = assets.list(modelName)
+                        Log.d("VOSK", "   Carpetas/archivos: ${contents?.joinToString()}")
+                    } else {
+                        Log.d("VOSK", "❌ MODELO NO ENCONTRADO: $modelName")
+                    }
+                } catch (e: Exception) {
+                    Log.d("VOSK", "❌ MODELO NO ENCONTRADO: $modelName - ${e.message}")
+                }
+            }
+
+        } catch (e: Exception) {
+            Log.e("VOSK", "Error verificando modelos: ${e.message}")
+        }
+    }
+    private fun initializeVosk(modelName: String = "vosk_es") {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                Log.d("VOSK", "=== INICIANDO VOSK CON MODELO: $modelName ===")
+
+                // Extraer modelo
+                val modelPath = VoskHelper.extractModel(this@ScoreboardActivity, modelName)
+                Log.d("VOSK", "Modelo extraído a: $modelPath")
+
+                // Inicializar modelo
+                model = Model(modelPath).also {
+                    if (it.pointer == null) throw IOException("Model initialization failed")
+                }
+                Log.d("VOSK", "Modelo Vosk inicializado correctamente")
+
+                recognizer = Recognizer(model, 16000.0f).also {
+                    if (it.pointer == null) throw IOException("Recognizer initialization failed")
+                }
+                Log.d("VOSK", "Reconocedor inicializado correctamente")
+
+                withContext(Dispatchers.Main) {
+                    try {
+                        speechService = SpeechService(recognizer, 16000.0f)
+                        speechService?.startListening(recognitionListener)
+
+                        Toast.makeText(
+                            this@ScoreboardActivity,
+                            "Voz activada - Modelo: ${modelName.uppercase()}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Log.d("VOSK", "Servicio de voz iniciado")
+                    } catch (e: Exception) {
+                        Log.e("VOSK", "Error iniciando servicio", e)
+                        Toast.makeText(
+                            this@ScoreboardActivity,
+                            "Error iniciando voz",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+
+            } catch (e: Exception) {
+                Log.e("VOSK", "❌ INICIALIZACIÓN FALLIDA", e)
+                withContext(Dispatchers.Main) {
+                    val errorMsg = when (e) {
+                        is IOException -> "Error con modelo '$modelName': ${e.message}"
+                        else -> "Error: ${e.message}"
+                    }
+                    Toast.makeText(this@ScoreboardActivity, errorMsg, Toast.LENGTH_LONG).show()
+
+                    // Opcional: intentar con el otro modelo
+                    if (modelName == "vosk_es") {
+                        Toast.makeText(this@ScoreboardActivity, "Intentando con modelo inglés...", Toast.LENGTH_SHORT).show()
+                        initializeVosk("vosk_en")
+                    }
+                }
+            }
+        }
+    }
 
 }

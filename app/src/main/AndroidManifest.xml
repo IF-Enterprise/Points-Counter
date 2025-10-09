@@ -4,6 +4,10 @@
 
     <!-- Permisos -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+    <!-- Add audio features for Android 11+ -->
+    <uses-feature android:name="android.hardware.microphone" android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +19,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Point_counter"
-        android:attributionTags="voice_recognition">
+        tools:targetApi="31">
+
+        <!-- Add audio attribution at application level -->
+        <property
+            android:name="android.media.audio.processing.ATTRIBUTION_TAG"
+            android:value="voice_recognition" />
 
         <activity
             android:name=".ui.MainActivity"
