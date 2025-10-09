@@ -64,11 +64,22 @@ open class ScoreboardActivity : MainActivity() {
         super.onCreate(savedInstanceState)
 
         // ✅ Usamos la función en vez de código duplicado
-        //checkAudioPermission()
+        checkAudioPermission()
 
         // Configuración inicial del juego
         val sportType = intent.getStringExtra("sportType")
-        // val setsToWin = intent.getIntExtra("sets", 3) NO INTENTAR ENLAZARLO CON RULES
+
+        val setsToWin = intent.getIntExtra("sets", 3)
+        val gamesToWin = intent.getIntExtra("games", 3)
+        val pointsToWin = intent.getIntExtra("points", 21)
+        val timeToWin= intent.getIntExtra("time", 90)
+
+        /* Falta implemnetar estos modificadores en el scoreManager -> Sport
+        scoreManager.setSetsToWin(setsToWin)
+        scoreManager.setGamesToWin(gamesToWin)
+        scoreManager.setPointsToWin(pointsToWin)
+        scoreManager.setTimeToWin(timeToWin)
+         */
 
         if (sportType == "pingpong") {
             scoreManager.setSport(PingPong())
